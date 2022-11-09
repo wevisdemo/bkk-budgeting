@@ -27,6 +27,8 @@ export default {
 
   modules: ["@nuxtjs/axios", "@nuxtjs/pwa"],
 
+  extends: ["@nuxtjs/eslint-config-typescript"],
+
   styleResources: {
     scss: ["~/assets/styles/variables.scss"],
   },
