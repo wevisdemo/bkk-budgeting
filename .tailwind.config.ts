@@ -1,6 +1,7 @@
-/** @type {import('tailwindcss').Config} */
-module.exports = {
-  darkMode: false, // or 'media' or 'class'
+import { Config as TailwindConfig } from "tailwindcss";
+
+const configs: TailwindConfig = {
+  content: ["./**/*.{vue,html,js}"],
   theme: {
     extend: {},
     colors: {
@@ -19,8 +20,7 @@ module.exports = {
     lineHeight: {},
     letterSpacing: {},
   },
-  variants: {
-    extend: {},
-  },
   plugins: [],
 };
+
+module.exports = configs;
