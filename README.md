@@ -2,69 +2,67 @@
 
 [![ci](https://github.com/wevisdemo/bkk-budgeting/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/wevisdemo/bkk-budgeting/actions/workflows/ci.yml)
 
-## Build Setup
+## 🌎 Environment
 
-```bash
-# install dependencies
-$ yarn install
+- Production: Coming soon...
+- Staging: Coming soon...
 
-# serve with hot reload at localhost:3000
-$ yarn dev
+## 💻 Tech stack
 
-# build for production and launch server
-$ yarn build
-$ yarn start
+- [NuxtJS](https://nuxtjs.org/) with [Vue 2 and TypeScript](https://v2.vuejs.org/v2/guide/typescript.html#Basic-Usage)
+- [TailwindCSS](https://tailwindcss.com/)
 
-# generate static project
-$ yarn generate
-```
+Note: ESLint and Prettier is recommended
 
-For detailed explanation on how things work, check out the [documentation](https://nuxtjs.org).
+## ⚽ Working style
 
-## Special Directories
+Note: Pull rebase `git pull --rebase` often. Before you start coding and pushing!
 
-You can create the following extra directories, some of which have special behaviors. Only `pages` is required; you can delete them if you don't want to use their functionality.
+- We use Github issue to track the progress.
+  - Please assign yourself to the issue that you are working on.
+  - I don't want to force "HOW" to implement the issue and we can discuss everything on the issue.
+  - Communication language doesn't matter. Feel free to use Thai or English.
+- We use Trunk-based development.
+  - No braches, we all push to the main branch.
+  - If the commit is related to a specific issue, add issue id in the commit message eg. `#21 Add button components`
+  -
+  - Continuous Integration: don't leave your code without pushing overnight, push as much as you can without breaking the build.
+  - Linter and formatter will run on commit, while build will be run on push so you can't push if it fail.
+- Encourage to write component test with TDD (Test driven development) but it's not mandatory.
+- Each time the code is pushed to the main branch, Github Action will build and deploy to the staging environment.
+- Use asynchonous communication. Let's try not to have meeting if not necessary.
+  - For issue related discussion, please use Github issue
+  - Other discussion can be done in slack
 
-### `assets`
+## 📂 Directory structure
 
-The assets directory contains your uncompiled assets such as Stylus or Sass files, images, or fonts.
+Use `pascal-case` for every file name since Linux (eg. Github Action runner) is not case-incensitive, in contrary to Mac and Windows.
 
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/assets).
+- `/components` Vue components
+  - Put in the root if it's shared between pages
+  - Put in the `/components/<page>/` if it's only used in that page
+  - If components is too big or getting duplicated, you should split into several component which can also be grouped in sub-folder
+- `/data` JSON promises and related data, including example one before fetching script is implemented.
+- `/models` Data types (interface, enum, etc.) sharing across the project
+- `/pages` Represent [Nuxt routing](https://nuxtjs.org/docs/directory-structure/pages)
+- `/static` Static assets such as images
+  - Before adding new assets, check first if it's already exist here.
+  - `$config.path.base` can be used to reference `static` path (or base path)
+  - `$config.path.images` can be used to reference `static/images` path
+  ```vue
+    <img :src="`${$config.path.images}/status/nodata.png`"
+  ```
+  - For SVG that can change the color (eg. button icon on hover), recommend in use inline svg with `currentColor` and Tailwind color preset
+- `/tests` Test file
+  - Recommend to mimick project structure eg. `/tests/components/component-name.test.ts`
 
-### `components`
+## 💅 Styling and design system
 
-The components directory contains your Vue.js components. Components make up the different parts of your page and can be reused and imported into your pages, layouts and even other components.
+- We used [WeVis Design System](https://wevisdemo.github.io/design-systems/) which provide
+  - Utility classes for typography
+  - Vue component
+- For other styling customization beyond WeVis design system, use Tailwindcss
+  - Color is defined in `tailwind.config.css` which naming should be related to Figma
+  - Configuration is also available on http://localhost:3000/\_tailwind/ when dev server is running
 
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/components).
-
-### `layouts`
-
-Layouts are a great help when you want to change the look and feel of your Nuxt app, whether you want to include a sidebar or have distinct layouts for mobile and desktop.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/layouts).
-
-### `pages`
-
-This directory contains your application views and routes. Nuxt will read all the `*.vue` files inside this directory and setup Vue Router automatically.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/get-started/routing).
-
-### `plugins`
-
-The plugins directory contains JavaScript plugins that you want to run before instantiating the root Vue.js Application. This is the place to add Vue plugins and to inject functions or constants. Every time you need to use `Vue.use()`, you should create a file in `plugins/` and add its path to plugins in `nuxt.config.js`.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/plugins).
-
-### `static`
-
-This directory contains your static files. Each file inside this directory is mapped to `/`.
-
-Example: `/static/robots.txt` is mapped as `/robots.txt`.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/static).
-
-### `store`
-
-This directory contains your Vuex store files. Creating a file in this directory automatically activates Vuex.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/store).
+**THANK YOU FOR ALL THE CONTRIBUTION ❤️**
