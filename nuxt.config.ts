@@ -1,5 +1,7 @@
 import type { NuxtConfig } from "@nuxt/types";
 
+const BASE_PATH = process.env.BASE_PATH || "";
+
 const config: NuxtConfig = {
   // Target: https://go.nuxtjs.dev/config-target
   target: "static",
@@ -17,7 +19,7 @@ const config: NuxtConfig = {
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: ["~/assets/styles/main.scss", "@wevisdemo/ui/styles/index.css"],
+  css: ["@wevisdemo/ui/styles/typography.css", "@wevisdemo/ui/styles/components.css"],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [],
@@ -31,12 +33,23 @@ const config: NuxtConfig = {
     transpile: ["@wevisdemo/ui/vue2"],
   },
 
-  modules: ["@nuxtjs/axios", "@nuxtjs/pwa"],
+  modules: ["@nuxtjs/tailwindcss", "@nuxtjs/axios", "@nuxtjs/pwa"],
 
   extends: ["@nuxtjs/eslint-config-typescript"],
 
   styleResources: {
     scss: ["~/assets/styles/variables.scss"],
+  },
+
+  publicRuntimeConfig: {
+    path: {
+      base: BASE_PATH,
+      images: `${BASE_PATH}/images`,
+    },
+  },
+
+  router: {
+    base: BASE_PATH || "/",
   },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
