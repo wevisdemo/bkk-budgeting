@@ -27,6 +27,10 @@ const config: NuxtConfig = {
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: ["@nuxtjs/style-resources", "@nuxt/typescript-build"],
 
+  build: {
+    transpile: ["@wevisdemo/ui/vue2"],
+  },
+
   modules: ["@nuxtjs/axios", "@nuxtjs/pwa"],
 
   extends: ["@nuxtjs/eslint-config-typescript"],
