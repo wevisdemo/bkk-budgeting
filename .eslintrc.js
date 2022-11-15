@@ -7,5 +7,13 @@ module.exports = {
   extends: ["@nuxtjs/eslint-config-typescript", "plugin:nuxt/recommended", "prettier"],
   plugins: [],
   // add your custom rules here
-  rules: {},
+  rules: {
+    "vue/no-undef-components": [
+      "error",
+      {
+        ignorePatterns: [],
+      },
+    ],
+  },
+  ignorePatterns: ["**/static/sw.js"],
 };
