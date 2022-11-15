@@ -1,5 +1,7 @@
 # Bangkok Budgeting
 
+[![ci](https://github.com/wevisdemo/bkk-budgeting/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/wevisdemo/bkk-budgeting/actions/workflows/ci.yml)
+
 ## Build Setup
 
 ```bash
