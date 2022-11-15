@@ -7,7 +7,6 @@
     </WvNavbar>
     <Nuxt />
     <WvFooter />
-    <!-- <Footer /> -->
   </div>
 </template>
 
