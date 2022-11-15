@@ -25,7 +25,6 @@ Note: Pull rebase `git pull --rebase` often. Before you start coding and pushing
 - We use Trunk-based development.
   - No braches, we all push to the main branch.
   - If the commit is related to a specific issue, add issue id in the commit message eg. `#21 Add button components`
-  -
   - Continuous Integration: don't leave your code without pushing overnight, push as much as you can without breaking the build.
   - Linter and formatter will run on commit, while build will be run on push so you can't push if it fail.
 - Encourage to write component test with TDD (Test driven development) but it's not mandatory.
