@@ -1,12 +1,14 @@
 <template>
   <div class="flex flex-col min-h-screen wv-font-anuphan wv-b5">
-    <WvNavbar class="z-20">
+    <WvNavbar class="z-20" :dark="true">
       <NuxtLink v-for="{ label, path } in routes" :key="path" :to="path">
-        <WvNavButton :active="path === $route.path">{{ label }}</WvNavButton>
+        <WvNavButton :active="path === $route.path" :dark="true">{{
+          label
+        }}</WvNavButton>
       </NuxtLink>
     </WvNavbar>
     <Nuxt />
-    <WvFooter />
+    <WvFooter :dark="true" />
   </div>
 </template>
 
