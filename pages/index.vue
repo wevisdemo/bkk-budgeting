@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="bg-wv-cream">
+    <div class="bg-wv-cream overflow-x-hidden">
       <Landing />
       <div
         class="max-w-7xl w-full p-6 m-auto flex flex-col justify-center items-center"
