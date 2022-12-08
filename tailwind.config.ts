@@ -7,11 +7,10 @@ export default <Partial<Config>>{
       textColor: {
         "wv-green": "#4CC35D",
       },
-    },
-    backgroundColor: {
-      "wv-cream": "#E8E4D8",
-      "wv-green": "#4CC35D",
-      black: "#000",
+      backgroundColor: {
+        "wv-cream": "#E8E4D8",
+        "wv-green": "#4CC35D",
+      },
     },
   },
 };
