@@ -7,7 +7,7 @@
       >
         <!-- intro box -->
         <div
-          class="sm:max-w-lg rounded-lg sm:bg-black sm:text-white sm:py-14 sm:px-20 grid gap-6"
+          class="sm:max-w-lg rounded-lg sm:bg-black sm:text-white sm:py-14 sm:px-20 grid gap-6 pb-6 sm:pb-0"
         >
           <p class="wv-b3 text-center">
             ทุกวันนี้เมืองที่เราใช้ชีวิต

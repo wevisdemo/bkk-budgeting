@@ -8,7 +8,7 @@
     </div>
     <p class="block sm:hidden text-center">เลือกได้ 1 ข้อ</p>
     <!-- top -->
-    <div class="flex flex-wrap gap-4 md:gap-6 lg:gap-10 justify-center">
+    <div class="flex flex-wrap gap-2 md:gap-6 lg:gap-10 justify-center">
       <div
         v-for="(item, index) in problemsTop"
         :key="index"
@@ -23,7 +23,7 @@
       </div>
     </div>
     <!-- bottom -->
-    <div class="flex flex-wrap gap-4 md:gap-6 lg:gap-10 justify-center">
+    <div class="flex flex-wrap gap-2 md:gap-6 lg:gap-10 justify-center">
       <div
         v-for="(item, index) in problemsBottom"
         :key="index"
