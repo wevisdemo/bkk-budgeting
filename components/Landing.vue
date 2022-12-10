@@ -5,7 +5,7 @@
       :src="`${$config.path.images}/background/landing.png`"
       alt="landing_bg"
     />
-    <div class="flex flex-col sm:flex-row gap-6 justify-between">
+    <div class="flex flex-col sm:flex-row gap-6 justify-between p-0 sm:p-10 lg:p-20">
       <div
         class="flex flex-col gap-3 sm:w-min z-10 sm:pt-30 sm:pb-20 text-center sm:text-left"
       >
