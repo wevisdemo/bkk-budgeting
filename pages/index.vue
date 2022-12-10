@@ -92,7 +92,7 @@
 <script lang="ts">
 import Vue from "vue";
 import AllocationQuestion from "~/components/AllocateQuestion.vue";
-import Landing from "~/components/Landing.vue";
+import Landing from "~/components/landing/Landing.vue";
 import PersistProblems from "~/components/PersistProblems.vue";
 import problemsData from "~/data/problems.json";
 

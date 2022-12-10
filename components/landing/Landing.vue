@@ -46,35 +46,9 @@
           <p class="wv-b5 p-1">กรุงเทพฯ ควรใช้งบฯ กับเรื่องอะไรบ้าง</p>
         </div>
       </div>
-      <div class="flex sm:hidden gap-4">
-        <div class="flex flex-grow flex-col gap-2 p-3 bg-wv-cream-2">
-          <p class="wv-b5 font-bold">เข้าใจแผนการใช้งบ</p>
-          <div class="divide-y">
-            <div class="wv-b5 py-1">
-              <span>วางแผนแก้ปัญหาแบบไหน</span>
-            </div>
-            <div class="wv-b5 py-1">
-              <span>ใช้ทำอะไรไปแล้ว</span>
-            </div>
-            <div class="wv-b5 py-1">
-              <span>อยากให้งบทำเรื่องอะไร</span>
-            </div>
-          </div>
-        </div>
-        <div class="flex flex-grow flex-col p-3 bg-wv-green">
-          <p class="wv-b5 font-bold">เข้าใจแผนการใช้งบ</p>
-          <div class="divide-y">
-            <div class="wv-b5 py-1">
-              <span>รายปี</span>
-            </div>
-            <div class="wv-b5 py-1">
-              <span>รายหน่วยงาน</span>
-            </div>
-            <div class="wv-b5 py-1">
-              <span>ค้นด้วยคีย์เวิร์ด</span>
-            </div>
-          </div>
-        </div>
+      <div class="flex sm:hidden gap-2">
+        <NavLinks :links="budgetPlans" arrow-direction="Down" class="bg-wv-cream-2" />
+        <NavLinks :links="budgetExplore" arrow-direction="Right" class="bg-wv-green" />
       </div>
     </div>
   </div>
@@ -82,10 +56,42 @@
 
 <script lang="ts">
 import Vue from "vue";
+import NavLinks from "~/components/landing/NavLinks.vue";
+
 export default Vue.extend({
   name: "LandingPage",
+  components: { NavLinks },
   data() {
-    return {};
+    return {
+      budgetPlans: [
+        {
+          title: "วางแผนแก้ปัญหาแบบไหน",
+          link: "",
+        },
+        {
+          title: "ใช้ทำอะไรไปแล้ว",
+          link: "",
+        },
+        {
+          title: "อยากให้งบทำเรื่องอะไร",
+          link: "",
+        },
+      ],
+      budgetExplore: [
+        {
+          title: "รายปี",
+          link: "",
+        },
+        {
+          title: "รายหน่วยงาน",
+          link: "",
+        },
+        {
+          title: "ค้นด้วยคีย์เวิร์ด",
+          link: "",
+        },
+      ],
+    };
   },
 });
 </script>
