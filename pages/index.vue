@@ -7,7 +7,7 @@
       >
         <!-- intro box -->
         <div
-          class="sm:max-w-lg rounded-lg sm:bg-black sm:text-white sm:py-14 sm:px-20 grid gap-6 pb-6 sm:pb-0"
+          class="sm:max-w-lg rounded-lg sm:bg-black sm:text-white pb-8 sm:py-14 sm:px-20 grid gap-6"
         >
           <p class="wv-b3 text-center">
             ทุกวันนี้เมืองที่เราใช้ชีวิต
@@ -25,39 +25,7 @@
         <!-- issues -->
         <PersistProblems />
         <!-- strategies -->
-        <div class="py-14 px-20 grid gap-6">
-          <div class="grid grid-cols-7 relative">
-            <div class="text-center absolute top-1/2 bottom-1/2 left-0 right-0">
-              Lorem Ipsum
-            </div>
-            <div
-              v-for="(item, index) in problems"
-              :key="index"
-              class="h-80 flex flex-col justify-between"
-            >
-              <img :src="item.img" :alt="item.title" />
-              <div class="flex-1">arrow</div>
-              <img :src="item.img" :alt="item.title" />
-            </div>
-          </div>
-          <div
-            class="max-w-7xl bg-black text-white flex flex-col items-center justify-center"
-          >
-            <p class="wv-h6">title lorem ipsum</p>
-            <p class="wv-h8">subtitle lorem ipsum</p>
-            <div class="grid grid-cols-4 gap-4">
-              <div
-                v-for="(item, problemsIndex) in problems"
-                :key="problemsIndex"
-                style="background-color: white"
-              >
-                <template v-for="(topic, topicIndex) in item.topic">
-                  <p :key="topicIndex" class="text-black">{{ topic.text }}</p>
-                </template>
-              </div>
-            </div>
-          </div>
-        </div>
+        <StrategicPlans />
         <div class="py-14 px-20 grid gap-6">
           <p class="wv-b5">Lorem ipsum</p>
           <h5 class="wv-h5">Lorem ipsum title bold</h5>
@@ -94,11 +62,11 @@ import Vue from "vue";
 import AllocationQuestion from "~/components/AllocateQuestion.vue";
 import Landing from "~/components/landing/Landing.vue";
 import PersistProblems from "~/components/PersistProblems.vue";
-import problemsData from "~/data/problems.json";
+import StrategicPlans from "~/components/strategies/StrategicPlans.vue";
 
 export default Vue.extend({
   name: "IndexPage",
-  components: { Landing, AllocationQuestion, PersistProblems },
+  components: { Landing, AllocationQuestion, PersistProblems, StrategicPlans },
   data() {
     return {
       intro: [
@@ -107,11 +75,6 @@ export default Vue.extend({
         "ถ้างั้นขอชวนมาลองเริ่มต้นที่เมืองหลวงอย่างกรุงเทพมหานครกันก่อนเลย!!",
       ],
     };
-  },
-  computed: {
-    problems() {
-      return problemsData;
-    },
   },
 });
 </script>
