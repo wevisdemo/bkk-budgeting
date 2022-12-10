@@ -2,6 +2,7 @@
   {
     "title": "น้ำเน่าเสีย, ขยะ, ฝุ่นละออง",
     "img": "issue_1",
+    "icon": "default_1",
     "strategy": "",
     "topic": [
       {
@@ -21,6 +22,7 @@
   {
     "title": "พื้นที่สีเขียวและสวนสาธารณะน้อย ไม่ปลอดภัย",
     "img": "issue_2",
+    "icon": "default_2",
     "strategy": "",
     "topic": [
       {
@@ -40,6 +42,7 @@
   {
     "title": "การทุจริต คอร์รัปชั่น",
     "img": "issue_3",
+    "icon": "default_3",
     "strategy": "",
     "topic": [
       {
@@ -59,6 +62,7 @@
   {
     "title": "สาธารณูปโภคพื้นฐานไม่รองรับกับผู้พิการ",
     "img": "issue_4",
+    "icon": "default_4",
     "strategy": "",
     "topic": [
       {
@@ -78,6 +82,7 @@
   {
     "title": "การบริการออนไลน์ประชาชนที่เข้ามาติดต่อยุ่งยาก",
     "img": "issue_5",
+    "icon": "default_5",
     "strategy": "",
     "topic": [
       {
@@ -97,6 +102,7 @@
   {
     "title": "แหล่งท่องเที่ยวเสื่อมโทรม",
     "img": "issue_6",
+    "icon": "default_6",
     "strategy": "",
     "topic": [
       {
@@ -116,6 +122,7 @@
   {
     "title": "เมืองแออัด ไม่เป็นระเบียบ",
     "img": "issue_7",
+    "icon": "default_7",
     "strategy": "",
     "topic": [
       {
