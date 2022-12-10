@@ -6,7 +6,9 @@
         class="max-w-7xl w-full p-6 m-auto flex flex-col justify-center items-center"
       >
         <!-- intro box -->
-        <div class="max-w-lg rounded-lg bg-black text-white py-14 px-20 grid gap-6">
+        <div
+          class="sm:max-w-lg rounded-lg sm:bg-black sm:text-white sm:py-14 sm:px-20 grid gap-6"
+        >
           <p class="wv-b3 text-center">
             ทุกวันนี้เมืองที่เราใช้ชีวิต
             ยังมีหลายอย่างไม่ได้เป็นแบบที่เราวาดฝันไว้ใช่ไหม?
@@ -16,7 +18,7 @@
             ก็ควรได้ร่วมออกแบบการใช้งบประมาณของเมือง
             เพื่อสร้างเมืองในแบบที่เราต้องการได้
           </p>
-          <p class="wv-b3 text-center text-wv-green">
+          <p class="wv-b3 text-center sm:text-wv-green font-bold">
             ถ้างั้นขอชวนมาลองเริ่มต้นที่เมืองหลวงอย่างกรุงเทพมหานครกันก่อนเลย!!
           </p>
         </div>
