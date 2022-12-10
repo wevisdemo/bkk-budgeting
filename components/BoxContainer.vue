@@ -1,5 +1,5 @@
 <template>
-  <div class="py-14 grid gap-4 sm:grid-6">
+  <div class="py-6 sm:py-14 grid gap-2 sm:grid-6">
     <slot />
   </div>
 </template>
