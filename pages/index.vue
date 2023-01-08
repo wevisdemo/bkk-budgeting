@@ -5,6 +5,7 @@
       <div
         class="max-w-7xl w-full p-6 m-auto flex flex-col justify-center items-center"
       >
+        <MissionStatement />
         <PersistProblems />
         <StrategicPlans />
         <DevelopmentTimeline />
@@ -19,6 +20,7 @@
 import Vue from "vue";
 import AllocationQuestion from "~/components/AllocateQuestion.vue";
 import DevelopmentTimeline from "~/components/DevelopmentTimeline.vue";
+import MissionStatement from "~/components/MissionStatement.vue";
 import PersistProblems from "~/components/PersistProblems.vue";
 import StrategicPlans from "~/components/StrategicPlans.vue";
 import BudgetPlans from "~/components/budget/BudgetPlans.vue";
@@ -33,6 +35,7 @@ export default Vue.extend({
     StrategicPlans,
     DevelopmentTimeline,
     BudgetPlans,
+    MissionStatement,
   },
   data() {
     return {

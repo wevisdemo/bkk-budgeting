@@ -16,18 +16,19 @@
 </template>
 
 <script lang="ts">
+import Vue from "vue";
 import BoxContainer from "~/components/BoxContainer.vue";
 import BudgetExplorer from "~/components/budget/charts/BudgetExplorer.vue";
 import BudgetUsage from "~/components/budget/charts/BudgetUsage.vue";
 import YearlyBudgetVue from "~/components/budget/charts/YearlyBudget.vue";
 
-export default {
+export default Vue.extend({
   name: "BudgetPlans",
   components: { BoxContainer, YearlyBudgetVue, BudgetUsage, BudgetExplorer },
   data() {
     return {};
   },
-};
+});
 </script>
 
 <style lang="scss"></style>

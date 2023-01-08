@@ -8,13 +8,14 @@
 </template>
 
 <script lang="ts">
+import Vue from "vue";
 import VizChart from "~/components/budget/charts/VizChartContainer.vue";
 
 interface YearlyBudgetDataProp {
   isPercentage: boolean;
 }
 
-export default {
+export default Vue.extend({
   name: "YearlyBudget",
   components: { VizChart },
   data(): YearlyBudgetDataProp {
@@ -27,7 +28,7 @@ export default {
       this.isPercentage = state;
     },
   },
-};
+});
 </script>
 
 <style lang="scss"></style>

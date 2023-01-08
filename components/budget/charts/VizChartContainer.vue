@@ -51,11 +51,13 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from "vue";
+
 interface VizChartDataProp {
   isPercentage: boolean;
 }
 
-export default {
+export default defineComponent({
   name: "VizChart",
   model: {
     prop: "percentage",
@@ -72,6 +74,7 @@ export default {
       required: false,
     },
   },
+  emits: ["chart"],
   data(): VizChartDataProp {
     return {
       isPercentage: this.percentage,
@@ -84,7 +87,7 @@ export default {
       return state;
     },
   },
-};
+});
 </script>
 
 <style lang="scss">
