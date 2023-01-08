@@ -26,6 +26,7 @@
         <PersistProblems />
         <!-- strategies -->
         <StrategicPlans />
+        <DevelopmentTimeline />
         <div class="py-14 px-20 grid gap-6">
           <p class="wv-b5">Lorem ipsum</p>
           <h5 class="wv-h5">Lorem ipsum title bold</h5>
@@ -60,13 +61,20 @@
 <script lang="ts">
 import Vue from "vue";
 import AllocationQuestion from "~/components/AllocateQuestion.vue";
-import Landing from "~/components/landing/Landing.vue";
+import DevelopmentTimeline from "~/components/DevelopmentTimeline.vue";
 import PersistProblems from "~/components/PersistProblems.vue";
-import StrategicPlans from "~/components/strategies/StrategicPlans.vue";
+import StrategicPlans from "~/components/StrategicPlans.vue";
+import Landing from "~/components/landing/Landing.vue";
 
 export default Vue.extend({
   name: "IndexPage",
-  components: { Landing, AllocationQuestion, PersistProblems, StrategicPlans },
+  components: {
+    Landing,
+    AllocationQuestion,
+    PersistProblems,
+    StrategicPlans,
+    DevelopmentTimeline,
+  },
   data() {
     return {
       intro: [
