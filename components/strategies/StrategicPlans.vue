@@ -2,7 +2,7 @@
   <BoxContainer>
     <div class="grid grid-cols-7 relative">
       <div
-        class="text-center absolute left-0 right-0 flex flex-col justify-center h-full"
+        class="text-center absolute left-0 right-0 flex flex-col justify-center h-full z-0"
       >
         <p class="wv-b3 font-bold">‘น้ำเน่าเสีย, ขยะ, ฝุ่นละออง’</p>
         <p class="wv-b3">
@@ -11,9 +11,11 @@
         <p class="wv-h8 font-extrabold">แผนยุทธศาสตร์ 7 ด้าน</p>
       </div>
       <div
-        v-for="(item, index) in problems"
-        :key="index"
-        class="h-[500px] flex flex-col justify-between items-center"
+        v-for="(item, problemsIndex) in problems"
+        :key="problemsIndex"
+        class="h-[500px] flex flex-col justify-between items-center z-50"
+        @mouseover="(onHoverImg = problemsIndex), (selectedTopic = problemsIndex)"
+        @mouseleave="onHoverImg = null"
       >
         <img
           class="w-20 h-20"
@@ -27,25 +29,32 @@
           </div>
         </div>
         <img
+          :id="problemsIndex.toString()"
           class="w-20 h-auto"
-          :src="`${$config.path.images}/strategies/${item.icon}.svg`"
+          :src="setImageHover(item.icon, problemsIndex)"
           :alt="item.title"
         />
       </div>
     </div>
-    <div
-      class="max-w-7xl bg-black text-white flex flex-col items-center justify-center"
-    >
-      <p class="wv-h6">title lorem ipsum</p>
-      <p class="wv-h8">subtitle lorem ipsum</p>
+    <div class="max-w-7xl bg-black flex flex-col items-center justify-center p-4">
+      <div class="text-white text-center pb-4">
+        <p class="wv-h6">การสร้างเมืองปลอดภัย</p>
+        <p class="wv-b6">ประกอบด้วย 4 มิติย่อย</p>
+      </div>
       <div class="grid grid-cols-4 gap-4">
         <div
-          v-for="(item, problemsIndex) in problems"
-          :key="problemsIndex"
+          v-for="(topic, topicIndex) in allTopics[selectedTopic]"
+          :key="topicIndex"
           style="background-color: white"
+          class="flex flex-col items-center grid-rows-[repeat(2,_min-content)] gap-1 text-center p-4 min-h-[200px]"
         >
-          <template v-for="(topic, topicIndex) in item.topic">
-            <p :key="topicIndex" class="text-black">{{ topic.text }}</p>
+          <div
+            class="bg-wv-blue text-white w-5 h-5 rounded-full flex items-center justify-center"
+          >
+            {{ topicIndex + 1 }}
+          </div>
+          <template v-for="(item, itemIndex) in topic">
+            <p :key="itemIndex" class="text-black font-bold">{{ item }}</p>
           </template>
         </div>
       </div>
@@ -58,12 +67,41 @@ import Vue from "vue";
 import BoxContainer from "~/components/BoxContainer.vue";
 import problemsData from "~/data/problems.json";
 
+interface StrategeicPlansDataProp {
+  onHoverImg: number | null;
+  selectedTopic: number;
+  strategicIcon: string;
+}
+
 export default Vue.extend({
   name: "StrategicPlans",
   components: { BoxContainer },
+  data(): StrategeicPlansDataProp {
+    return {
+      onHoverImg: null,
+      selectedTopic: 0,
+      strategicIcon: "",
+    };
+  },
   computed: {
     problems() {
       return problemsData;
+    },
+    allTopics() {
+      const topics = problemsData.map(item => {
+        return item.topic;
+      });
+
+      return topics;
+    },
+  },
+  methods: {
+    setImageHover(icon: string, index: number) {
+      if (this.onHoverImg === index) {
+        return `${this.$config.path.images}/strategies/${icon}_hover.svg`;
+      } else {
+        return `${this.$config.path.images}/strategies/${icon}.svg`;
+      }
     },
   },
 });
@@ -76,7 +114,7 @@ export default Vue.extend({
 }
 
 .line {
-  height: calc(100% - 30px);
+  height: calc(100% - 4px);
   background: blue;
   width: 2px;
 }
