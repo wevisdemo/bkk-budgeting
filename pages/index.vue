@@ -1,10 +1,10 @@
 <template>
-  <div>
-    <div class="bg-wv-cream overflow-x-hidden">
-      <Landing />
+  <div class="overflow-x-hidden">
+    <div class="bg-wv-cream">
       <div
         class="max-w-7xl w-full p-6 m-auto flex flex-col justify-center items-center"
       >
+        <Landing />
         <MissionStatement />
         <PersistProblems />
         <StrategicPlans />
@@ -12,6 +12,9 @@
         <BudgetPlans />
         <AllocationQuestion />
       </div>
+    </div>
+    <div class="max-w-7xl w-full p-6 m-auto flex flex-col justify-center items-center">
+      <ProjectDevelopment />
     </div>
   </div>
 </template>
@@ -22,6 +25,7 @@ import AllocationQuestion from "~/components/AllocateQuestion.vue";
 import DevelopmentTimeline from "~/components/DevelopmentTimeline.vue";
 import MissionStatement from "~/components/MissionStatement.vue";
 import PersistProblems from "~/components/PersistProblems.vue";
+import ProjectDevelopment from "~/components/ProjectDevelopment.vue";
 import StrategicPlans from "~/components/StrategicPlans.vue";
 import BudgetPlans from "~/components/budget/BudgetPlans.vue";
 import Landing from "~/components/landing/Landing.vue";
@@ -36,6 +40,7 @@ export default Vue.extend({
     DevelopmentTimeline,
     BudgetPlans,
     MissionStatement,
+    ProjectDevelopment,
   },
   data() {
     return {
