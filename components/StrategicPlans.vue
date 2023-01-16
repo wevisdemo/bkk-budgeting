@@ -67,7 +67,7 @@ import Vue from "vue";
 import BoxContainer from "~/components/BoxContainer.vue";
 import problemsData from "~/data/problems.json";
 
-interface StrategeicPlansDataProp {
+interface StrategeicPlansData {
   onHoverImg: number | null;
   selectedTopic: number;
   strategicIcon: string;
@@ -76,7 +76,7 @@ interface StrategeicPlansDataProp {
 export default Vue.extend({
   name: "StrategicPlans",
   components: { BoxContainer },
-  data(): StrategeicPlansDataProp {
+  data(): StrategeicPlansData {
     return {
       onHoverImg: null,
       selectedTopic: 0,

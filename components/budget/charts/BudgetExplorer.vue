@@ -11,14 +11,14 @@
 import Vue from "vue";
 import VizChart from "~/components/budget/charts/VizChartContainer.vue";
 
-interface YearlyBudgetDataProp {
+interface YearlyBudgetData {
   isPercentage: boolean;
 }
 
 export default Vue.extend({
   name: "YearlyBudget",
   components: { VizChart },
-  data(): YearlyBudgetDataProp {
+  data(): YearlyBudgetData {
     return {
       isPercentage: false,
     };
