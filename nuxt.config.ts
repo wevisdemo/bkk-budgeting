@@ -6,7 +6,7 @@ const config: NuxtConfig = {
   target: "static",
 
   head: {
-    title: "budget",
+    title: "BKK Budgeting",
     meta: [
       { charset: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
