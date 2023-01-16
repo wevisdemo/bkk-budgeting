@@ -5,11 +5,13 @@
       <div
         v-for="(project, index) in projectsList"
         :key="index"
-        class="py-1 px-2 rounded bg-wv-gray-3 text-center flex"
+        class="grid gap-4 projectItem"
       >
         <CoinIcon />
-        <p class="wv-b3">{{ project.title }}</p>
-        <p class="wv-b3">{{ project.subtitle }}</p>
+        <div class="py-1 px-2 rounded bg-wv-gray-3 text-center">
+          <p class="wv-b3">{{ project.title }}</p>
+          <p class="wv-b3">{{ project.subtitle }}</p>
+        </div>
         <CoinIcon />
       </div>
     </div>
@@ -71,3 +73,9 @@ export default Vue.extend({
   },
 });
 </script>
+
+<style scoped>
+.projectItem {
+  grid-template-columns: auto 1fr auto;
+}
+</style>
