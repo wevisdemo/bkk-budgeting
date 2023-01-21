@@ -72,7 +72,7 @@
 
 <script lang="ts">
 import Vue from "vue";
-import CoinIcon from "~/components/icons/CoinIcon.vue";
+import CoinIcon from "~/components/CoinIcon.vue";
 import provincesData from "~/data/provinces.json";
 
 interface project {
