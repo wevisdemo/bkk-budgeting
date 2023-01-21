@@ -17,6 +17,7 @@
       <ProjectDevelopment />
     </div>
     <GoodSociety />
+    <ParticipatoryBudgeting />
   </div>
 </template>
 
@@ -26,6 +27,7 @@ import AllocationQuestion from "~/components/AllocateQuestion.vue";
 import DevelopmentTimeline from "~/components/DevelopmentTimeline.vue";
 import GoodSociety from "~/components/GoodSociety.vue";
 import MissionStatement from "~/components/MissionStatement.vue";
+import ParticipatoryBudgeting from "~/components/ParticipatoryBudgeting.vue";
 import PersistProblems from "~/components/PersistProblems.vue";
 import ProjectDevelopment from "~/components/ProjectDevelopment.vue";
 import StrategicPlans from "~/components/StrategicPlans.vue";
@@ -44,6 +46,7 @@ export default Vue.extend({
     MissionStatement,
     ProjectDevelopment,
     GoodSociety,
+    ParticipatoryBudgeting,
   },
   data() {
     return {
