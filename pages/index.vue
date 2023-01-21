@@ -16,6 +16,7 @@
     <div class="max-w-7xl w-full p-6 m-auto flex flex-col justify-center items-center">
       <ProjectDevelopment />
     </div>
+    <GoodSociety />
   </div>
 </template>
 
@@ -23,6 +24,7 @@
 import Vue from "vue";
 import AllocationQuestion from "~/components/AllocateQuestion.vue";
 import DevelopmentTimeline from "~/components/DevelopmentTimeline.vue";
+import GoodSociety from "~/components/GoodSociety.vue";
 import MissionStatement from "~/components/MissionStatement.vue";
 import PersistProblems from "~/components/PersistProblems.vue";
 import ProjectDevelopment from "~/components/ProjectDevelopment.vue";
@@ -41,6 +43,7 @@ export default Vue.extend({
     BudgetPlans,
     MissionStatement,
     ProjectDevelopment,
+    GoodSociety,
   },
   data() {
     return {
