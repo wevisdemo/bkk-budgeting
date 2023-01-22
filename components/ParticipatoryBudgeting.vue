@@ -12,7 +12,7 @@
       <div class="flex flex-col items-center justify-center gap-4 my-4">
         <img
           class="rounded-full"
-          src="~/assets/professor-portrait.jpg"
+          src="~/assets/images/professor-portrait.jpg"
           width="100px"
           height="100px"
         />
@@ -22,10 +22,10 @@
         <div
           v-for="(item, videoIndex) in videoAnswers"
           :key="videoIndex"
-          class="flex gap-2 p-4 rounded border border-wv-green"
-          @click="handleQuestion"
+          class="flex gap-2 p-4 rounded-lg border border-wv-green cursor-pointer"
+          @click.stop="setActiveQuestion(videoIndex)"
         >
-          <div v-if="!openQuestion">
+          <div v-if="videoIndex !== openedQuestion">
             <svg
               width="24"
               height="24"
@@ -54,7 +54,25 @@
               <rect y="11" width="24" height="2" fill="#4CC45D" />
             </svg>
           </div>
-          <p class="wv-h8">{{ item.question }}</p>
+          <div class="flex flex-col gap-8">
+            <p class="wv-h8">{{ item.question }}</p>
+            <div v-show="videoIndex === openedQuestion" class="flex flex-col gap-8">
+              <video
+                :id="`video-${videoIndex}`"
+                width="100%"
+                height="auto"
+                class="m-auto"
+                style="max-width: 400px"
+                @click.stop="toggleVideo(videoIndex)"
+              >
+                <source
+                  :src="require(`~/assets/videos/p${videoIndex + 1}.mp4`)"
+                  type="video/mp4"
+                />
+              </video>
+              <p class="wv-b3 text-center">{{ item.answer }}</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -64,34 +82,62 @@
 <script lang="ts">
 import Vue from "vue";
 
+interface QAndAnswer {
+  question: string;
+  answer: string;
+  video: string;
+}
+
+interface ParticipatoryBudgetingData {
+  openedQuestion: number | null;
+  videoAnswers: QAndAnswer[];
+}
+
 export default Vue.extend({
   name: "ParticipatoryBudgeting",
-  data() {
+  data(): ParticipatoryBudgetingData {
     return {
-      openQuestion: false,
+      openedQuestion: null,
       videoAnswers: [
         {
           question:
             "กรุงเทพมหานครมองเรื่องการมีส่วนร่วมโดยเฉพาะงบประมาณแบบมีส่วนร่วมอย่างไร?",
-          answer: "",
+          answer:
+            "การจะสร้างกลไกการมีส่วนร่วมให้มากที่สุด ต้องเป็นกลไกที่ทำให้เกิดความรับผิดชอบ โดยถ้ามีกำหนดให้ใช้จ่ายเงิน รัฐจะเป็นคนใช้จ่ายเงินลงความต้องการของพื้นใดพื้นที่นึง และพื้นที่นั้นต้องเสียสละเวลามาให้ข้อมูล ช่วยให้ความเห็นกำกับติดตาม เป็นเชิงสองฝ่ายทำงานร่วมกัน และการกำหนดกลไกงบประมาณแบบมีส่วนร่วม ช่วยหนุนให้แต่ละฝ่ายมีความสม่ำเสมอในการร่วมมือ และต่องบฯ ทำให้กลไกมีสลักสำคัญขึ้นจึงนำไปอยู่ในแผน",
           video: "",
         },
         {
           question: "ตอนนี้กรุงเทพมหานครกำลังดำเนินการอะไรอยู่?",
-          answer: "",
+          answer:
+            "การจะสร้างกลไกการมีส่วนร่วมให้มากที่สุด ต้องเป็นกลไกที่ทำให้เกิดความรับผิดชอบ โดยถ้ามีกำหนดให้ใช้จ่ายเงิน รัฐจะเป็นคนใช้จ่ายเงินลงความต้องการของพื้นใดพื้นที่นึง และพื้นที่นั้นต้องเสียสละเวลามาให้ข้อมูล ช่วยให้ความเห็นกำกับติดตาม เป็นเชิงสองฝ่ายทำงานร่วมกัน และการกำหนดกลไกงบประมาณแบบมีส่วนร่วม ช่วยหนุนให้แต่ละฝ่ายมีความสม่ำเสมอในการร่วมมือ และต่องบฯ ทำให้กลไกมีสลักสำคัญขึ้นจึงนำไปอยู่ในแผน",
           video: "",
         },
         {
           question: "ประเทศไทย หากจะไปสู่งบประมาณแบบมีส่วนร่วมได้ ควรเริ่มที่จุดไหน?",
-          answer: "",
+          answer:
+            "การจะสร้างกลไกการมีส่วนร่วมให้มากที่สุด ต้องเป็นกลไกที่ทำให้เกิดความรับผิดชอบ โดยถ้ามีกำหนดให้ใช้จ่ายเงิน รัฐจะเป็นคนใช้จ่ายเงินลงความต้องการของพื้นใดพื้นที่นึง และพื้นที่นั้นต้องเสียสละเวลามาให้ข้อมูล ช่วยให้ความเห็นกำกับติดตาม เป็นเชิงสองฝ่ายทำงานร่วมกัน และการกำหนดกลไกงบประมาณแบบมีส่วนร่วม ช่วยหนุนให้แต่ละฝ่ายมีความสม่ำเสมอในการร่วมมือ และต่องบฯ ทำให้กลไกมีสลักสำคัญขึ้นจึงนำไปอยู่ในแผน",
           video: "",
         },
       ],
     };
   },
   methods: {
-    handleQuestion() {
-      this.openQuestion = !this.openQuestion;
+    setActiveQuestion(id: number) {
+      if (this.openedQuestion === id) {
+        this.openedQuestion = null;
+      } else {
+        this.openedQuestion = id;
+      }
+    },
+    toggleVideo(id: number) {
+      const videoEl: any = document.getElementById(`video-${id}`);
+      // eslint-disable-next-line no-console
+      if (!videoEl) return;
+      if (videoEl.paused) {
+        videoEl.play();
+      } else {
+        videoEl.pause();
+      }
     },
   },
 });
