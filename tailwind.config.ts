@@ -16,6 +16,9 @@ export default <Partial<Config>>{
         "wv-blue": "#3277FF",
         "wv-gray-3": "#DDDDDD",
       },
+      borderColor: {
+        "wv-green": "#4CC35D",
+      },
     },
   },
 };
