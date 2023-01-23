@@ -3,7 +3,7 @@
     <div class="flex justify-between w-full">
       <h5 class="wv-h5 font-bold">{{ title }}</h5>
       <button
-        class="flex bg-wv-gray-3 text-wv-gray-4 rounded-full border-2 h-min"
+        class="flex bg-wv-gray-3 text-wv-gray-5 rounded-full border-2 h-min"
         @click="handleChartMode"
       >
         <div
