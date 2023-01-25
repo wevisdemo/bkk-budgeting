@@ -13,7 +13,7 @@
 </template>
 
 <script lang="ts">
-import { PropType, defineComponent } from "vue";
+import Vue, { PropType } from "vue";
 
 export interface VoteType {
   type:
@@ -43,7 +43,7 @@ export interface Vote {
   type: VoteType["type"];
 }
 
-export default defineComponent({
+export default Vue.extend({
   name: "IdeaVote",
   props: {
     strategyVote: {
