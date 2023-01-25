@@ -18,7 +18,7 @@
 </template>
 
 <script lang="ts">
-import { PropType, defineComponent } from "vue";
+import Vue, { PropType } from "vue";
 
 interface Links {
   title: string;
@@ -27,7 +27,7 @@ interface Links {
 
 type ArrowDirection = "Down" | "Right";
 
-export default defineComponent({
+export default Vue.extend({
   name: "NavLinks",
   props: {
     links: { type: Array as PropType<Links[]>, default: () => [], required: true },
