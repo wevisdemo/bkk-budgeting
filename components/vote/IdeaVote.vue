@@ -37,6 +37,11 @@
         <p class="wv-b6">{{ title }}</p>
       </div>
     </div>
+    <div class="flex justify-center py-4">
+      <button class="border border-black rounded p-3" @click="openDialog">
+        เสนอไอเดียเพิ่มเติม
+      </button>
+    </div>
   </div>
 </template>
 
@@ -50,6 +55,7 @@ interface VoteLegend {
 }
 
 interface IdeaVoteData {
+  dialogOpen: boolean;
   districts: string[];
   ideaVotes: Vote[];
   strategyLegend: VoteLegend[];
@@ -60,6 +66,7 @@ export default Vue.extend({
   components: { VoteProgress },
   data(): IdeaVoteData {
     return {
+      dialogOpen: false,
       districts: ["ทุกเขต"],
       ideaVotes: [
         {
@@ -123,6 +130,11 @@ export default Vue.extend({
         { title: "ส่งเสริมการสร้างเมืองประชาธิปไตย", type: "democracy" },
       ],
     };
+  },
+  methods: {
+    openDialog() {
+      this.dialogOpen = true;
+    },
   },
 });
 </script>
