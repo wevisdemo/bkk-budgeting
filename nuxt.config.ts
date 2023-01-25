@@ -18,7 +18,7 @@ const config: NuxtConfig = {
 
   css: ["@wevisdemo/ui/styles/typography.css", "@wevisdemo/ui/styles/components.css"],
 
-  plugins: [],
+  plugins: ["~/plugins/clickOutside.client.ts"],
 
   components: true,
 
