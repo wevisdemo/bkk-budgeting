@@ -12,20 +12,31 @@
       </div>
       <div
         v-for="(item, problemsIndex) in problems"
-        :key="problemsIndex"
+        :key="`${item.strategy}-problemsIndex`"
         class="h-[500px] flex flex-col justify-between items-center z-50"
         @mouseover="(onHoverImg = problemsIndex), (selectedTopic = problemsIndex)"
         @mouseleave="onHoverImg = null"
       >
         <img
           class="w-20 h-20"
+          :class="
+            selectedTopic === problemsIndex
+              ? `border border-solid border-black rounded-full`
+              : `opacity-50`
+          "
           :src="`${$config.path.images}/persistent-problems/${item.img}.png`"
           :alt="item.title"
         />
         <div class="flex-1">
           <div class="arrow">
-            <div class="line" />
-            <div class="point" />
+            <div
+              class="line border-2"
+              :class="[
+                selectedTopic === problemsIndex ? `border-solid` : `border-dotted`,
+                `border-wv-${item.strategy}`,
+              ]"
+            />
+            <div class="point" :class="`border-t-wv-${item.strategy}`" />
           </div>
         </div>
         <img
@@ -65,7 +76,7 @@
 <script lang="ts">
 import Vue from "vue";
 import BoxContainer from "~/components/BoxContainer.vue";
-import problemsData from "~/data/problems.json";
+import { problemsData } from "~/data/problems-data";
 
 interface StrategeicPlansData {
   onHoverImg: number | null;
@@ -115,8 +126,6 @@ export default Vue.extend({
 
 .line {
   height: calc(100% - 4px);
-  background: blue;
-  width: 2px;
 }
 
 .point {
@@ -124,7 +133,8 @@ export default Vue.extend({
   height: 0;
   border-left: 15px solid transparent;
   border-right: 15px solid transparent;
-  border-top: 15px solid blue;
+  border-top-width: 15px;
+  border-top-style: solid;
   @apply absolute bottom-0;
 }
 </style>
