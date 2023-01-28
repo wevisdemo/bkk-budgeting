@@ -14,34 +14,8 @@
 
 <script lang="ts">
 import Vue, { PropType } from "vue";
-
-export interface VoteType {
-  type:
-    | "safe"
-    | "management"
-    | "environment"
-    | "economic"
-    | "democracy"
-    | "equality"
-    | "connectivity";
-}
-
-export interface TypeColor {
-  colors:
-    | "bg-wv-safe"
-    | "bg-wv-management"
-    | "bg-wv-environment"
-    | "bg-wv-economic"
-    | "bg-wv-democracy"
-    | "bg-wv-equality"
-    | "bg-wv-connectivity";
-}
-
-export interface Vote {
-  title: string;
-  progress: number;
-  type: VoteType["type"];
-}
+import { TypeColor } from "~/models/strategies";
+import { Vote } from "~/models/voting";
 
 export default Vue.extend({
   name: "IdeaVote",
@@ -51,7 +25,7 @@ export default Vue.extend({
       required: true,
     },
     bgColor: {
-      type: String as PropType<TypeColor["colors"]>,
+      type: String as PropType<TypeColor>,
       required: true,
     },
   },

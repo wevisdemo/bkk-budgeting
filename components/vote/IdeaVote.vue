@@ -47,11 +47,13 @@
 
 <script lang="ts">
 import Vue from "vue";
-import VoteProgress, { Vote, VoteType } from "./VoteProgress.vue";
+import VoteProgress from "./VoteProgress.vue";
+import { StrategyTypes } from "~/models/strategies";
+import { Vote } from "~/models/voting";
 
 interface VoteLegend {
   title: string;
-  type: VoteType["type"];
+  type: StrategyTypes;
 }
 
 interface IdeaVoteData {
