@@ -5,14 +5,14 @@
       <div
         v-for="(project, index) in projectsList"
         :key="index"
-        class="grid gap-4 projectItem"
+        class="grid gap-10 projectItem"
       >
-        <CoinIcon />
+        <CoinIcon :rotate="index" />
         <div class="py-1 px-2 rounded bg-wv-gray-3 text-center">
           <p class="wv-b3">{{ project.title }}</p>
           <p class="wv-b3">{{ project.subtitle }}</p>
         </div>
-        <CoinIcon />
+        <CoinIcon :rotate="index + 1" />
       </div>
       <div class="flex justify-center py-4">
         <button class="border border-black rounded p-3" @click.stop="openDialog">

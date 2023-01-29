@@ -1,142 +1,38 @@
 <template>
   <div
-    :style="`transform: rotate(${getRandomInt(
-      0,
-      45,
+    :style="`transform: rotate(${isEven(
+      rotate,
     )}deg); transform-origin: center; width: fit-content;`"
   >
-    <svg
-      width="84"
-      height="55"
-      viewBox="0 0 84 55"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        d="M39.3748 49.8412C18.1312 47.3725 1.89743 36.8725 3.11572 26.3886L4.06277 18.2389L80.9927 27.1786L80.0457 35.3284C78.8274 45.8122 60.6184 52.3098 39.3748 49.8412Z"
-        fill="white"
-        stroke="#4CC45D"
-        stroke-width="2.5"
-        stroke-miterlimit="10"
-        stroke-linejoin="round"
-      />
-      <path
-        d="M3.97649 18.9826C5.19478 8.49875 23.4038 2.00109 44.6474 4.46974C65.891 6.93838 82.1247 17.4385 80.9064 27.9223C79.6881 38.4062 61.4792 44.9038 40.2356 42.4352C18.9919 39.9665 2.7582 29.4665 3.97649 18.9826Z"
-        fill="white"
-        stroke="#4CC45D"
-        stroke-width="2.5"
-        stroke-miterlimit="10"
-        stroke-linejoin="round"
-      />
-      <path
-        d="M75.0781 36.219L74.1056 44.5878"
-        stroke="#4CC45D"
-        stroke-width="2.5"
-        stroke-linejoin="round"
-      />
-      <path
-        d="M69.8324 39.501L68.9714 46.9099"
-        stroke="#4CC45D"
-        stroke-width="2.5"
-        stroke-linejoin="round"
-      />
-      <path
-        d="M64.7539 41.343L64.435 44.0876L63.9487 48.272"
-        stroke="#4CC45D"
-        stroke-width="2.5"
-        stroke-linejoin="round"
-      />
-      <path
-        d="M59.8985 41.2654L58.926 49.6342"
-        stroke="#4CC45D"
-        stroke-width="2.5"
-        stroke-linejoin="round"
-      />
-      <path
-        d="M54.8757 42.6282L53.9032 50.997"
-        stroke="#4CC45D"
-        stroke-width="2.5"
-        stroke-linejoin="round"
-      />
-      <path
-        d="M50.0762 42.0701L49.1037 50.4389"
-        stroke="#4CC45D"
-        stroke-width="2.5"
-        stroke-linejoin="round"
-      />
-      <path
-        d="M45.1653 42.4719L44.1927 50.8407"
-        stroke="#4CC45D"
-        stroke-width="2.5"
-        stroke-linejoin="round"
-      />
-      <path
-        d="M40.3655 41.9148L39.393 50.2836"
-        stroke="#4CC45D"
-        stroke-width="2.5"
-        stroke-linejoin="round"
-      />
-      <path
-        d="M35.566 41.3567L34.5935 49.7255"
-        stroke="#4CC45D"
-        stroke-width="2.5"
-        stroke-linejoin="round"
-      />
-      <path
-        d="M30.8781 39.8389L29.9056 48.2077"
-        stroke="#4CC45D"
-        stroke-width="2.5"
-        stroke-linejoin="round"
-      />
-      <path
-        d="M26.0787 39.2808L25.2177 46.6897"
-        stroke="#4CC45D"
-        stroke-width="2.5"
-        stroke-linejoin="round"
-      />
-      <path
-        d="M21.3904 37.7639L20.641 44.2129"
-        stroke="#4CC45D"
-        stroke-width="2.5"
-        stroke-linejoin="round"
-      />
-      <path
-        d="M16.7025 36.2458L15.9531 42.6948"
-        stroke="#4CC45D"
-        stroke-width="2.5"
-        stroke-linejoin="round"
-      />
-      <path
-        d="M7.88443 28.4106L6.99205 36.0899"
-        stroke="#4CC45D"
-        stroke-width="2.5"
-        stroke-linejoin="round"
-      />
-      <path
-        d="M12.2378 32.8083L11.3768 40.2173"
-        stroke="#4CC45D"
-        stroke-width="2.5"
-        stroke-linejoin="round"
-      />
-    </svg>
+    <img src="~/assets/images/coin.svg" alt="Development timeline" class="w-full" />
   </div>
 </template>
 
 <script lang="ts">
-import Vue from "vue";
+import { defineComponent } from "vue";
 
-export default Vue.extend({
+export default defineComponent({
   name: "CoinIcon",
+  props: {
+    rotate: {
+      type: Number,
+      required: true,
+    },
+  },
   data() {
     return {
       rotation: 0,
     };
   },
   methods: {
-    getRandomInt(min: number, max: number) {
-      min = Math.ceil(min);
-      max = Math.floor(max);
-      return Math.floor(Math.random() * (max - min) + min);
+    isEven(index: number = 0) {
+      const min = Math.ceil(30);
+      const max = Math.floor(50);
+      const random = Math.floor(Math.random() * (max - min) + min);
+      // eslint-disable-next-line no-console
+      console.log(random);
+
+      return index % 2 ? `${random}` : `${-random}`;
     },
   },
 });
