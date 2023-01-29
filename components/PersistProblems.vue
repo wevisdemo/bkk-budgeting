@@ -6,7 +6,7 @@
     <div class="wv-h5 sm:pb-12 text-center block sm:hidden wv-font-bold">
       {{ title }}
     </div>
-    <p class="block sm:hidden text-center">เลือกได้ 1 ข้อ</p>
+    <!-- <p class="block sm:hidden text-center">เลือกได้ 1 ข้อ</p> -->
     <!-- top -->
     <div class="flex flex-wrap gap-2 md:gap-6 lg:gap-10 justify-center">
       <div

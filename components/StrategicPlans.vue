@@ -1,23 +1,23 @@
 <template>
   <BoxContainer>
-    <div class="grid grid-cols-7 relative">
-      <div
-        class="text-center absolute left-0 right-0 flex flex-col justify-center h-full z-0"
-      >
-        <p class="wv-b3 font-bold">‘น้ำเน่าเสีย, ขยะ, ฝุ่นละออง’</p>
-        <p class="wv-b3">
-          เป็นเพียงส่วนหนึ่งของอีกหลายประเด็นที่กรุงเทพฯ วางแผนเพื่อแก้ไข ภายใต้
-        </p>
-        <p class="wv-h8 font-extrabold">แผนยุทธศาสตร์ 7 ด้าน</p>
+    <div class="grid gap-2 grid-cols-7 relative">
+      <div class="hidden sm:block absolute left-0 right-0 h-full">
+        <div class="text-center flex flex-col justify-center h-full z-0">
+          <p class="wv-b3 font-bold">‘น้ำเน่าเสีย, ขยะ, ฝุ่นละออง’</p>
+          <p class="wv-b3">
+            เป็นเพียงส่วนหนึ่งของอีกหลายประเด็นที่กรุงเทพฯ วางแผนเพื่อแก้ไข ภายใต้
+          </p>
+          <p class="wv-h8 font-extrabold">แผนยุทธศาสตร์ 7 ด้าน</p>
+        </div>
       </div>
       <div
         v-for="(item, problemsIndex) in problems"
         :key="`${item.strategy}-problemsIndex`"
-        class="h-[500px] flex flex-col justify-between items-center z-50"
+        class="sm:h-[500px] flex flex-col justify-between items-center z-50"
         @mouseover="(onHoverImg = problemsIndex), (selectedTopic = problemsIndex)"
       >
         <img
-          class="w-20 h-20"
+          class="w-20"
           :class="
             selectedTopic === problemsIndex
               ? `border border-solid border-black rounded-full`
@@ -29,7 +29,7 @@
         <div class="flex-1">
           <div class="arrow">
             <div
-              class="line border-2"
+              class="h-10 sm:h-72 border-2"
               :class="[
                 selectedTopic === problemsIndex
                   ? `border-solid`

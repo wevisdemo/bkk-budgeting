@@ -1,21 +1,13 @@
 <template>
   <div class="overflow-x-hidden">
     <div class="bg-wv-cream">
-      <div
-        class="max-w-7xl w-full p-6 m-auto flex flex-col justify-center items-center"
-      >
-        <Landing />
-        <MissionStatement />
-        <PersistProblems />
-        <StrategicPlans />
-        <DevelopmentTimeline />
-        <BudgetPlans />
-        <AllocationQuestion />
-      </div>
-    </div>
-    <div
-      class="max-w-7xl w-full pt-8 px-8 p-32 m-auto flex flex-col justify-center items-center"
-    >
+      <Landing />
+      <MissionStatement />
+      <PersistProblems />
+      <StrategicPlans />
+      <DevelopmentTimeline />
+      <BudgetPlans />
+      <AllocationQuestion />
       <ProjectDevelopment />
       <IdeaVote />
     </div>

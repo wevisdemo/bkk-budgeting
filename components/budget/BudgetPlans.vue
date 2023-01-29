@@ -1,6 +1,6 @@
 <template>
   <BoxContainer>
-    <div class="text-center px-40 mx-4 pb-10">
+    <div class="text-center mx-4 pb-10">
       <h4 class="wv-h4 font-bold pb-10">
         เพื่อพัฒนาสู่ยุทธศาสตร์ 7 ด้าน มาดูกันว่ากรุงเทพฯ ใช้งบประมาณอย่างไร?
       </h4>

@@ -1,7 +1,7 @@
 <template>
-  <div class="relative max-w-7xl w-full landing-bg overflow-hidden p-6 m-auto">
+  <BoxContainer class="relative landing-bg overflow-hidden">
     <img
-      class="hidden sm:block absolute opacity-95 bottom-0 left-0 right-0 pb-6"
+      class="max-w-5xl hidden sm:block absolute opacity-95 bottom-0 left-0 right-0 pb-6 m-auto w-full"
       :src="`${$config.path.images}/background/landing.png`"
       alt="landing_bg"
     />
@@ -51,16 +51,17 @@
         <NavLinks :links="budgetExplore" arrow-direction="Right" class="bg-wv-green" />
       </div>
     </div>
-  </div>
+  </BoxContainer>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
 import NavLinks from "~/components/landing/NavLinks.vue";
+import BoxContainer from "~/components/BoxContainer.vue";
 
 export default Vue.extend({
   name: "LandingPage",
-  components: { NavLinks },
+  components: { NavLinks, BoxContainer },
   data() {
     return {
       budgetPlans: [

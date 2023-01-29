@@ -1,5 +1,5 @@
 <template>
-  <div class="grid relative mb-[15rem] sm:mb-[18rem]">
+  <div class="grid relative mb-[15rem] sm:mb-[18rem] justify-center">
     <div
       class="bg-wv-green rounded-full p-10 sm:p-20 flex flex-col items-center justify-center gap-4 aspect-square w-[112vw] h-[112vw] sm:w-[580px] sm:h-[580px] text-center z-50"
     >
@@ -15,7 +15,9 @@
       </p>
       <p class="wv-b3 wv-font-bold">คุณคิดว่าควรนำไปพัฒนากับเรื่องอะไรบ้าง?</p>
     </div>
-    <div class="absolute bottom-0 sm:bottom-[-50px] left-0 right-0 -mb-60">
+    <div
+      class="flex justify-center absolute bottom-0 sm:bottom-[-50px] left-0 right-0 -mb-60"
+    >
       <img
         class="sm:max-w-xl h-auto"
         :src="`${$config.path.images}/6_vote.png`"
