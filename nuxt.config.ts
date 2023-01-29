@@ -22,7 +22,7 @@ const config: NuxtConfig = {
 
   components: true,
 
-  buildModules: ["@nuxtjs/style-resources", "@nuxt/typescript-build"],
+  buildModules: ["@nuxtjs/svg", "@nuxtjs/style-resources", "@nuxt/typescript-build"],
 
   build: {
     transpile: ["@wevisdemo/ui/vue2"],

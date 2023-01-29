@@ -7,7 +7,7 @@
       <p class="wv-h5 font-bold">“มหานครแห่งเอเชีย”</p>
       <p class="wv-b3">ภายในระยะเวลา 20 ปี (พ.ศ. 2561-2580)</p>
     </div>
-    <div>TODO: TIMELINE</div>
+    <img src="~assets/images/timeline.svg" alt="Development timeline" class="w-full" />
   </BoxContainer>
 </template>
 
