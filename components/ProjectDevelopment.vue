@@ -21,44 +21,63 @@
       </div>
     </div>
     <FormDialog v-if="dialogOpen">
-      <div v-click-outside="closeDialog" class="p-4 bg-black max-w-lg">
-        <button style="text-black" @click.stop="closeDialog">X</button>
-        <div class="text-center">
-          <div class="text-white">
-            <p class="wv-b3">ขอสอบถามสั้นๆเกี่ยวกับคุณ ก่อนเข้าไปร่วมแสดงความคิดเห็น</p>
-            <p class="wv-b6 font-thin">
-              คำตอบของคุณจะใช้เพื่อการประมวลผลข้อมูลบนแพลตฟอร์มนี้และรวบรวมเพื่อ
-              ยื่นต่อผู้ว่าราชการจังหวัดกรุงเทพมหานครและหน่วยงานที่เกี่ยวข้องต่อไป
-            </p>
-            <p class="wv-b6 font-thin">
-              คุณใช้ชีวิตอยู่ในกรุงเทพมหานครหรือไม่? (เรียน/ทำงาน/พักอาศัย)
-            </p>
-          </div>
-          <div class="flex gap-4 justify-center pb-4">
-            <button class="bg-white text-black px-2 py-1 min-w-[50px] rounded-sm">
-              ใช่
-            </button>
-            <button class="bg-white text-black px-2 py-1 min-w-[50px] rounded-sm">
-              ไม่ใช่
-            </button>
-          </div>
-          <p class="wv-b6 text-white">คุณอยู่จังหวัดไหน?</p>
-          <div>
-            <select id="province" name="province" class="rounded-sm px-2 py-1">
-              <option
-                v-for="(province, provIndex) in provinces"
-                :key="provIndex"
-                :value="province.province_name"
+      <form @submit.prevent="e => handleSubmit(e)">
+        <div v-click-outside="closeDialog" class="p-4 bg-black max-w-lg">
+          <button style="text-black" @click.stop="closeDialog">X</button>
+          <div class="text-center">
+            <div class="text-white">
+              <p class="wv-b3">
+                ขอสอบถามสั้นๆเกี่ยวกับคุณ ก่อนเข้าไปร่วมแสดงความคิดเห็น
+              </p>
+              <p class="wv-b6 font-thin">
+                คำตอบของคุณจะใช้เพื่อการประมวลผลข้อมูลบนแพลตฟอร์มนี้และรวบรวมเพื่อ
+                ยื่นต่อผู้ว่าราชการจังหวัดกรุงเทพมหานครและหน่วยงานที่เกี่ยวข้องต่อไป
+              </p>
+              <p class="wv-b6 font-thin">
+                คุณใช้ชีวิตอยู่ในกรุงเทพมหานครหรือไม่? (เรียน/ทำงาน/พักอาศัย)
+              </p>
+            </div>
+            <div class="flex gap-4 justify-center pb-4">
+              <div
+                class="bg-white text-black px-2 py-1 min-w-[50px] rounded-sm cursor-pointer"
+                role="button"
+                @click="() => setInBangkok(true)"
               >
-                {{ province.province_name }}
-              </option>
-            </select>
-          </div>
-          <div class="pt-6">
-            <button class="bg-white text-black px-2 py-1 rounded-sm">ยืนยัน</button>
+                ใช่
+              </div>
+              <div
+                class="bg-white text-black px-2 py-1 min-w-[50px] rounded-sm cursor-pointer"
+                role="button"
+                @click="() => setInBangkok(false)"
+              >
+                ไม่ใช่
+              </div>
+            </div>
+            <p class="wv-b6 text-white">คุณอยู่จังหวัดไหน?</p>
+            <div>
+              <select
+                id="province"
+                v-model="formData.province"
+                name="province"
+                class="rounded-sm px-2 py-1"
+              >
+                <option
+                  v-for="(province, provIndex) in provinces"
+                  :key="provIndex"
+                  :value="province.province_name"
+                >
+                  {{ province.province_name }}
+                </option>
+              </select>
+            </div>
+            <div class="pt-6">
+              <button class="bg-white text-black px-2 py-1 rounded-sm" type="submit">
+                ยืนยัน
+              </button>
+            </div>
           </div>
         </div>
-      </div>
+      </form>
     </FormDialog>
   </div>
 </template>
@@ -79,10 +98,16 @@ interface province {
   province_name: string;
 }
 
+interface FormDataProps {
+  inBangkok: boolean;
+  province: string;
+}
+
 interface ProjectDevelopmentData {
   dialogOpen: boolean;
   provinces: province[];
   projectsList: project[];
+  formData: FormDataProps;
 }
 
 export default Vue.extend({
@@ -92,6 +117,7 @@ export default Vue.extend({
     return {
       dialogOpen: false,
       provinces: provincesData,
+      formData: { inBangkok: false, province: "กรุงเทพมหานคร" },
       projectsList: [
         {
           title: "ปรับปรุงระบบจัดการขยะ",
@@ -142,6 +168,14 @@ export default Vue.extend({
     },
     closeDialog() {
       this.dialogOpen = false;
+    },
+    setInBangkok(check: boolean) {
+      this.formData.inBangkok = check;
+    },
+    handleSubmit(e: Event) {
+      e.preventDefault();
+      // eslint-disable-next-line no-console
+      console.log(this.formData);
     },
   },
 });
