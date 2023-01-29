@@ -20,12 +20,13 @@ const config: NuxtConfig = {
 
   plugins: ["~/plugins/clickOutside.client.ts"],
 
-  components: true,
+  components: false,
 
   buildModules: ["@nuxtjs/svg", "@nuxtjs/style-resources", "@nuxt/typescript-build"],
 
   build: {
-    transpile: ["@wevisdemo/ui/vue2"],
+    transpile: ["@wevisdemo/ui/vue2", "axios"],
+    standalone: false,
   },
 
   modules: ["@nuxtjs/tailwindcss", "@nuxtjs/axios", "@nuxtjs/pwa"],
