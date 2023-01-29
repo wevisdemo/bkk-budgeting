@@ -1,4 +1,5 @@
-<svg width="982" height="205" viewBox="0 0 982 205" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg width="inherit" height="inherit" viewBox="0 0 982 205" fill="none"
+  xmlns="http://www.w3.org/2000/svg">
   <line x1="410" y1="90" x2="410" y2="116" stroke="white" stroke-width="4" />
   <rect width="150" height="89" transform="translate(333 116)" fill="white" />
   <path
