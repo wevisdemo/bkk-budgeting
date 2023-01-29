@@ -1,86 +1,90 @@
 <template>
   <div class="bg-black text-white">
-    <div class="max-w-5xl w-full p-6 m-auto flex flex-col justify-center items-center">
-      <div class="mx-10">
-        <p class="wv-b3 text-center">
-          ทางทีมได้สอบถามไปยัง <span class="text-wv-green">“ผศ.ดร.ทวิดา กมลเวชช”</span>
-          ที่ปรึกษาเรื่องการจัดทำแผนพัฒนาของกรุงเทพมหานคร” เกี่ยวกับความหวังในการเห็น
-          <strong>“ระบบงบประมาณแบบมีส่วนร่วม (Participatory Budgeting)”</strong>
-          ที่จะเกิดขึ้นโดยกรุงเทพมหานคร
-        </p>
-      </div>
-      <div class="flex flex-col items-center justify-center gap-4 my-4">
-        <img
-          class="rounded-full"
-          src="~/assets/images/professor-portrait.jpg"
-          width="100px"
-          height="100px"
-        />
-        <p class="wv-b5 text-wv-green">กด + เพื่อฟังคลิปคำตอบ</p>
-      </div>
-      <div class="flex flex-col gap-4">
-        <div
-          v-for="(item, videoIndex) in videoAnswers"
-          :key="videoIndex"
-          class="flex gap-2 p-4 rounded-lg border border-wv-green cursor-pointer"
-          @click.stop="setActiveQuestion(videoIndex)"
-        >
-          <div v-if="videoIndex !== openedQuestion">
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <rect y="11" width="24" height="2" fill="#4CC45D" />
-              <rect
-                x="13"
+    <BoxContainer class="justify-center">
+      <div class="max-w-4xl">
+        <div class="mx-10">
+          <p class="wv-b3 text-center">
+            ทางทีมได้สอบถามไปยัง
+            <span class="text-wv-green">“ผศ.ดร.ทวิดา กมลเวชช”</span>
+            ที่ปรึกษาเรื่องการจัดทำแผนพัฒนาของกรุงเทพมหานคร” เกี่ยวกับความหวังในการเห็น
+            <strong>“ระบบงบประมาณแบบมีส่วนร่วม (Participatory Budgeting)”</strong>
+            ที่จะเกิดขึ้นโดยกรุงเทพมหานคร
+          </p>
+        </div>
+        <div class="flex flex-col items-center justify-center gap-4 my-4">
+          <img
+            class="rounded-full"
+            src="~/assets/images/professor-portrait.jpg"
+            width="100px"
+            height="100px"
+          />
+          <p class="wv-b5 text-wv-green">กด + เพื่อฟังคลิปคำตอบ</p>
+        </div>
+        <div class="flex flex-col gap-4">
+          <div
+            v-for="(item, videoIndex) in videoAnswers"
+            :key="videoIndex"
+            class="flex gap-2 p-4 rounded-lg border border-wv-green cursor-pointer"
+            @click.stop="setActiveQuestion(videoIndex)"
+          >
+            <div v-if="videoIndex !== openedQuestion">
+              <svg
                 width="24"
-                height="2"
-                transform="rotate(90 13 0)"
-                fill="#4CC45D"
-              />
-            </svg>
-          </div>
-          <div v-else>
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <rect y="11" width="24" height="2" fill="#4CC45D" />
-            </svg>
-          </div>
-          <div class="flex flex-col gap-8">
-            <p class="wv-h8">{{ item.question }}</p>
-            <div v-show="videoIndex === openedQuestion" class="flex flex-col gap-8">
-              <video
-                :id="`video-${videoIndex}`"
-                width="100%"
-                height="auto"
-                class="m-auto"
-                style="max-width: 400px"
-                @click.stop="toggleVideo(videoIndex)"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
               >
-                <source
-                  :src="require(`~/assets/videos/p${videoIndex + 1}.mp4`)"
-                  type="video/mp4"
+                <rect y="11" width="24" height="2" fill="#4CC45D" />
+                <rect
+                  x="13"
+                  width="24"
+                  height="2"
+                  transform="rotate(90 13 0)"
+                  fill="#4CC45D"
                 />
-              </video>
-              <p class="wv-b3 text-center">{{ item.answer }}</p>
+              </svg>
+            </div>
+            <div v-else>
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect y="11" width="24" height="2" fill="#4CC45D" />
+              </svg>
+            </div>
+            <div class="flex flex-col gap-8">
+              <p class="wv-h8">{{ item.question }}</p>
+              <div v-show="videoIndex === openedQuestion" class="flex flex-col gap-8">
+                <video
+                  :id="`video-${videoIndex}`"
+                  width="100%"
+                  height="auto"
+                  class="m-auto"
+                  style="max-width: 400px"
+                  @click.stop="toggleVideo(videoIndex)"
+                >
+                  <source
+                    :src="require(`~/assets/videos/p${videoIndex + 1}.mp4`)"
+                    type="video/mp4"
+                  />
+                </video>
+                <p class="wv-b3 text-center">{{ item.answer }}</p>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </BoxContainer>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
+import BoxContainer from "./BoxContainer.vue";
 
 interface QAndAnswer {
   question: string;
@@ -95,6 +99,7 @@ interface ParticipatoryBudgetingData {
 
 export default Vue.extend({
   name: "ParticipatoryBudgeting",
+  components: { BoxContainer },
   data(): ParticipatoryBudgetingData {
     return {
       openedQuestion: null,

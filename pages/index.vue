@@ -10,9 +10,9 @@
       <AllocationQuestion />
       <ProjectDevelopment />
       <IdeaVote />
+      <GoodSociety />
+      <ParticipatoryBudgeting />
     </div>
-    <GoodSociety />
-    <ParticipatoryBudgeting />
   </div>
 </template>
 
