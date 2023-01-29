@@ -29,9 +29,6 @@ export default defineComponent({
       const min = Math.ceil(30);
       const max = Math.floor(50);
       const random = Math.floor(Math.random() * (max - min) + min);
-      // eslint-disable-next-line no-console
-      console.log(random);
-
       return index % 2 ? `${random}` : `${-random}`;
     },
   },
