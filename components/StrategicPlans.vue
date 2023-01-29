@@ -15,7 +15,6 @@
         :key="`${item.strategy}-problemsIndex`"
         class="h-[500px] flex flex-col justify-between items-center z-50"
         @mouseover="(onHoverImg = problemsIndex), (selectedTopic = problemsIndex)"
-        @mouseleave="onHoverImg = null"
       >
         <img
           class="w-20 h-20"
@@ -32,11 +31,19 @@
             <div
               class="line border-2"
               :class="[
-                selectedTopic === problemsIndex ? `border-solid` : `border-dotted`,
+                selectedTopic === problemsIndex
+                  ? `border-solid`
+                  : `border-dotted opacity-50`,
                 `border-wv-${item.strategy}`,
               ]"
             />
-            <div class="point" :class="`border-t-wv-${item.strategy}`" />
+            <div
+              class="point-down"
+              :class="[
+                `border-t-wv-${item.strategy}`,
+                selectedTopic === problemsIndex ? 'opacity-100' : 'opacity-50',
+              ]"
+            />
           </div>
         </div>
         <img
@@ -45,6 +52,7 @@
           :src="setImageHover(item.icon, problemsIndex)"
           :alt="item.title"
         />
+        <div v-show="selectedTopic === problemsIndex" class="point-up" />
       </div>
     </div>
     <div class="max-w-7xl bg-black flex flex-col items-center justify-center p-4">
@@ -125,16 +133,27 @@ export default Vue.extend({
 }
 
 .line {
-  height: calc(100% - 4px);
+  height: calc(100% - 10px);
 }
 
-.point {
+.point-down {
   width: 0;
   height: 0;
-  border-left: 15px solid transparent;
-  border-right: 15px solid transparent;
-  border-top-width: 15px;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top-width: 12px;
   border-top-style: solid;
   @apply absolute bottom-0;
+}
+
+.point-up {
+  width: 0;
+  height: 0;
+  border-left: 18px solid transparent;
+  border-right: 18px solid transparent;
+  border-bottom-width: 22px;
+  border-bottom-style: solid;
+  border-bottom-color: black;
+  @apply absolute -bottom-5;
 }
 </style>
