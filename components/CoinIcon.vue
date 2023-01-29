@@ -4,7 +4,7 @@
       rotate,
     )}deg); transform-origin: center; width: fit-content;`"
   >
-    <img src="~/assets/images/coin.svg" alt="Development timeline" class="w-full" />
+    <img src="~/assets/icons/coin.svg" alt="Development timeline" class="w-full" />
   </div>
 </template>
 
