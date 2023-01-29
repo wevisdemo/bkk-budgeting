@@ -8,7 +8,15 @@
         class="grid gap-10 projectItem"
       >
         <CoinIcon :rotate="index" />
-        <div class="py-1 px-2 rounded bg-wv-gray-3 text-center">
+        <div
+          class="py-1 px-2 rounded text-center cursor-pointer"
+          :class="
+            formData.projects.includes(project)
+              ? `bg-wv-${project.type}`
+              : `bg-wv-gray-3`
+          "
+          @click="selectProjects(project)"
+        >
           <p class="wv-b3">{{ project.title }}</p>
           <p class="wv-b3">{{ project.subtitle }}</p>
         </div>
@@ -23,7 +31,9 @@
     <FormDialog v-if="dialogOpen">
       <form @submit.prevent="e => handleSubmit(e)">
         <div v-click-outside="closeDialog" class="p-4 bg-black max-w-lg">
-          <button style="text-black" @click.stop="closeDialog">X</button>
+          <button class="text-white" @click.stop="closeDialog">
+            <closeSvg />
+          </button>
           <div class="text-center">
             <div class="text-white">
               <p class="wv-b3">
@@ -86,10 +96,14 @@
 import Vue from "vue";
 import CoinIcon from "~/components/CoinIcon.vue";
 import FormDialog from "~/components/dialog/FormDialog.vue";
+// @ts-ignore
+import closeSvg from "~/assets/icons/close.svg?inline";
 
 import provincesData from "~/data/provinces.json";
+import { StrategyTypes } from "~/models/strategies";
 
 interface project {
+  type: StrategyTypes;
   title: string;
   subtitle: string;
 }
@@ -101,6 +115,7 @@ interface province {
 interface FormDataProps {
   inBangkok: boolean;
   province: string;
+  projects: project[];
 }
 
 interface ProjectDevelopmentData {
@@ -112,52 +127,62 @@ interface ProjectDevelopmentData {
 
 export default Vue.extend({
   name: "ProjectDevelopment",
-  components: { CoinIcon, FormDialog },
+  components: { CoinIcon, FormDialog, closeSvg },
   data(): ProjectDevelopmentData {
     return {
       dialogOpen: false,
       provinces: provincesData,
-      formData: { inBangkok: false, province: "กรุงเทพมหานคร" },
+      formData: { inBangkok: false, province: "กรุงเทพมหานคร", projects: [] },
       projectsList: [
         {
+          type: "environment",
           title: "ปรับปรุงระบบจัดการขยะ",
-          subtitle: "(มหานครปลอดภัย)",
+          subtitle: "(การพัฒนาสิ่งแวดล้อมยั่งยืน)",
         },
         {
+          type: "safe",
           title: "พัฒนาทางเท้า ทางข้าม",
-          subtitle: "(มหานครสีเขียวสะดวกสบาย)",
+          subtitle: "(การสร้างเมืองปลอดภัย)",
         },
         {
+          type: "safe",
           title: "ปรับปรุงการระบายน้ำและจัดการน้ำท่วม",
           subtitle: "(มหานครปลอดภัย)",
         },
         {
+          type: "connectivity",
           title: "จัดการการจราจรติดขัด",
-          subtitle: "(มหานครสีเขียวสะดวกสบาย)",
+          subtitle: "(การเชื่อมโยงเมืองที่มีความคล่องตัว)",
         },
         {
+          type: "safe",
           title: "ติดตั้งแสงสว่างและกล้องวงจรอย่างทั่วถึง",
-          subtitle: "(มหานครปลอดภัย)",
+          subtitle: "(การสร้างเมืองปลอดภัย)",
         },
         {
+          type: "environment",
           title: "เพิ่มพื้นที่สีเขียว",
-          subtitle: "(มหานครสีเขียวสะดวกสบาย)",
+          subtitle: "(การพัฒนาสิ่งแวดล้อมยั่งยืน)",
         },
         {
+          type: "equality",
           title: "พัฒนาระบบการศึกษา",
-          subtitle: "(มหานครสำหรับทุกคน)",
+          subtitle: "(การลดความเหลื่อมล้ำด้วยการบริหารเมือง)",
         },
         {
+          type: "democracy",
           title: "สร้างแพลตฟอร์มการมีส่วนร่วมและแสดงความคิดเห็นในการใช้งบฯ",
-          subtitle: "(มหานครประชาธิปไตย)",
+          subtitle: "(การสร้างเมืองประชาธิปไตยแบบมีส่วนร่วม)",
         },
         {
+          type: "connectivity",
           title: "จัดระเบียบผังเมืองให้เหมาะสม",
-          subtitle: "(มหานครกระชับ)",
+          subtitle: "(การเชื่อมโยงเมืองที่มีความคล่องตัว)",
         },
         {
+          type: "economic",
           title: "ฟื้นฟูสถานที่ท่องเที่ยวสำคัญ",
-          subtitle: "(มหานครแห่งเศรษฐกิจและเรียนรู้)",
+          subtitle: "(การต่อยอดความเป็นเมืองศูนย์กลางเศรษฐกิจ)",
         },
       ],
     };
@@ -168,6 +193,19 @@ export default Vue.extend({
     },
     closeDialog() {
       this.dialogOpen = false;
+    },
+    selectProjects(project: project) {
+      const max: number = 3;
+      const maxLimit = this.formData.projects.length < max;
+      const isIncluded = this.formData.projects.includes(project);
+      if (!isIncluded) {
+        if (maxLimit) this.formData.projects.push(project);
+      } else {
+        const filtered = this.formData.projects.filter(el => el !== project);
+        this.formData.projects = filtered;
+      }
+      // eslint-disable-next-line no-console
+      console.log(this.formData.projects);
     },
     setInBangkok(check: boolean) {
       this.formData.inBangkok = check;
