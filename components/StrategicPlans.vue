@@ -1,6 +1,6 @@
 <template>
-  <BoxContainer>
-    <div class="grid gap-2 grid-cols-7 relative">
+  <BoxContainer class="justify-center">
+    <div class="grid gap-2 grid-cols-7 relative max-w-5xl">
       <div class="hidden sm:block absolute left-0 right-0 h-full">
         <div class="text-center flex flex-col justify-center h-full z-0">
           <p class="wv-b3 font-bold">‘น้ำเน่าเสีย, ขยะ, ฝุ่นละออง’</p>
@@ -55,7 +55,7 @@
         <div v-show="selectedTopic === problemsIndex" class="point-up" />
       </div>
     </div>
-    <div class="max-w-7xl bg-black flex flex-col items-center justify-center p-4">
+    <div class="max-w-5xl bg-black flex flex-col items-center justify-center p-4">
       <div class="text-white text-center pb-4">
         <p class="wv-h6">การสร้างเมืองปลอดภัย</p>
         <p class="wv-b6">ประกอบด้วย 4 มิติย่อย</p>
