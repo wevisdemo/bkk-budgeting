@@ -6,11 +6,11 @@
         <div
           v-for="(project, index) in projectsList"
           :key="index"
-          class="grid gap-10 projectItem"
+          class="grid gap-10 w-full projectItem md:projectItem"
         >
           <CoinIcon :rotate="index" />
           <div
-            class="py-1 px-2 rounded text-center cursor-pointer"
+            class="py-1 px-2 rounded text-center cursor-pointer flex-grow hover:opacity-80"
             :class="
               formData.projects.includes(project)
                 ? `bg-wv-${project.type}`
@@ -33,7 +33,7 @@
         <form @submit.prevent="e => handleSubmit(e)">
           <div v-click-outside="closeDialog" class="p-4 bg-black max-w-lg">
             <button class="text-white" @click.stop="closeDialog">
-              <closeSvg />
+              <CloseSvg />
             </button>
             <div class="text-center">
               <div class="text-white">
@@ -100,7 +100,7 @@ import CoinIcon from "~/components/CoinIcon.vue";
 import FormDialog from "~/components/dialog/FormDialog.vue";
 import BoxContainer from "~/components/BoxContainer.vue";
 // @ts-ignore
-import closeSvg from "~/assets/icons/close.svg?inline";
+import CloseSvg from "~/assets/icons/close.svg?inline";
 
 import provincesData from "~/data/provinces.json";
 import { StrategyTypes } from "~/models/strategies";
@@ -130,7 +130,7 @@ interface ProjectDevelopmentData {
 
 export default Vue.extend({
   name: "ProjectDevelopment",
-  components: { CoinIcon, FormDialog, closeSvg, BoxContainer },
+  components: { CoinIcon, FormDialog, CloseSvg, BoxContainer },
   data(): ProjectDevelopmentData {
     return {
       dialogOpen: false,
@@ -224,6 +224,12 @@ export default Vue.extend({
 
 <style scoped>
 .projectItem {
-  grid-template-columns: auto 1fr auto;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: theme("screens.md")) {
+  .md\:projectItem {
+    grid-template-columns: auto 1fr auto;
+  }
 }
 </style>

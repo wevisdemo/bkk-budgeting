@@ -1,17 +1,20 @@
 <template>
-  <div
-    :style="`transform: rotate(${isEven(
-      rotate,
-    )}deg); transform-origin: center; width: fit-content;`"
-  >
-    <img src="~/assets/icons/coin.svg" alt="Development timeline" class="w-full" />
+  <div class="hidden md:block">
+    <div
+      :style="`transform: rotate(${isEven(
+        rotate,
+      )}deg); transform-origin: center; width: fit-content;`"
+      class="h-full flex justify-center items-center"
+    >
+      <img src="~/assets/icons/coin.svg" alt="Development timeline" class="w-full" />
+    </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import Vue from "vue";
 
-export default defineComponent({
+export default Vue.extend({
   name: "CoinIcon",
   props: {
     rotate: {
