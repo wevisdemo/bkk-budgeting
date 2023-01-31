@@ -1,7 +1,7 @@
 <template>
   <BoxContainer>
     <div class="text-center mx-4 pb-10">
-      <h4 class="wv-h4 font-bold pb-10">
+      <h4 class="wv-h4 wv-bold pb-10">
         เพื่อพัฒนาสู่ยุทธศาสตร์ 7 ด้าน มาดูกันว่ากรุงเทพฯ ใช้งบประมาณอย่างไร?
       </h4>
       <p>ตั้งแต่ปี 2561 - 2566 กรุงเทพฯ ใช้งบฯ รวม</p>

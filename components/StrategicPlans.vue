@@ -3,7 +3,7 @@
     <div class="grid gap-2 grid-cols-7 relative max-w-5xl">
       <div class="hidden sm:block absolute left-0 right-0 h-full">
         <div class="text-center flex flex-col justify-center h-full z-0">
-          <p class="wv-b3 font-bold">‘น้ำเน่าเสีย, ขยะ, ฝุ่นละออง’</p>
+          <p class="wv-b3 wv-bold">‘น้ำเน่าเสีย, ขยะ, ฝุ่นละออง’</p>
           <p class="wv-b3">
             เป็นเพียงส่วนหนึ่งของอีกหลายประเด็นที่กรุงเทพฯ วางแผนเพื่อแก้ไข ภายใต้
           </p>
@@ -73,7 +73,7 @@
             {{ topicIndex + 1 }}
           </div>
           <template v-for="(item, itemIndex) in topic">
-            <p :key="itemIndex" class="text-black font-bold">{{ item }}</p>
+            <p :key="itemIndex" class="text-black wv-bold">{{ item }}</p>
           </template>
         </div>
       </div>

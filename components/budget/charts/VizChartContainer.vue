@@ -1,7 +1,7 @@
 <template>
   <div class="bg-white p-8 rounded-lg">
     <div class="flex justify-between w-full">
-      <h5 class="wv-h5 font-bold">{{ title }}</h5>
+      <h5 class="wv-h5 wv-bold">{{ title }}</h5>
       <button
         class="flex bg-wv-gray-3 text-wv-gray-5 rounded-full border-2 h-min"
         @click="handleChartMode"

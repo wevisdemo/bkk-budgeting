@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen wv-font-anuphan wv-b5">
+  <div class="min-h-screen wv-kondolar wv-b5">
     <WvNavbar class="z-20" :dark="true">
       <NuxtLink v-for="{ label, path } in routes" :key="path" :to="path">
         <WvNavButton :active="path === $route.path" :dark="true">{{

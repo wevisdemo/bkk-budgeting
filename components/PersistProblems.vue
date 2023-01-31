@@ -3,7 +3,7 @@
     <div class="wv-h8 sm:pb-12 text-center hidden sm:block">
       {{ title }}
     </div>
-    <div class="wv-h5 sm:pb-12 text-center block sm:hidden wv-font-bold">
+    <div class="wv-h5 sm:pb-12 text-center block sm:hidden wv-bold">
       {{ title }}
     </div>
     <!-- <p class="block sm:hidden text-center">เลือกได้ 1 ข้อ</p> -->
@@ -19,7 +19,7 @@
           :src="`${$config.path.images}/persistent-problems/${item.img}.png`"
           :alt="item.title"
         />
-        <p class="wv-b4 wv-font-bold">{{ item.title }}</p>
+        <p class="wv-b4 wv-bold">{{ item.title }}</p>
       </div>
     </div>
     <!-- bottom -->
@@ -34,7 +34,7 @@
           :src="`${$config.path.images}/persistent-problems/${item.img}.png`"
           :alt="item.title"
         />
-        <p class="wv-b4 wv-font-bold">{{ item.title }}</p>
+        <p class="wv-b4 wv-bold">{{ item.title }}</p>
       </div>
     </div>
   </BoxContainer>

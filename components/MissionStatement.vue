@@ -13,7 +13,7 @@
               ก็ควรได้ร่วมออกแบบการใช้งบประมาณของเมือง
               เพื่อสร้างเมืองในแบบที่เราต้องการได้
             </p>
-            <p class="wv-b3 text-center sm:text-wv-green font-bold">
+            <p class="wv-b3 text-center sm:text-wv-green wv-bold">
               ถ้างั้นขอชวนมาลองเริ่มต้นที่เมืองหลวงอย่างกรุงเทพมหานครกันก่อนเลย!!
             </p>
           </div>

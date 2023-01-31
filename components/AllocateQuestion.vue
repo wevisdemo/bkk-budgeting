@@ -7,13 +7,13 @@
         ในปีต่อๆไป
         <br />
         กรุงเทพมหานครยังคงมุ่งพัฒนาและขับเคลื่อน
-        <span class="wv-font-bold">“ยุทธศาสตร์ทั้ง 7 ด้าน”</span>
+        <span class="wv-bold">“ยุทธศาสตร์ทั้ง 7 ด้าน”</span>
         ให้เกิดขึ้นต่อไป
       </p>
       <p class="wv-b3">
         ถ้าบางส่วนของงบฯ ที่คุณมีส่วนช่วยตัดสินใจให้ถูกใช้อย่างตรงจุดได้
       </p>
-      <p class="wv-b3 wv-font-bold">คุณคิดว่าควรนำไปพัฒนากับเรื่องอะไรบ้าง?</p>
+      <p class="wv-b3 wv-bold">คุณคิดว่าควรนำไปพัฒนากับเรื่องอะไรบ้าง?</p>
     </div>
     <div
       class="flex justify-center absolute bottom-0 sm:bottom-[-50px] left-0 right-0 -mb-60"
