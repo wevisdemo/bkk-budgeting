@@ -8,7 +8,8 @@
       </NuxtLink>
     </WvNavbar>
     <Nuxt />
-    <WvFooter :dark="true" />
+    <WvFooter v-if="!isAboutFooter()" :dark="true" />
+    <AboutFooter v-if="isAboutFooter()" />
   </div>
 </template>
 
@@ -21,8 +22,9 @@ import WvFooter from "@wevisdemo/ui/vue2/footer";
 import WvNavButton from "@wevisdemo/ui/vue2/nav-button";
 
 import Vue from "vue";
+import AboutFooter from "~/components/AboutFooter.vue";
 export default Vue.extend({
-  components: { WvNavbar, WvFooter, WvNavButton },
+  components: { WvNavbar, WvFooter, WvNavButton, AboutFooter },
   data() {
     return {
       routes: [
@@ -31,7 +33,14 @@ export default Vue.extend({
         { label: "Vote", path: "/vote" },
         { label: "About", path: "/about" },
       ],
+      footerComponent: "AboutFooter",
     };
+  },
+  methods: {
+    isAboutFooter() {
+      const routeName = this.$route.name;
+      return routeName === "about";
+    },
   },
 });
 </script>
