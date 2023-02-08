@@ -13,7 +13,7 @@
       <div
         v-for="(item, problemsIndex) in problems"
         :key="`${item.strategy}-problemsIndex`"
-        class="sm:h-[500px] flex flex-col justify-between items-center z-50"
+        class="sm:h-[500px] flex flex-col justify-between items-center z-30"
         @mouseover="(onHoverImg = problemsIndex), (selectedTopic = problemsIndex)"
       >
         <img

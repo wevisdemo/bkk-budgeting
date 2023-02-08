@@ -1,7 +1,7 @@
 <template>
   <div class="grid relative mb-[15rem] sm:mb-[18rem] justify-center">
     <div
-      class="bg-wv-green rounded-full p-10 sm:p-20 flex flex-col items-center justify-center gap-4 aspect-square w-[112vw] h-[112vw] sm:w-[580px] sm:h-[580px] text-center z-50"
+      class="bg-wv-green rounded-full p-10 sm:p-20 flex flex-col items-center justify-center gap-4 aspect-square w-[112vw] h-[112vw] sm:w-[580px] sm:h-[580px] text-center z-30"
     >
       <p class="wv-h8">
         ในปีต่อๆไป

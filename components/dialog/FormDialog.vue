@@ -1,6 +1,6 @@
 <template>
   <div
-    class="fixed w-full h-full left-0 right-0 top-0 bottom-0 flex justify-center items-center z-50 bg-dialog"
+    class="fixed w-full h-full left-0 right-0 top-0 bottom-0 flex justify-center items-center z-40 bg-dialog"
   >
     <slot />
   </div>
