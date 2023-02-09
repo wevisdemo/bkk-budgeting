@@ -1,19 +1,20 @@
 <template>
-  <BoxContainer class="justify-center">
-    <div class="grid gap-2 grid-cols-7 relative max-w-5xl">
-      <div class="hidden sm:block absolute left-0 right-0 h-full">
-        <div class="text-center flex flex-col justify-center h-full z-0">
-          <p class="wv-b3 wv-bold">‘น้ำเน่าเสีย, ขยะ, ฝุ่นละออง’</p>
-          <p class="wv-b3">
-            เป็นเพียงส่วนหนึ่งของอีกหลายประเด็นที่กรุงเทพฯ วางแผนเพื่อแก้ไข ภายใต้
-          </p>
-          <p class="wv-h8 font-extrabold">แผนยุทธศาสตร์ 7 ด้าน</p>
-        </div>
+  <BoxContainer>
+    <div class="hidden sm:block h-full pb-6">
+      <div class="text-center flex flex-col justify-center h-full z-0">
+        <p class="wv-b3">
+          เป็นเพียงส่วนหนึ่งของอีกหลายประเด็นที่กรุงเทพฯ วางแผนเพื่อแก้ไข ภายใต้
+        </p>
+        <p class="wv-h8 font-extrabold">แผนยุทธศาสตร์ 7 ด้าน</p>
       </div>
+    </div>
+    <div
+      class="flex gap-2 sm:gap-6 md:gap-12 grid-cols-7 relative justify-center w-full"
+    >
       <div
         v-for="(item, problemsIndex) in problems"
         :key="`${item.strategy}-problemsIndex`"
-        class="sm:h-[500px] flex flex-col justify-between items-center z-30"
+        class="sm:h-[260px] flex flex-col justify-between items-center z-30"
         @mouseover="(onHoverImg = problemsIndex), (selectedTopic = problemsIndex)"
       >
         <img
@@ -29,11 +30,11 @@
         <div class="flex-1">
           <div class="arrow">
             <div
-              class="h-10 sm:h-72 border-2"
+              class="h-14 border-2"
               :class="[
                 selectedTopic === problemsIndex
                   ? `border-solid`
-                  : `border-dotted opacity-50`,
+                  : `border-dashed opacity-50`,
                 `border-wv-${item.strategy}`,
               ]"
             />
@@ -41,38 +42,39 @@
               class="point-down"
               :class="[
                 `border-t-wv-${item.strategy}`,
-                selectedTopic === problemsIndex ? 'opacity-100' : 'opacity-50',
+                selectedTopic === problemsIndex ? 'opacity-100' : 'opacity-80',
               ]"
             />
           </div>
         </div>
         <img
           :id="problemsIndex.toString()"
-          class="w-20 h-auto"
+          class="w-20 h-28"
           :src="setImageHover(item.icon, problemsIndex)"
           :alt="item.title"
         />
         <div v-show="selectedTopic === problemsIndex" class="point-up" />
       </div>
     </div>
-    <div class="max-w-5xl bg-black flex flex-col items-center justify-center p-4">
-      <div class="text-white text-center pb-4">
-        <p class="wv-h6">การสร้างเมืองปลอดภัย</p>
-        <p class="wv-b6">ประกอบด้วย 4 มิติย่อย</p>
+    <div class="bg-white flex flex-col items-center justify-center p-4 w-full">
+      <div class="text-center pb-4">
+        <p class="wv-b6">ยุทธศาสตร์ด้าน</p>
+        <p class="wv-h8 wv-bold">การสร้างเมืองปลอดภัย</p>
+        <p class="wv-b6">ประกอบด้วย {{ allTopics[selectedTopic].length }} มิติย่อย</p>
       </div>
-      <div class="grid grid-cols-4 gap-4">
+      <div class="grid grid-cols-4 divide-x w-full">
         <div
-          v-for="(topic, topicIndex) in allTopics[selectedTopic]"
+          v-for="(topics, topicIndex) in allTopics[selectedTopic]"
           :key="topicIndex"
           style="background-color: white"
-          class="flex flex-col items-center grid-rows-[repeat(2,_min-content)] gap-1 text-center p-4 min-h-[200px]"
+          class="flex flex-col items-center grid-rows-[repeat(2,_min-content)] gap-1 text-center p-4 min-h-[200px] w-full"
         >
           <div
             class="bg-wv-blue text-white w-5 h-5 rounded-full flex items-center justify-center"
           >
             {{ topicIndex + 1 }}
           </div>
-          <template v-for="(item, itemIndex) in topic">
+          <template v-for="(item, itemIndex) in topics.topic">
             <p :key="itemIndex" class="text-black wv-bold">{{ item }}</p>
           </template>
         </div>
@@ -108,10 +110,19 @@ export default Vue.extend({
     },
     allTopics() {
       const topics = problemsData.map(item => {
-        return item.topic;
+        return item.topics;
       });
 
       return topics;
+    },
+    currentHoveredImage() {
+      return this.$store.state.currentImage;
+    },
+  },
+  watch: {
+    currentHoveredImage(newCount) {
+      this.selectedTopic = newCount;
+      this.onHoverImg = newCount;
     },
   },
   methods: {
@@ -132,10 +143,6 @@ export default Vue.extend({
   @apply relative flex justify-center;
 }
 
-.line {
-  height: calc(100% - 10px);
-}
-
 .point-down {
   width: 0;
   height: 0;
@@ -153,7 +160,7 @@ export default Vue.extend({
   border-right: 18px solid transparent;
   border-bottom-width: 22px;
   border-bottom-style: solid;
-  border-bottom-color: black;
+  border-bottom-color: white;
   @apply absolute -bottom-5;
 }
 </style>
