@@ -68,17 +68,17 @@
         <div
           v-for="(strategy, strategyIndex) in allStrategies[selectedStrategy]"
           :key="strategyIndex"
-          class="flex flex-col grid-rows-[repeat(2,_min-content)] gap- p-4 min-h-[200px] w-full bg-white"
+          class="flex flex-col grid-rows-[repeat(2,_min-content)] gap-4 p-4 min-h-[200px] w-full bg-white"
         >
-          <div class="flex justify-center w-full">
+          <div class="flex flex-col items-center justify-center w-full gap-1">
             <div
-              class="text-white w-5 h-5 rounded-full flex items-center justify-center"
+              class="text-white w-5 h-5 rounded-full flex justify-center wv-b6"
               :class="`bg-wv-${plans[selectedStrategy].strategy_en}`"
             >
-              {{ strategyIndex + 1 }}
+              <span>{{ strategyIndex + 1 }}</span>
             </div>
+            <p class="wv-b5 wv-bold text-center">{{ strategy.sub_strategy }}</p>
           </div>
-          <p class="wv-b5 wv-bold text-center">{{ strategy.sub_strategy }}</p>
           <p v-if="strategy.sample" class="wv-b6 wv-bold text-wv-gray-1">
             {{ strategy.sample }} <br />
             อยู่ในมิตินี้
