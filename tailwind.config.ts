@@ -11,6 +11,7 @@ export default <Partial<Config>>{
     extend: {
       textColor: {
         "wv-green": "#4CC35D",
+        "wv-gray-1": "#737373",
         "wv-gray-3": "#DDDDDD",
         "wv-gray-5": "#858585",
       },
@@ -23,7 +24,7 @@ export default <Partial<Config>>{
         "wv-gray-4": "#F3F3F3",
         "wv-safe": "#3277FF",
         "wv-environment": "#BACB37",
-        "wv-connectivity": "#FFC2F1",
+        "wv-connectivity": "#FF9FDF",
         "wv-democracy": "#FF7A00",
         "wv-management": "#C462F2",
         "wv-economic": "#FFB800",
@@ -33,7 +34,7 @@ export default <Partial<Config>>{
         "wv-green": "#4CC35D",
         "wv-safe": "#3277FF",
         "wv-environment": "#BACB37",
-        "wv-connectivity": "#FFC2F1",
+        "wv-connectivity": "#FF9FDF",
         "wv-democracy": "#FF7A00",
         "wv-management": "#C462F2",
         "wv-economic": "#FFB800",
