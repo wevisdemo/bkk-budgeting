@@ -1,10 +1,10 @@
-import { GetterTree, ActionTree, MutationTree, Store } from "vuex";
+import { GetterTree, ActionTree, MutationTree } from "vuex";
 
-export interface S {
+export interface State {
   currentImage: number;
 }
 
-export const state = (): S => ({
+export const state = (): State => ({
   currentImage: 0,
 });
 
@@ -19,11 +19,3 @@ export const mutations: MutationTree<RootState> = {
 };
 
 export const actions: ActionTree<RootState, RootState> = {};
-
-declare module "vuex" {
-  // Declare your own store states.
-
-  interface StoreOptions<S> {
-    $store: Store<S>;
-  }
-}
