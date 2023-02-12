@@ -56,42 +56,56 @@
         <div v-show="selectedStrategy === planIndex" class="point-up" />
       </div>
     </div>
+    <!-- strategy -->
     <div class="bg-white flex flex-col items-center justify-center p-4 w-full">
       <div class="text-center pb-4">
         <p class="wv-b6">ยุทธศาสตร์ด้าน</p>
         <p class="wv-h8 wv-bold">การสร้างเมืองปลอดภัย</p>
-        <p class="wv-b6">
+        <p class="hidden sm:block wv-b6">
           ประกอบด้วย {{ allStrategies[selectedStrategy].length }} มิติย่อย
         </p>
+        <p class="block sm:hidden">ประกอบด้วย 5 มิติย่อย (กด + เพื่ออ่านคำอธิบาย)</p>
       </div>
-      <div class="flex divide-x w-full">
+      <!-- desktop -->
+      <div class="hidden sm:block">
+        <div class="flex divide-x w-full">
+          <div
+            v-for="(strategy, strategyIndex) in allStrategies[selectedStrategy]"
+            :key="strategyIndex"
+            class="flex flex-col grid-rows-[repeat(2,_min-content)] gap-4 p-4 min-h-[200px] w-full bg-white"
+          >
+            <div class="flex flex-col items-center justify-center w-full gap-1">
+              <div
+                class="text-white w-5 h-5 rounded-full flex justify-center wv-b6"
+                :class="`bg-wv-${plans[selectedStrategy].strategy_en}`"
+              >
+                <span>{{ strategyIndex + 1 }}</span>
+              </div>
+              <p class="wv-b5 wv-bold text-center">{{ strategy.sub_strategy }}</p>
+            </div>
+            <p v-if="strategy.sample" class="wv-b6 wv-bold text-wv-gray-1">
+              {{ strategy.sample }} <br />
+              อยู่ในมิตินี้
+            </p>
+            <ul>
+              <li
+                v-for="(item, itemIndex) in strategy.sub_srategy_def"
+                :key="itemIndex"
+                class="wv-b5 text-black list-disc list-inside"
+              >
+                {{ item }}
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="block sm:hidden">
         <div
           v-for="(strategy, strategyIndex) in allStrategies[selectedStrategy]"
           :key="strategyIndex"
-          class="flex flex-col grid-rows-[repeat(2,_min-content)] gap-4 p-4 min-h-[200px] w-full bg-white"
+          class="flex flex-col w-full bg-white"
         >
-          <div class="flex flex-col items-center justify-center w-full gap-1">
-            <div
-              class="text-white w-5 h-5 rounded-full flex justify-center wv-b6"
-              :class="`bg-wv-${plans[selectedStrategy].strategy_en}`"
-            >
-              <span>{{ strategyIndex + 1 }}</span>
-            </div>
-            <p class="wv-b5 wv-bold text-center">{{ strategy.sub_strategy }}</p>
-          </div>
-          <p v-if="strategy.sample" class="wv-b6 wv-bold text-wv-gray-1">
-            {{ strategy.sample }} <br />
-            อยู่ในมิตินี้
-          </p>
-          <ul>
-            <li
-              v-for="(item, itemIndex) in strategy.sub_srategy_def"
-              :key="itemIndex"
-              class="wv-b5 text-black list-disc list-inside"
-            >
-              {{ item }}
-            </li>
-          </ul>
+          <div>{{ strategy.sub_strategy }}</div>
         </div>
       </div>
     </div>
