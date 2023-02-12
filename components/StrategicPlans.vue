@@ -12,71 +12,86 @@
       class="flex gap-2 sm:gap-6 md:gap-12 grid-cols-7 relative justify-center w-full"
     >
       <div
-        v-for="(item, problemsIndex) in problems"
-        :key="`${item.strategy}-problemsIndex`"
+        v-for="(item, planIndex) in plans"
+        :key="`${item.strategy_en}-problemsIndex`"
         class="sm:h-[260px] flex flex-col justify-between items-center z-30"
-        @mouseover="(onHoverImg = problemsIndex), (selectedTopic = problemsIndex)"
+        @mouseover="(onHoverImg = planIndex), (selectedStrategy = planIndex)"
       >
         <img
           class="w-20"
           :class="
-            selectedTopic === problemsIndex
+            selectedStrategy === planIndex
               ? `border border-solid border-black rounded-full`
               : `opacity-50`
           "
           :src="`${$config.path.images}/persistent-problems/${item.img}.png`"
-          :alt="item.title"
+          :alt="item.strategy"
         />
         <div class="flex-1">
           <div class="arrow">
             <div
               class="h-14 border-2"
               :class="[
-                selectedTopic === problemsIndex
+                selectedStrategy === planIndex
                   ? `border-solid`
                   : `border-dashed opacity-50`,
-                `border-wv-${item.strategy}`,
+                `border-wv-${item.strategy_en}`,
               ]"
             />
             <div
               class="point-down"
               :class="[
-                `border-t-wv-${item.strategy}`,
-                selectedTopic === problemsIndex ? 'opacity-100' : 'opacity-80',
+                `border-t-wv-${item.strategy_en}`,
+                selectedStrategy === planIndex ? 'opacity-100' : 'opacity-80',
               ]"
             />
           </div>
         </div>
         <img
-          :id="problemsIndex.toString()"
+          :id="planIndex.toString()"
           class="w-20 h-28"
-          :src="setImageHover(item.icon, problemsIndex)"
-          :alt="item.title"
+          :src="setImageHover(item.icon, planIndex)"
+          :alt="item.strategy"
         />
-        <div v-show="selectedTopic === problemsIndex" class="point-up" />
+        <div v-show="selectedStrategy === planIndex" class="point-up" />
       </div>
     </div>
     <div class="bg-white flex flex-col items-center justify-center p-4 w-full">
       <div class="text-center pb-4">
         <p class="wv-b6">ยุทธศาสตร์ด้าน</p>
         <p class="wv-h8 wv-bold">การสร้างเมืองปลอดภัย</p>
-        <p class="wv-b6">ประกอบด้วย {{ allTopics[selectedTopic].length }} มิติย่อย</p>
+        <p class="wv-b6">
+          ประกอบด้วย {{ allStrategies[selectedStrategy].length }} มิติย่อย
+        </p>
       </div>
-      <div class="grid grid-cols-4 divide-x w-full">
+      <div class="flex divide-x w-full">
         <div
-          v-for="(topics, topicIndex) in allTopics[selectedTopic]"
-          :key="topicIndex"
-          style="background-color: white"
-          class="flex flex-col items-center grid-rows-[repeat(2,_min-content)] gap-1 text-center p-4 min-h-[200px] w-full"
+          v-for="(strategy, strategyIndex) in allStrategies[selectedStrategy]"
+          :key="strategyIndex"
+          class="flex flex-col grid-rows-[repeat(2,_min-content)] gap- p-4 min-h-[200px] w-full bg-white"
         >
-          <div
-            class="bg-wv-blue text-white w-5 h-5 rounded-full flex items-center justify-center"
-          >
-            {{ topicIndex + 1 }}
+          <div class="flex justify-center w-full">
+            <div
+              class="text-white w-5 h-5 rounded-full flex items-center justify-center"
+              :class="`bg-wv-${plans[selectedStrategy].strategy_en}`"
+            >
+              {{ strategyIndex + 1 }}
+            </div>
           </div>
-          <template v-for="(item, itemIndex) in topics.topic">
-            <p :key="itemIndex" class="text-black wv-bold">{{ item }}</p>
-          </template>
+          <p class="wv-b5 wv-bold text-center">{{ strategy.sub_strategy }}</p>
+          <p v-if="strategy.sample" class="wv-b6 wv-bold text-wv-gray-1">
+            {{ strategy.sample }} <br />
+            อยู่ในมิตินี้
+          </p>
+          <ul>
+            <li
+              v-for="(item, itemIndex) in strategy.sub_srategy_def"
+              :key="itemIndex"
+              class="wv-b5 text-black list-disc list-inside"
+            >
+              {{ item }}
+            </li>
+          </ul>
         </div>
       </div>
     </div>
@@ -86,11 +101,11 @@
 <script lang="ts">
 import Vue from "vue";
 import BoxContainer from "~/components/BoxContainer.vue";
-import { problemsData } from "~/data/problems-data";
+import { planData } from "~/data/plan-data";
 
 interface StrategeicPlansData {
   onHoverImg: number | null;
-  selectedTopic: number;
+  selectedStrategy: number;
   strategicIcon: string;
 }
 
@@ -100,20 +115,18 @@ export default Vue.extend({
   data(): StrategeicPlansData {
     return {
       onHoverImg: null,
-      selectedTopic: 0,
+      selectedStrategy: 0,
       strategicIcon: "",
     };
   },
   computed: {
-    problems() {
-      return problemsData;
+    plans() {
+      return planData;
     },
-    allTopics() {
-      const topics = problemsData.map(item => {
-        return item.topics;
+    allStrategies() {
+      return planData.map(item => {
+        return item.strategies;
       });
-
-      return topics;
     },
     currentHoveredImage() {
       return this.$store.state.currentImage;
@@ -121,7 +134,7 @@ export default Vue.extend({
   },
   watch: {
     currentHoveredImage(newCount) {
-      this.selectedTopic = newCount;
+      this.selectedStrategy = newCount;
       this.onHoverImg = newCount;
     },
   },
@@ -138,6 +151,10 @@ export default Vue.extend({
 </script>
 
 <style lang="scss">
+.grid-cols-auto {
+  grid-auto-columns: auto;
+}
+
 .arrow {
   height: 100%;
   @apply relative flex justify-center;
