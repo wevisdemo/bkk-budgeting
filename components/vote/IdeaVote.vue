@@ -1,51 +1,48 @@
 <template>
-  <div class="bg-white">
-    <!-- class="flex flex-col gap-2 items-center   w-full" -->
-    <BoxContainer class="justify-center text-center">
-      <div class="max-w-3xl">
-        <p class="wv-h8">ไอเดียโดนใจของผู้ที่ใช้แพลตฟอร์มนี้</p>
-        <div class="flex justify-center">
-          <p class="wv-b5">ที่อยู่ใน</p>
-          <div class="ml-2">
-            <select
-              id="district"
-              name="district"
-              class="border border-black rounded-sm px-2 py-1 min-w-[220px]"
-            >
-              <option
-                v-for="(district, districtIndex) in districts"
-                :key="districtIndex"
-                :value="district"
-              >
-                {{ district }}
-              </option>
-            </select>
-          </div>
-        </div>
-        <p class="wv-b5">ทั้งหมด <strong>xx,xxxx</strong> คน</p>
-        <div class="flex flex-col gap-2 w-full my-4">
-          <div v-for="(vote, voteIndex) in ideaVotes" :key="`voteIndex-${voteIndex}`">
-            <VoteProgress :strategy-vote="vote" :bg-color="`bg-wv-${vote.type}`" />
-          </div>
-        </div>
-        <div class="flex flex-wrap items-center gap-2">
-          <div
-            v-for="({ title, type }, strategyLegendIndex) in strategyLegend"
-            :key="`strategyLegendIndex-${strategyLegendIndex}`"
-            class="flex items-center gap-1"
+  <BoxContainer class="justify-center text-center">
+    <div class="max-w-3xl">
+      <p class="wv-h8">ไอเดียโดนใจของผู้ที่ใช้แพลตฟอร์มนี้</p>
+      <div class="flex justify-center">
+        <p class="wv-b5">ที่อยู่ใน</p>
+        <div class="ml-2">
+          <select
+            id="district"
+            name="district"
+            class="border border-black rounded-sm px-2 py-1 min-w-[220px]"
           >
-            <div :class="`w-4 h-4 rounded bg-wv-${type}`" />
-            <p class="wv-b6">{{ title }}</p>
-          </div>
-        </div>
-        <div class="flex justify-center py-4">
-          <button class="border border-black rounded p-3" @click="openDialog">
-            เสนอไอเดียเพิ่มเติม
-          </button>
+            <option
+              v-for="(district, districtIndex) in districts"
+              :key="districtIndex"
+              :value="district"
+            >
+              {{ district }}
+            </option>
+          </select>
         </div>
       </div>
-    </BoxContainer>
-  </div>
+      <p class="wv-b5">ทั้งหมด <strong>xx,xxxx</strong> คน</p>
+      <div class="flex flex-col gap-2 w-full my-4">
+        <div v-for="(vote, voteIndex) in ideaVotes" :key="`voteIndex-${voteIndex}`">
+          <VoteProgress :strategy-vote="vote" :bg-color="`bg-wv-${vote.type}`" />
+        </div>
+      </div>
+      <div class="flex flex-wrap items-center gap-2">
+        <div
+          v-for="({ title, type }, strategyLegendIndex) in strategyLegend"
+          :key="`strategyLegendIndex-${strategyLegendIndex}`"
+          class="flex items-center gap-1"
+        >
+          <div :class="`w-4 h-4 rounded bg-wv-${type}`" />
+          <p class="wv-b6">{{ title }}</p>
+        </div>
+      </div>
+      <div class="flex justify-center py-4">
+        <button class="border border-black rounded p-3" @click="openDialog">
+          เสนอไอเดียเพิ่มเติม
+        </button>
+      </div>
+    </div>
+  </BoxContainer>
 </template>
 
 <script lang="ts">

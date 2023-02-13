@@ -1,97 +1,93 @@
 <template>
-  <div class="bg-white">
-    <BoxContainer class="pb-8 sm:py-10 md:py-14 sm:px-10 md:px-32">
-      <p class="wv-h8 text-center">เลือกโครงการที่อยากพัฒนา เลือกได้ 3 โครงการ</p>
-      <div class="grid gap-4">
+  <BoxContainer class="pb-8 sm:py-10 md:py-14 sm:px-10 md:px-32">
+    <p class="wv-h8 text-center">เลือกโครงการที่อยากพัฒนา เลือกได้ 3 โครงการ</p>
+    <div class="grid gap-4">
+      <div
+        v-for="(project, index) in projectsList"
+        :key="index"
+        class="grid gap-10 w-full projectItem md:projectItem"
+      >
+        <CoinIcon :rotate="index" />
         <div
-          v-for="(project, index) in projectsList"
-          :key="index"
-          class="grid gap-10 w-full projectItem md:projectItem"
+          class="py-1 px-2 rounded text-center cursor-pointer flex-grow hover:opacity-80"
+          :class="
+            formData.projects.includes(project) ? `bg-wv-${project.type}` : `bg-white`
+          "
+          @click="selectProjects(project)"
         >
-          <CoinIcon :rotate="index" />
-          <div
-            class="py-1 px-2 rounded text-center cursor-pointer flex-grow hover:opacity-80"
-            :class="
-              formData.projects.includes(project)
-                ? `bg-wv-${project.type}`
-                : `bg-wv-gray-3`
-            "
-            @click="selectProjects(project)"
-          >
-            <p class="wv-b3">{{ project.title }}</p>
-            <p class="wv-b3">{{ project.subtitle }}</p>
-          </div>
-          <CoinIcon :rotate="index + 1" />
+          <p class="wv-b3">{{ project.title }}</p>
+          <p class="wv-b3">{{ project.subtitle }}</p>
         </div>
-        <div class="flex justify-center py-4">
-          <button class="border border-black rounded p-3" @click.stop="openDialog">
-            ส่งความคิดเห็น
-          </button>
-        </div>
+        <CoinIcon :rotate="index + 1" />
       </div>
-      <FormDialog v-if="dialogOpen">
-        <form @submit.prevent="e => handleSubmit(e)">
-          <div v-click-outside="closeDialog" class="p-4 bg-black max-w-lg">
-            <button class="text-white" @click.stop="closeDialog">
-              <CloseSvg />
-            </button>
-            <div class="text-center">
-              <div class="text-white">
-                <p class="wv-b3">
-                  ขอสอบถามสั้นๆเกี่ยวกับคุณ ก่อนเข้าไปร่วมแสดงความคิดเห็น
-                </p>
-                <p class="wv-b6 font-thin">
-                  คำตอบของคุณจะใช้เพื่อการประมวลผลข้อมูลบนแพลตฟอร์มนี้และรวบรวมเพื่อ
-                  ยื่นต่อผู้ว่าราชการจังหวัดกรุงเทพมหานครและหน่วยงานที่เกี่ยวข้องต่อไป
-                </p>
-                <p class="wv-b6 font-thin">
-                  คุณใช้ชีวิตอยู่ในกรุงเทพมหานครหรือไม่? (เรียน/ทำงาน/พักอาศัย)
-                </p>
+      <div class="flex justify-center py-4">
+        <button class="border border-black rounded p-3" @click.stop="openDialog">
+          ส่งความคิดเห็น
+        </button>
+      </div>
+    </div>
+    <FormDialog v-if="dialogOpen">
+      <form @submit.prevent="e => handleSubmit(e)">
+        <div v-click-outside="closeDialog" class="p-4 bg-black max-w-lg">
+          <button class="text-white" @click.stop="closeDialog">
+            <CloseSvg />
+          </button>
+          <div class="text-center">
+            <div class="text-white">
+              <p class="wv-b3">
+                ขอสอบถามสั้นๆเกี่ยวกับคุณ ก่อนเข้าไปร่วมแสดงความคิดเห็น
+              </p>
+              <p class="wv-b6 font-thin">
+                คำตอบของคุณจะใช้เพื่อการประมวลผลข้อมูลบนแพลตฟอร์มนี้และรวบรวมเพื่อ
+                ยื่นต่อผู้ว่าราชการจังหวัดกรุงเทพมหานครและหน่วยงานที่เกี่ยวข้องต่อไป
+              </p>
+              <p class="wv-b6 font-thin">
+                คุณใช้ชีวิตอยู่ในกรุงเทพมหานครหรือไม่? (เรียน/ทำงาน/พักอาศัย)
+              </p>
+            </div>
+            <div class="flex gap-4 justify-center pb-4">
+              <div
+                class="bg-white text-black px-2 py-1 min-w-[50px] rounded-sm cursor-pointer"
+                role="button"
+                @click="() => setInBangkok(true)"
+              >
+                ใช่
               </div>
-              <div class="flex gap-4 justify-center pb-4">
-                <div
-                  class="bg-white text-black px-2 py-1 min-w-[50px] rounded-sm cursor-pointer"
-                  role="button"
-                  @click="() => setInBangkok(true)"
-                >
-                  ใช่
-                </div>
-                <div
-                  class="bg-white text-black px-2 py-1 min-w-[50px] rounded-sm cursor-pointer"
-                  role="button"
-                  @click="() => setInBangkok(false)"
-                >
-                  ไม่ใช่
-                </div>
-              </div>
-              <p class="wv-b6 text-white">คุณอยู่จังหวัดไหน?</p>
-              <div>
-                <select
-                  id="province"
-                  v-model="formData.province"
-                  name="province"
-                  class="rounded-sm px-2 py-1"
-                >
-                  <option
-                    v-for="(province, provIndex) in provinces"
-                    :key="provIndex"
-                    :value="province.province_name"
-                  >
-                    {{ province.province_name }}
-                  </option>
-                </select>
-              </div>
-              <div class="pt-6">
-                <button class="bg-white text-black px-2 py-1 rounded-sm" type="submit">
-                  ยืนยัน
-                </button>
+              <div
+                class="bg-white text-black px-2 py-1 min-w-[50px] rounded-sm cursor-pointer"
+                role="button"
+                @click="() => setInBangkok(false)"
+              >
+                ไม่ใช่
               </div>
             </div>
+            <p class="wv-b6 text-white">คุณอยู่จังหวัดไหน?</p>
+            <div>
+              <select
+                id="province"
+                v-model="formData.province"
+                name="province"
+                class="rounded-sm px-2 py-1"
+              >
+                <option
+                  v-for="(province, provIndex) in provinces"
+                  :key="provIndex"
+                  :value="province.province_name"
+                >
+                  {{ province.province_name }}
+                </option>
+              </select>
+            </div>
+            <div class="pt-6">
+              <button class="bg-white text-black px-2 py-1 rounded-sm" type="submit">
+                ยืนยัน
+              </button>
+            </div>
           </div>
-        </form>
-      </FormDialog>
-    </BoxContainer>
-  </div>
+        </div>
+      </form>
+    </FormDialog>
+  </BoxContainer>
 </template>
 
 <script lang="ts">
