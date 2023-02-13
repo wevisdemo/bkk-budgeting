@@ -4,6 +4,12 @@
     @chart="state => handleChartMode(state)"
   >
     <div>{{ isPercentage ? "Percentage Mode" : "Value Mode" }}</div>
+    <NuxtLink
+      :to="{ path: 'explore', query: { select: 'YearlyBudget' } }"
+      class="py-[5px] px-[10px] rounded border-wv-gray-1 border text-wv-gray-1 w-fit ml-auto cursor-pointer"
+    >
+      สำรวจงบยุทธศาสตร์รายปีเพิ่มเติม
+    </NuxtLink>
   </VizChart>
 </template>
 
