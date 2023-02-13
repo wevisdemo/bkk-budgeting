@@ -1,11 +1,36 @@
 <template>
   <BoxContainer>
-    <div class="text-center mx-4 pb-10">
-      <h4 class="wv-h4 wv-bold pb-10">
-        เพื่อพัฒนาสู่ยุทธศาสตร์ 7 ด้าน มาดูกันว่ากรุงเทพฯ ใช้งบประมาณอย่างไร?
-      </h4>
-      <p>ตั้งแต่ปี 2561 - 2566 กรุงเทพฯ ใช้งบฯ รวม</p>
-      <h5 class="wv-h5">x,xxx,xxx ล้านบาท</h5>
+    <div class="flex flex-col gap-16 relative -mx-14 sm:mx-4">
+      <div class="flex justify-center items-center w-full text-center">
+        <img
+          src="~/assets/illustrations/budgetplans.svg"
+          alt="Budget plan"
+          width="100%"
+          height="auto"
+          class="max-w-[600px]"
+        />
+        <div class="absolute max-w-lg p-16 sm:p-8">
+          <h4 class="wv-h4 wv-bold">
+            เพื่อพัฒนาสู่ยุทธศาสตร์ 7 ด้าน มาดูกันว่ากรุงเทพฯ ใช้งบประมาณอย่างไร?
+          </h4>
+        </div>
+      </div>
+    </div>
+    <div
+      class="flex flex-col sm:flex-row items-center sm:items-start gap-4 max-w-xl m-auto text-center sm:text-left mb-10"
+    >
+      <img
+        src="~/assets/illustrations/budgetfolder.svg"
+        width="100%"
+        height="auto"
+        alt="Budget folder"
+        class="max-w-[100px] sm:max-w-[130px]"
+      />
+      <p>
+        <strong>หมายเหตุ :</strong> งบที่ใช้ตามแผนยุทธศาสตร์ ไม่ใช่งบทั้งหมดของกรุงเทพฯ
+        แต่เราโฟกัสเฉพาะส่วนนี้
+        เพราะเกี่ยวข้องกับการให้บริการประชาชนและประชาชนมีส่วนร่วมได้มากที่สุด
+      </p>
     </div>
     <div class="grid gap-8">
       <YearlyBudgetVue />
@@ -24,7 +49,12 @@ import YearlyBudgetVue from "~/components/budget/charts/YearlyBudget.vue";
 
 export default Vue.extend({
   name: "BudgetPlans",
-  components: { BoxContainer, YearlyBudgetVue, BudgetUsage, BudgetExplorer },
+  components: {
+    BoxContainer,
+    YearlyBudgetVue,
+    BudgetUsage,
+    BudgetExplorer,
+  },
   data() {
     return {};
   },
