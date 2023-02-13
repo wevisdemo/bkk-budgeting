@@ -26,7 +26,7 @@
           <VoteProgress :strategy-vote="vote" :bg-color="`bg-wv-${vote.type}`" />
         </div>
       </div>
-      <div class="flex flex-wrap items-center gap-2">
+      <!-- <div class="flex flex-wrap items-center gap-2">
         <div
           v-for="({ title, type }, strategyLegendIndex) in strategyLegend"
           :key="`strategyLegendIndex-${strategyLegendIndex}`"
@@ -35,7 +35,7 @@
           <div :class="`w-4 h-4 rounded bg-wv-${type}`" />
           <p class="wv-b6">{{ title }}</p>
         </div>
-      </div>
+      </div> -->
       <div class="flex justify-center py-4">
         <button class="border border-black rounded p-3" @click="openDialog">
           เสนอไอเดียเพิ่มเติม
