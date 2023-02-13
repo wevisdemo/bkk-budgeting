@@ -1,7 +1,7 @@
 <template>
   <div class="bg-black text-white">
-    <BoxContainer class="justify-center">
-      <div class="max-w-4xl">
+    <BoxContainer>
+      <div class="p-0 sm:p-10">
         <div class="mx-10">
           <p class="wv-b3 text-center text-wv-green">ข้อมูลเพิ่มเติม</p>
         </div>
