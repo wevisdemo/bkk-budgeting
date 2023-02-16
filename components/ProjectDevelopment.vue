@@ -109,16 +109,29 @@
         </div>
       </form>
     </FormDialog>
-    <div></div>
+    <div v-if="isShowLoading" class="absolute top-0 w-full h-full bg-white">
+      <div class="flex flex-col gap-4 m-auto tex-center">
+        <h5 class="wv-h5 wv-bold">เรากำลังส่งข้อมูลของคุณ...</h5>
+        <div class="lottie-img">
+          <Lottie :options="defaultOptions" />
+        </div>
+        <p>
+          ข้อมูลนี้จะรวบรวมยื่นต่อผู้ว่าราชการจังหวัดกรุงเทพมหานคร
+          และหน่วยงานที่เกี่ยวข้องต่อไป
+        </p>
+      </div>
+    </div>
   </BoxContainer>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
+import Lottie from "vue-lottie/src/lottie.vue";
 import CoinIcon from "~/components/CoinIcon.vue";
 import FormDialog from "~/components/dialog/FormDialog.vue";
 import BoxContainer from "~/components/BoxContainer.vue";
 import { StrategyTypes } from "~/models/strategies";
+import animData from "~/assets/lottie/project-loading.json";
 
 interface Project {
   type: StrategyTypes;
@@ -138,18 +151,32 @@ interface FormDataProps {
   projects: Project[];
 }
 
+interface LottieOptions {
+  animationData: any;
+  loop: boolean;
+  autoplay: boolean;
+}
+
 interface ProjectDevelopmentData {
+  defaultOptions: LottieOptions;
   dialogOpen: boolean;
   districts: District[];
   projectsList: Project[];
   formData: FormDataProps;
+  isShowLoading: boolean;
 }
 
 export default Vue.extend({
   name: "ProjectDevelopment",
-  components: { CoinIcon, FormDialog, BoxContainer },
+  components: { CoinIcon, FormDialog, BoxContainer, Lottie },
   data(): ProjectDevelopmentData {
     return {
+      defaultOptions: {
+        animationData: animData,
+        loop: true,
+        autoplay: true,
+      },
+      isShowLoading: false,
       dialogOpen: false,
       formData: {
         district: {
@@ -550,6 +577,7 @@ export default Vue.extend({
     },
     handleSubmit(e: Event) {
       e.preventDefault();
+      this.isShowLoading = true;
       // eslint-disable-next-line no-console
       console.log(this.formData);
     },
