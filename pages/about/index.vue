@@ -145,6 +145,7 @@
 <script lang="ts">
 import Vue from "vue";
 import BoxContainer from "~/components/BoxContainer.vue";
+import { createMetadata } from "~/utils/metadata";
 
 export default Vue.extend({
   name: "AboutPage",
@@ -199,5 +200,6 @@ export default Vue.extend({
       ],
     };
   },
+  head: createMetadata({ pageName: "เกี่ยวกับโครงการ" }),
 });
 </script>

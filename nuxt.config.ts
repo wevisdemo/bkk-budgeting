@@ -1,19 +1,16 @@
 import type { NuxtConfig } from "@nuxt/types";
+import { createMetadata } from "./utils/metadata";
 
 const BASE_PATH = process.env.BASE_PATH || "";
+const { title, meta } = createMetadata();
 
 const config: NuxtConfig = {
   target: "static",
 
   head: {
-    title: "BKK Budgeting",
-    meta: [
-      { charset: "utf-8" },
-      { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { hid: "description", name: "description", content: "" },
-      { name: "format-detection", content: "telephone=no" },
-    ],
-    link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
+    title,
+    meta,
+    link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.png" }],
   },
 
   css: ["@wevisdemo/ui/styles/typography.css", "@wevisdemo/ui/styles/components.css"],
