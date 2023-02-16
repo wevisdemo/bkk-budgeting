@@ -42,7 +42,7 @@ const config: NuxtConfig = {
   },
 
   router: {
-    base: process.env.NODE_ENV === "production" ? "/bkk-budgeting/" : BASE_PATH || "/",
+    base: BASE_PATH || "/",
   },
 
   axios: {
