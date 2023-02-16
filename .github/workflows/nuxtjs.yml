@@ -16,6 +16,9 @@ concurrency:
   group: "pages"
   cancel-in-progress: true
 
+env:
+  BASE_PATH: "/bkk-budgeting"
+
 jobs:
   build:
     runs-on: ${{ matrix.os }}
@@ -51,7 +54,7 @@ jobs:
       - name: Generate Nuxt
         run: yarn generate
         env:
-          BASE_PATH: ${{ vars.BASE_PATH }}
+          BASE_PATH: ${{ env.BASE_PATH }}
 
       - name: Run linter 👀
         run: yarn lint
