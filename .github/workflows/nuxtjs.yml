@@ -50,6 +50,8 @@ jobs:
 
       - name: Generate Nuxt
         run: yarn generate
+        env:
+          BASE_PATH: { { env.BASE_PATH } }
 
       - name: Run linter 👀
         run: yarn lint
