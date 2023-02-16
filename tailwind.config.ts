@@ -9,6 +9,9 @@ export default <Partial<Config>>{
   ],
   theme: {
     extend: {
+      screens: {
+        xs: "400px",
+      },
       textColor: {
         "wv-green": "#4CC35D",
         "wv-gray-1": "#737373",
