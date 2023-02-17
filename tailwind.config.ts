@@ -9,6 +9,9 @@ export default <Partial<Config>>{
   ],
   theme: {
     extend: {
+      screens: {
+        xs: "400px",
+      },
       textColor: {
         "wv-green": "#4CC35D",
         "wv-gray-1": "#737373",
@@ -66,5 +69,19 @@ export default <Partial<Config>>{
     "border-t-wv-management",
     "border-t-wv-economic",
     "border-t-wv-equality",
+    "hover:border-wv-safe",
+    "hover:border-wv-environment",
+    "hover:border-wv-connectivity",
+    "hover:border-wv-democracy",
+    "hover:border-wv-management",
+    "hover:border-wv-economic",
+    "hover:border-wv-equality",
+    "hover:border-t-wv-safe",
+    "hover:border-t-wv-environment",
+    "hover:border-t-wv-connectivity",
+    "hover:border-t-wv-democracy",
+    "hover:border-t-wv-management",
+    "hover:border-t-wv-economic",
+    "hover:border-t-wv-equality",
   ],
 };

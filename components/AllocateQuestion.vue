@@ -3,7 +3,7 @@
     <div
       class="bg-wv-green rounded-full p-10 sm:p-20 flex flex-col items-center justify-center gap-4 aspect-square w-[112vw] h-[112vw] sm:w-[580px] sm:h-[580px] text-center z-30"
     >
-      <p class="wv-h8">
+      <p class="wv-b3">
         ในปีต่อๆไป
         <br />
         กรุงเทพมหานครยังคงมุ่งพัฒนาและขับเคลื่อน
@@ -16,7 +16,7 @@
       <p class="wv-b3 wv-bold">คุณคิดว่าควรนำไปพัฒนากับเรื่องอะไรบ้าง?</p>
     </div>
     <div
-      class="flex justify-center absolute bottom-0 sm:bottom-[-50px] left-0 right-0 -mb-60"
+      class="flex justify-center absolute bottom-0 sm:bottom-[-50px] left-0 right-0 -mb-48 xs:-mb-52 sm:-mb-60"
     >
       <img
         class="sm:max-w-xl h-auto"

@@ -30,8 +30,20 @@
         />
       </div>
       <div class="flex sm:flex-col gap-2 w-full sm:max-w-[300px]">
-        <NavLinks :links="budgetPlans" arrow-direction="Down" class="bg-wv-cream-2" />
-        <NavLinks :links="budgetExplore" arrow-direction="Right" class="bg-wv-green" />
+        <div class="bg-wv-cream-2 rounded">
+          <NavLinks
+            title="เข้าใจแผนการใช้งบ"
+            :links="budgetPlans"
+            arrow-direction="Down"
+          />
+        </div>
+        <div class="bg-wv-green rounded">
+          <NavLinks
+            title="สำรวจการใช้งบ"
+            :links="budgetExplore"
+            arrow-direction="Right"
+          />
+        </div>
       </div>
     </div>
   </BoxContainer>

@@ -42,10 +42,9 @@ export default Vue.extend({
   data() {
     return {
       routes: [
-        { label: "Intro", path: "/" },
-        { label: "Explore", path: "/explore" },
-        { label: "Vote", path: "/vote" },
-        { label: "About", path: "/about" },
+        { label: "เข้าใจแผนการใช้งบ", path: "/" },
+        { label: "สำรวจการใช้งบ", path: "/explore" },
+        { label: "เกี่ยวกับโครงการ", path: "/about" },
       ],
       footerComponent: "AboutFooter",
       cookieOptions: ["Functionality"],
