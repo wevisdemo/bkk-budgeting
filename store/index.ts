@@ -2,10 +2,14 @@ import { GetterTree, ActionTree, MutationTree } from "vuex";
 
 export interface State {
   currentImage: number;
+  strategyChoice: string;
+  subStrategyChoice: string;
 }
 
 export const state = (): State => ({
   currentImage: 0,
+  strategyChoice: "",
+  subStrategyChoice: "",
 });
 
 export type RootState = ReturnType<typeof state>;
@@ -16,6 +20,23 @@ export const getters: GetterTree<RootState, RootState> = {
 
 export const mutations: MutationTree<RootState> = {
   setCurrentImage: (state, newImage: number) => (state.currentImage = newImage),
+  setStrategyChoice: (state, newStrategy: string) =>
+    (state.strategyChoice = newStrategy),
+  setSubStrategyChoice: (state, newSubStrategy: string) =>
+    (state.subStrategyChoice = newSubStrategy),
 };
 
-export const actions: ActionTree<RootState, RootState> = {};
+export const actions: ActionTree<RootState, RootState> = {
+  updateStrategy({ commit, state }, payload) {
+    state.strategyChoice === payload
+      ? commit("setStrategyChoice", "")
+      : commit("setStrategyChoice", payload);
+
+    commit("setSubStrategyChoice", "");
+  },
+  updateSubStrategy({ commit, state }, payload) {
+    state.subStrategyChoice === payload
+      ? commit("setSubStrategyChoice", "")
+      : commit("setSubStrategyChoice", payload);
+  },
+};

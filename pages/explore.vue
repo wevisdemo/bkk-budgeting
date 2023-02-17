@@ -10,19 +10,20 @@
       <div>สำรวจการใช้งบกรุงเทพฯ ตามแผนยุทธศาสตร์</div>
       <div>toggle</div>
     </div>
-    <ByYears :data="groupOfData" />
+    <SurveyByYears :data="groupOfData" />
   </div>
 </template>
 
 <script>
-import budget66 from "~/data/budgets/66.json";
-import ByYears from "~/components/expore/ByYears.vue";
+import budget66 from "~/data/budgets/66";
+import budget67 from "~/data/budgets/67";
+import SurveyByYears from "~/components/expore/SurveyByYears.vue";
 
 export default {
-  components: { ByYears },
+  components: { SurveyByYears },
   data() {
     return {
-      groupOfData: [...budget66],
+      groupOfData: [{ 66: budget66 }, { 67: budget67 }, { 68: budget67 }],
     };
   },
 };
