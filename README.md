@@ -5,7 +5,7 @@
 ## 🌎 Environment
 
 - Production: Coming soon...
-- Staging: Coming soon...
+- Staging: https://wevisdemo.github.io/bkk-budgeting/
 
 ## 💻 Tech stack
 
