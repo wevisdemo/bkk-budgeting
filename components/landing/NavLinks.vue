@@ -1,6 +1,6 @@
 <template>
-  <div class="flex flex-1 sm:flex-none flex-col gap-2 p-3 rounded">
-    <p class="wv-b5 wv-bold">เข้าใจแผนการใช้งบ</p>
+  <div class="flex flex-1 sm:flex-none flex-col gap-2 p-3">
+    <p class="wv-b5 wv-bold">{{ title }}</p>
     <div class="divide-y divide-black divide-opacity-25">
       <NuxtLink
         v-for="(item, index) in links"
@@ -18,26 +18,29 @@
 </template>
 
 <script lang="ts">
-import Vue, { PropType } from "vue";
+import { PropType, defineComponent } from "vue";
 
-interface Links {
+interface Link {
   title: string;
   link: string;
 }
 
 type ArrowDirection = "Down" | "Right";
 
-export default Vue.extend({
+export default defineComponent({
   name: "NavLinks",
   props: {
-    links: { type: Array as PropType<Links[]>, default: () => [], required: true },
+    title: {
+      type: String,
+      required: true,
+    },
+    links: { type: Array as PropType<Link[]>, default: () => [], required: true },
     arrowDirection: {
       type: String as PropType<ArrowDirection>,
-      default: String,
+      default: "Down",
       required: false,
     },
   },
-
   computed: {
     ArrowDirection() {
       const direction = this.arrowDirection;
