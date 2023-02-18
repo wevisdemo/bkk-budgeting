@@ -31,7 +31,8 @@
     "papaparse": "^5.3.2",
     "vue": "^2.7.10",
     "vue-server-renderer": "^2.7.10",
-    "vue-template-compiler": "^2.7.10"
+    "vue-template-compiler": "^2.7.10",
+    "vue-uuid": "^3.0.0"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.19.1",

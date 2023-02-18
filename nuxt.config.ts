@@ -15,7 +15,7 @@ const config: NuxtConfig = {
 
   css: ["@wevisdemo/ui/styles/typography.css", "@wevisdemo/ui/styles/components.css"],
 
-  plugins: ["~/plugins/clickOutside.client.ts"],
+  plugins: ["~/plugins/clickOutside.client.ts", "~/plugins/vueCookies.ts"],
 
   components: false,
 
