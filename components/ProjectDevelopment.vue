@@ -18,13 +18,14 @@
           ]"
           @click="selectProjects(project)"
         >
-          <p class="wv-b3 wv-bold">{{ project.title }}</p>
-          <p class="wv-b6">{{ project.subtitle }}</p>
+          <p class="wv-b3 wv-bold">{{ project.name }}</p>
+          <p class="wv-b6">{{ project.desc }}</p>
         </div>
         <CoinIcon :rotate="index + 1" />
       </div>
       <div class="flex justify-center py-4">
         <button
+          v-if="!isVoted"
           class="border border-black rounded p-3"
           :class="formData.projects.length === 0 ? `opacity-20` : ``"
           :disabled="formData.projects.length === 0"
@@ -94,15 +95,20 @@
         </div>
       </form>
     </FormDialog>
-    <div v-if="isShowLoading" class="absolute top-0 w-full h-full bg-white">
-      <div class="flex flex-col gap-4 m-auto tex-center">
+    <div
+      v-if="isShowLoading"
+      class="fixed top-0 left-0 right-0 bottom-0 w-full h-full bg-white z-[9999]"
+    >
+      <div
+        class="flex flex-col gap-6 m-auto text-center h-full w-full justify-center items-center"
+      >
         <h5 class="wv-h5 wv-bold">เรากำลังส่งข้อมูลของคุณ...</h5>
         <div class="lottie-img">
           <Lottie :options="defaultOptions" />
         </div>
-        <p>
+        <p class="wv-b3">
           ข้อมูลนี้จะรวบรวมยื่นต่อผู้ว่าราชการจังหวัดกรุงเทพมหานคร
-          และหน่วยงานที่เกี่ยวข้องต่อไป
+          <br />และหน่วยงานที่เกี่ยวข้องต่อไป
         </p>
       </div>
     </div>
@@ -110,7 +116,9 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
+import { defineComponent } from "vue";
+import firebase from "firebase/compat/app";
+
 import Lottie from "vue-lottie/src/lottie.vue";
 import CoinIcon from "~/components/CoinIcon.vue";
 import FormDialog from "~/components/dialog/FormDialog.vue";
@@ -123,10 +131,14 @@ import type { StrategyTypes } from "~/models/strategies";
 import animData from "~/assets/lottie/project-loading.json";
 import projectsData from "~/data/projects.json";
 
+const googleSheetUrlProject =
+  "https://cheesy.punchup.world/api/project/617ba453e90567588618dcfb/sheet/project/row";
+
 export interface Project {
+  id: number;
   type: StrategyTypes;
-  title: string;
-  subtitle: string;
+  name: string;
+  desc: string;
   progress: number;
   vote_count: number;
 }
@@ -148,9 +160,10 @@ interface ProjectDevelopmentData {
   projectsList: Project[];
   formData: FormDataProps;
   isShowLoading: boolean;
+  isVoted: boolean;
 }
 
-export default Vue.extend({
+export default defineComponent({
   name: "ProjectDevelopment",
   components: { CoinIcon, FormDialog, BoxContainer, Lottie, DistrictDropdown },
   data(): ProjectDevelopmentData {
@@ -167,7 +180,15 @@ export default Vue.extend({
         projects: [],
       },
       projectsList: projectsData as Project[],
+      isVoted: false,
     };
+  },
+  mounted() {
+    if (!this.$cookies.get("isVoted") || this.$cookies.get("isVoted") === undefined) {
+      this.isVoted = false;
+    } else {
+      this.isVoted = true;
+    }
   },
   methods: {
     openDialog() {
@@ -187,30 +208,157 @@ export default Vue.extend({
         this.formData.projects = filtered;
       }
     },
-    handleSubmit(e: Event) {
+    async handleSubmit(e: Event) {
       e.preventDefault();
+      this.dialogOpen = false;
       this.isShowLoading = true;
-      // async await submit form data
+      await this.sendData();
+      this.isShowLoading = false;
       // eslint-disable-next-line no-console
-      console.log(this.formData);
     },
     setDistrict(district: District) {
       // eslint-disable-next-line no-console
       console.log(district);
       this.formData.district = district;
     },
+    async sendData() {
+      this.isShowLoading = true;
+      this.isVoted = true;
+
+      const array = [] as any;
+      const arrayForExcel = [] as any;
+      const arrayFb = [] as any;
+
+      const messageRef = this.$fire.database.ref("user");
+
+      this.formData.projects.forEach(project => {
+        array.push({
+          projectid: project.id,
+          userid: this.$cookies.get("uuid"),
+        });
+        arrayForExcel.push({
+          userid: this.$cookies.get("uuid"),
+          projectid: project.id,
+          name: project.name,
+          dimension: project.desc,
+          district: "",
+          province: "",
+          hashousereg: "",
+          isinbkk: "",
+          date: this.$moment().format("DD-MM-YYYY"),
+        });
+      });
+
+      try {
+        const data = await messageRef.once("value");
+        const r = data.val();
+        for (const [, value] of Object.entries(r) as any) {
+          if (value.userid === this.$cookies.get("uuid")) {
+            arrayFb.push(value);
+            break;
+          }
+        }
+      } catch (e) {
+        alert(e);
+        return;
+      }
+
+      this.updateVoteProjectCount(arrayFb, this.formData.projects);
+
+      for (let i = 0; i < arrayForExcel.length; i++) {
+        arrayForExcel[i].district =
+          arrayFb[0].district === "" ? "-" : arrayFb[0].district;
+        arrayForExcel[i].province =
+          arrayFb[0].province === "" ? "-" : arrayFb[0].province;
+
+        if (arrayFb[0].isInBkk) {
+          if (arrayFb[0].hasHouseReg) arrayForExcel[i].hashousereg = "มี";
+          else arrayForExcel[i].hashousereg = "ไม่มี";
+        } else arrayForExcel[i].hashousereg = "-";
+        arrayForExcel[i].isinbkk = arrayFb[0].isInBkk ? "อยู่" : "ไม่อยู่";
+      }
+
+      const sequence = this.$fire.database.ref("sequence").child("project_sequence");
+      const messageRefProject = this.$fire.database.ref("project");
+
+      try {
+        const a = await sequence.once("value");
+        let count = a.val() as number;
+        for (let i = 0; i < array.length; i++) {
+          await messageRefProject.child((++count).toString()).set(array[i]);
+        }
+        sequence.set(count);
+      } catch (e) {
+        alert(e);
+        return;
+      }
+      await this.$axios
+        .$post(googleSheetUrlProject, arrayForExcel)
+        .then(() => {
+          // eslint-disable-next-line no-console
+          console.log("sent");
+        })
+        .catch(error => {
+          // eslint-disable-next-line no-console
+          console.log(error);
+        });
+      this.$cookies.set("isVoted", true);
+
+      setTimeout(() => {
+        // todo: use event bus to emit and execute in ideaVote
+        // this.$root.$refs.ideaVote?.getChartData();
+        // todo: deselect selection
+        const element = document.getElementById("vote-result");
+        if (element) element.scrollIntoView();
+      }, 3000);
+    },
+    updateVoteProjectCount(data: any, selectedProjects: Project[]) {
+      const refHasHouseReg = this.$fire.database.ref("voteProject/all_district");
+      const refNoHouseReg = this.$fire.database.ref(
+        "voteProject/all_district_nohousereg",
+      );
+      if (data[0].isInBkk && data[0].hasHouseReg) {
+        const ref = this.$fire.database.ref(
+          "voteProject/choice_1/" + data[0].district.replace("เขต", ""),
+        );
+        selectedProjects.forEach(element => {
+          ref
+            .child("project_" + element)
+            .set(firebase.database.ServerValue.increment(1));
+          refHasHouseReg
+            .child("project_" + element)
+            .set(firebase.database.ServerValue.increment(1));
+        });
+      } else if (data[0].isInBkk && !data[0].hasHouseReg) {
+        const ref = this.$fire.database.ref(
+          "voteProject/choice_2/" + data[0].district.replace("เขต", ""),
+        );
+        selectedProjects.forEach(element => {
+          ref
+            .child("project_" + element)
+            .set(firebase.database.ServerValue.increment(1));
+          refNoHouseReg
+            .child("project_" + element)
+            .set(firebase.database.ServerValue.increment(1));
+        });
+      } else {
+        const ref = this.$fire.database.ref("voteProject/choice_3");
+        selectedProjects.forEach(element => {
+          ref
+            .child("project_" + element)
+            .set(firebase.database.ServerValue.increment(1));
+        });
+      }
+      const refCount = this.$fire.database.ref("voteProject/user_count");
+      refCount.set(firebase.database.ServerValue.increment(1));
+    },
   },
 });
 </script>
 
-<style scoped>
-.projectItem {
-  grid-template-columns: 1fr;
-}
-
-@media (min-width: theme("screens.md")) {
-  .md\:projectItem {
-    grid-template-columns: auto 1fr auto;
-  }
+<style lang="scss" scoped>
+.lottie-img {
+  width: 300px;
+  height: 300px;
 }
 </style>
