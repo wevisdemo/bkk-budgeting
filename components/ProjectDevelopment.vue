@@ -123,10 +123,12 @@ import type { StrategyTypes } from "~/models/strategies";
 import animData from "~/assets/lottie/project-loading.json";
 import projectsData from "~/data/projects.json";
 
-interface Project {
+export interface Project {
   type: StrategyTypes;
   title: string;
   subtitle: string;
+  progress: number;
+  vote_count: number;
 }
 
 interface FormDataProps {
