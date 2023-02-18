@@ -2,10 +2,10 @@
   <div class="w-full relative rounded border-2 border-white">
     <div class="flex flex-col z-20 h-full w-full relative py-2 px-2">
       <div class="flex gap-1 items-center">
-        <p class="wv-b4 wv-bold flex-grow text-left">{{ strategyVote.title }}</p>
+        <p class="wv-b4 wv-bold flex-grow text-left">{{ strategyVote.name }}</p>
         <p class="wv-b4">{{ strategyVote.progress }}%</p>
       </div>
-      <p class="wv-b6 flex-grow text-left">{{ strategyVote.subtitle }}</p>
+      <p class="wv-b6 flex-grow text-left">{{ strategyVote.desc }}</p>
     </div>
     <div
       :class="`top-0 left-0 z-10 absolute h-full ${
