@@ -1,6 +1,6 @@
 <template>
   <BoxContainer>
-    <div>
+    <div id="vote-result">
       <div class="text-center">
         <h5 class="wv-h5 wv-bold">ไอเดียโดนใจของผู้ที่ใช้แพลตฟอร์มนี้</h5>
         <div class="flex justify-center items-center my-3">
