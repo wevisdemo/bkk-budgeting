@@ -91,7 +91,7 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
+import { defineComponent } from "vue";
 import VoteProgress from "./VoteProgress.vue";
 import BoxContainer from "~/components/BoxContainer.vue";
 import DistrictDropdown from "~/components/DistrictDropdown.vue";
@@ -107,7 +107,7 @@ interface IdeaVoteData {
   selected_district_name: string;
 }
 
-export default Vue.extend({
+export default defineComponent({
   name: "IdeaVote",
   components: { VoteProgress, BoxContainer, DistrictDropdown },
   data(): IdeaVoteData {
