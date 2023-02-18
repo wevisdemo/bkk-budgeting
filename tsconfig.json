@@ -15,7 +15,13 @@
       "~/*": ["./*"],
       "@/*": ["./*"]
     },
-    "types": ["@nuxt/types", "@nuxtjs/axios", "@nuxtjs/firebase", "@types/node"],
+    "types": [
+      "@nuxt/types",
+      "@nuxtjs/axios",
+      "@nuxtjs/firebase",
+      "@types/node",
+      "vue-cookies"
+    ],
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true
   },
