@@ -15,7 +15,7 @@
       "~/*": ["./*"],
       "@/*": ["./*"]
     },
-    "types": ["@nuxt/types", "@nuxtjs/axios", "@types/node"],
+    "types": ["@nuxt/types", "@nuxtjs/axios", "@nuxtjs/firebase", "@types/node"],
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true
   },
