@@ -23,6 +23,7 @@ const config: NuxtConfig = {
     "@nuxt/typescript-build",
     "@nuxtjs/svg",
     "@nuxtjs/style-resources",
+    "@nuxtjs/moment",
     [
       "@nuxtjs/firebase",
       {
@@ -42,6 +43,10 @@ const config: NuxtConfig = {
       },
     ],
   ],
+
+  moment: {
+    locales: ["th"],
+  },
 
   build: {
     quiet: false,

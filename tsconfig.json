@@ -19,6 +19,7 @@
       "@nuxt/types",
       "@nuxtjs/axios",
       "@nuxtjs/firebase",
+      "@nuxtjs/moment",
       "@types/node",
       "vue-cookies"
     ],
