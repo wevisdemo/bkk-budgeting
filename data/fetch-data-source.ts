@@ -1,5 +1,4 @@
-import axios from "axios";
-import { parse } from "csv-parse/sync";
+import { parse as papaParse, ParseResult } from "papaparse";
 
 export interface BudgetRow {
   budgetYear: number;
@@ -26,18 +25,47 @@ export interface BudgetRow {
 const GOOGLE_SHEETS_CSV =
   "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ85mQgwOqSIwu-QOdD4nPgC9K8_UgXFgOW1p45p5HIedDihVCNTDIOAU2O-ibjyKMGNpj3jI_E65g1/pub?gid=1938129512&single=true&output=csv";
 
+interface CSV_ROW {
+  budget_year: string;
+  plan_proj_name: string;
+  flag: string;
+  O_S: string;
+  "output/proj": string;
+  output_proj_name: string;
+  amount: string;
+  output_no: string;
+  output_name: string;
+  output_name1: string;
+  purpose_proj: string;
+  sub_strategy: string;
+  strategy: string;
+  plan_strategy: string;
+  side: string;
+  integration: string;
+  fund_grp_name: string;
+  county: string;
+  name_organization: string;
+}
+
+let cached: BudgetRow[] | undefined;
+
 /**
  * fetchDataSource fetches and cleans data from Google Sheets
  * @returns all cleaned rows available
  */
 export const fetchDataSource = async (): Promise<BudgetRow[]> => {
-  const res = await axios.get(GOOGLE_SHEETS_CSV, { responseType: "blob" });
-  const csv = (await res.data.text()) as string;
+  if (cached) {
+    return Promise.resolve(cached);
+  }
 
-  const rows = parse(csv);
+  const result = await parse<CSV_ROW>(GOOGLE_SHEETS_CSV);
 
-  return rows.map(
-    (row: { [key: string]: string }): BudgetRow => ({
+  if (result.errors) {
+    return Promise.reject(result.errors);
+  }
+
+  const mapped = result.data.map(
+    (row): BudgetRow => ({
       budgetYear: Number(row.budget_year),
       planProjName: row.plan_proj_name,
       flag: row.flag,
@@ -59,8 +87,21 @@ export const fetchDataSource = async (): Promise<BudgetRow[]> => {
       nameOrganization: row.name_organization,
     }),
   );
+  cached = mapped;
+  return mapped;
 };
 
 const isIntegration = (rawValue: string): boolean => {
   return rawValue !== "-" && rawValue !== "";
 };
+
+function parse<T>(url: string) {
+  return new Promise<ParseResult<T>>((resolve, reject) => {
+    papaParse<T>(url, {
+      download: true,
+      complete: resolve,
+      error: reject,
+      header: true,
+    });
+  });
+}
