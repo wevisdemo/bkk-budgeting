@@ -5,7 +5,7 @@
       <div class="flex justify-center items-center my-3">
         <p class="wv-b5">ที่อยู่ใน</p>
         <div class="ml-2">
-          <DistrictDropdown :type="2" @change="setDistrict" />
+          <DistrictDropdown :type="2" @change="onChangeDistrict" />
         </div>
       </div>
       <p class="wv-b5">ทั้งหมด <strong>xx,xxxx</strong> คน</p>
@@ -87,22 +87,18 @@
 <script lang="ts">
 import Vue from "vue";
 import VoteProgress from "./VoteProgress.vue";
-import { StrategyTypes } from "~/models/strategies";
 import BoxContainer from "~/components/BoxContainer.vue";
 import DistrictDropdown from "~/components/DistrictDropdown.vue";
 
 import type { District } from "~/components/DistrictDropdown.vue";
-import type { Vote } from "~/models/voting";
-
-interface VoteLegend {
-  title: string;
-  type: StrategyTypes;
-}
+import type { Project } from "~/components/ProjectDevelopment.vue";
+import projectsData from "~/data/projects.json";
 
 interface IdeaVoteData {
   dialogOpen: boolean;
-  ideaVotes: Vote[];
-  strategyLegend: VoteLegend[];
+  ideaVotes: Project[];
+  isAllDistrict: boolean;
+  selected_district_name: string;
 }
 
 export default Vue.extend({
@@ -111,77 +107,64 @@ export default Vue.extend({
   data(): IdeaVoteData {
     return {
       dialogOpen: false,
-      ideaVotes: [
-        {
-          title: "ปรับปรุงระบบจัดการขยะ",
-          progress: 32,
-          type: "safe",
-        },
-        {
-          title: "พัฒนาทางเท้า ทางข้าม",
-          progress: 43,
-          type: "environment",
-        },
-        {
-          title: "ปรับปรุงการระบายน้ำและจัดการน้ำท่วม",
-          progress: 25,
-          type: "safe",
-        },
-        {
-          title: "จัดการการจราจรติดขัด",
-          progress: 22,
-          type: "environment",
-        },
-        {
-          title: "ติดตั้งแสงสว่างและกล้องวงจรอย่างทั่วถึง",
-          progress: 55,
-          type: "safe",
-        },
-        {
-          title: "เพิ่มพื้นที่สีเขียว",
-          progress: 48,
-          type: "environment",
-        },
-        {
-          title: "พัฒนาระบบการศึกษา",
-          progress: 33,
-          type: "connectivity",
-        },
-        {
-          title: "สร้างแพลตฟอร์มการมีส่วนร่วมและแสดงความคิดเห็นในการใช้งบฯ",
-          progress: 72,
-          type: "democracy",
-        },
-        {
-          title: "จัดระเบียบผังเมืองให้เหมาะสม",
-          progress: 67,
-          type: "management",
-        },
-        {
-          title: "ฟื้นฟูสถานที่ท่องเที่ยวสำคัญ",
-          progress: 38,
-          type: "economic",
-        },
-      ],
-      strategyLegend: [
-        { title: "การสร้างเมืองปลอดภัย", type: "safe" },
-        { title: "การลดความเหลื่อมล้ำ", type: "equality" },
-        { title: "การพัฒนาสิ่งแวดล้อมยั่งยืน", type: "environment" },
-        { title: "การสร้างความเป็นมืออาชีพในการบริหาร", type: "management" },
-        { title: "การเชื่อมโยงเมืองที่มีความคล่องตัว", type: "connectivity" },
-        { title: "การต่อยอดความเป็นเมืองศูนย์กลางเศรษฐกิจ", type: "economic" },
-        { title: "ส่งเสริมการสร้างเมืองประชาธิปไตย", type: "democracy" },
-      ],
+      ideaVotes: projectsData.map(p => ({
+        ...p,
+        vote_count: 0,
+        progress: 0,
+      })) as Project[],
+      isAllDistrict: true,
+      selected_district_name: "ทุกเขต",
     };
+  },
+  async mounted() {
+    await this.getChartData();
+    this.calculatePercentage();
   },
   methods: {
     openDialog() {
       this.dialogOpen = true;
     },
-    setDistrict(district: District) {
-      // eslint-disable-next-line no-console
-      console.log(district);
-      // this.formData.district = district;
+    async onChangeDistrict(district: District) {
+      this.selected_district_name = district.th_name;
+      await this.getChartData();
+      this.calculatePercentage();
+    },
+    async getChartData() {
+      this.ideaVotes.forEach(strategy => {
+        strategy.progress = 0;
+        strategy.vote_count = 0;
+      });
+      const ref = this.$fire.database.ref("voteProject");
+      try {
+        const snapshots = await ref.once("value");
+        if (this.selected_district_name === "ทุกเขต") {
+          for (const [key, value] of Object.entries(snapshots.val().all_district)) {
+            const index = key.replace("project_", "");
+            const votes = value as number;
+            this.ideaVotes[parseInt(index) - 1].vote_count = votes;
+          }
+        } else {
+          for (const [key, value] of Object.entries(
+            snapshots.val().choice_1[this.selected_district_name],
+          )) {
+            const index = key.replace("project_", "");
+            const votes = value as number;
+            this.ideaVotes[parseInt(index) - 1].vote_count = votes;
+          }
+        }
+      } catch (e) {
+        alert(e);
+      }
+    },
+    calculatePercentage() {
+      const totalVoteCount = this.ideaVotes.reduce(
+        (previous, current) => previous + current.vote_count,
+        0,
+      );
+      this.ideaVotes.forEach(project => {
+        const percentage = (project.vote_count / totalVoteCount) * 100;
+        project.progress = parseFloat(percentage.toFixed(2));
+      });
     },
   },
 });
