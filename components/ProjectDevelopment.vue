@@ -1,5 +1,5 @@
 <template>
-  <BoxContainer class="pb-8 sm:py-10 md:py-14 sm:px-10 md:px-48">
+  <BoxContainer>
     <div class="mb-2">
       <h5 class="wv-h5 wv-bold text-center">เลือก 3 โครงการที่อยากพัฒนา</h5>
     </div>
@@ -7,11 +7,11 @@
       <div
         v-for="(project, index) in projectsList"
         :key="index"
-        class="grid gap-10 w-full projectItem md:projectItem"
+        class="flex justify-center gap-10"
       >
         <CoinIcon :rotate="index" />
         <div
-          class="py-2 px-2 rounded cursor-pointer flex-grow transition-colors"
+          class="py-2 px-2 rounded cursor-pointer flex-grow transition-colors max-w-[600px]"
           :class="[
             formData.projects.includes(project) ? `bg-wv-${project.type}` : `bg-white`,
             `border-2 hover:border-wv-${project.type}`,
