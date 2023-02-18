@@ -1,7 +1,7 @@
 export const BASE_TITLE = "Bangkok Budgeting";
 const DESCRIPTION = "เปิดเผยอย่างโปร่งใส เพื่อใครๆ ก็มีส่วนร่วมกับงบกรุงเทพฯ ได้";
-export const DEFAULT_OG_IMAGE =
-  "https://raw.githubusercontent.com/wevisdemo/promise-tracker/main/static/og/default.jpg";
+// todo: replace new og iamge
+export const DEFAULT_OG_IMAGE = "https://d208eq9ndr4893.cloudfront.net/og_image.png";
 
 interface createMetadataParams {
   pageName?: string;
@@ -37,6 +37,21 @@ export const createMetadata = ({
       {
         hid: "og-image",
         property: "og:image",
+        content: image,
+      },
+      {
+        hid: "twitter:title",
+        name: "twitter:title",
+        content: title,
+      },
+      {
+        hid: "twitter:description",
+        name: "twitter:description",
+        content: description,
+      },
+      {
+        hid: "twitter:image",
+        name: "twitter:image:src",
         content: image,
       },
       {
