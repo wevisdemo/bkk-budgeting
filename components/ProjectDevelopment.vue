@@ -118,7 +118,7 @@ import BoxContainer from "~/components/BoxContainer.vue";
 import DistrictDropdown from "~/components/DistrictDropdown.vue";
 
 import type { District } from "~/components/DistrictDropdown.vue";
-import { StrategyTypes } from "~/models/strategies";
+import type { StrategyTypes } from "~/models/strategies";
 
 import animData from "~/assets/lottie/project-loading.json";
 import projectsData from "~/data/projects.json";
