@@ -123,6 +123,8 @@ export default defineComponent({
     };
   },
   async mounted() {
+    // todo: get unique rows in db for total amount of voters
+    // await this.$nocoDb.dbViewRow
     await this.getChartData();
     this.calculatePercentage();
   },

@@ -276,6 +276,7 @@ export default defineComponent({
 
       try {
         // find row from db that matches cookie uuid
+        // find if the current user is a returning user??
         const cookieId = this.$cookies.get("uuid");
         const rowData: NocoTableRowType = await this.findTableViewRow(cookieId);
         if (rowData.userId === cookieId) {
@@ -290,6 +291,7 @@ export default defineComponent({
         return;
       }
 
+      // update current data for returning user??
       // if (arrayNoco.length > 1) {
       //   arrayForNoco.forEach(nocoRow => {
       //     nocoRow.district = arrayNoco[0].district === "" ? "-" : arrayNoco[0].district;
