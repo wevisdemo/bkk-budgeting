@@ -28,7 +28,7 @@ import Vue from "vue";
 import BoxContainer from "./BoxContainer.vue";
 
 export default Vue.extend({
-  name: "GoodSociety",
+  name: "ProjectShare",
   components: { BoxContainer },
 });
 </script>

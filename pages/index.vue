@@ -10,7 +10,7 @@
       <AllocationQuestion />
       <ProjectDevelopment />
       <IdeaVote />
-      <GoodSociety />
+      <ProjectShare />
       <ParticipatoryBudgeting />
     </div>
   </div>
@@ -21,7 +21,7 @@ import Vue from "vue";
 import AllocationQuestion from "~/components/AllocateQuestion.vue";
 import BudgetPlans from "~/components/budget/BudgetPlans.vue";
 import DevelopmentTimeline from "~/components/DevelopmentTimeline.vue";
-import GoodSociety from "~/components/GoodSociety.vue";
+import ProjectShare from "~/components/ProjectShare.vue";
 import Landing from "~/components/landing/Landing.vue";
 import MissionStatement from "~/components/MissionStatement.vue";
 import ParticipatoryBudgeting from "~/components/ParticipatoryBudgeting.vue";
@@ -41,7 +41,7 @@ export default Vue.extend({
     BudgetPlans,
     MissionStatement,
     ProjectDevelopment,
-    GoodSociety,
+    ProjectShare,
     ParticipatoryBudgeting,
     IdeaVote,
   },
