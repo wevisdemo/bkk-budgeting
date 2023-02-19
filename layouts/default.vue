@@ -69,7 +69,7 @@ export default Vue.extend({
       if (option.Functionality) {
         // Initialize or enable analytics
         this.$cookies.set("uuid", this.uuid);
-        this.$cookies.set("isVoted", false);
+        this.$cookies.set("isVoted", "false");
         this.cookies = false;
 
         const messageRef = this.$fire.database.ref("user");
