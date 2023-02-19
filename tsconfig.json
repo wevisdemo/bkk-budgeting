@@ -21,7 +21,8 @@
       "@nuxtjs/firebase",
       "@nuxtjs/moment",
       "@types/node",
-      "vue-cookies"
+      "vue-cookies",
+      "nocodb-sdk"
     ],
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true

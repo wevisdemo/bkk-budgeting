@@ -1,6 +1,5 @@
 import type { NuxtConfig } from "@nuxt/types";
 import { createMetadata } from "./utils/metadata";
-
 const BASE_PATH = process.env.BASE_PATH || "";
 const { title, meta } = createMetadata();
 
@@ -15,7 +14,11 @@ const config: NuxtConfig = {
 
   css: ["@wevisdemo/ui/styles/typography.css", "@wevisdemo/ui/styles/components.css"],
 
-  plugins: ["~/plugins/clickOutside.client.ts", "~/plugins/vueCookies.ts"],
+  plugins: [
+    "~/plugins/clickOutside.client.ts",
+    "~/plugins/vueCookies.ts",
+    "~/plugins/nocoDb.ts",
+  ],
 
   components: false,
 
@@ -63,6 +66,11 @@ const config: NuxtConfig = {
       base: BASE_PATH,
       images: `${BASE_PATH}/images`,
     },
+    ncAuthApiSecret: process.env.NC_AUTH_API_SECRET,
+  },
+
+  privateRuntimeConfig: {
+    ncAuthApiSecret: process.env.NC_AUTH_API_SECRET,
   },
 
   router: {
