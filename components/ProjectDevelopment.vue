@@ -46,6 +46,7 @@
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
+              <!-- resolve by using svg loader as import component  -->
               <path
                 d="M2.00012 1.66895L15.3311 14.9999"
                 stroke="currentColor"
@@ -117,7 +118,6 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import firebase from "firebase/compat/app";
 
 import Lottie from "vue-lottie/src/lottie.vue";
 import CoinIcon from "~/components/CoinIcon.vue";
@@ -130,9 +130,6 @@ import type { StrategyTypes } from "~/models/strategies";
 
 import animData from "~/assets/lottie/project-loading.json";
 import projectsData from "~/data/projects.json";
-
-const googleSheetUrlProject =
-  "https://cheesy.punchup.world/api/project/617ba453e90567588618dcfb/sheet/project/row";
 
 export interface Project {
   id: number;
@@ -163,6 +160,18 @@ interface ProjectDevelopmentData {
   isVoted: boolean;
 }
 
+interface NocoTableRowType {
+  userId: string;
+  projectId: number;
+  vote: string;
+  dimension: string;
+  district: string;
+  province: string | null;
+  hasHouseReg: boolean;
+  isInBkk: boolean;
+  date: string;
+}
+
 export default defineComponent({
   name: "ProjectDevelopment",
   components: { CoinIcon, FormDialog, BoxContainer, Lottie, DistrictDropdown },
@@ -184,13 +193,33 @@ export default defineComponent({
     };
   },
   mounted() {
-    if (!this.$cookies.get("isVoted") || this.$cookies.get("isVoted") === undefined) {
+    const cookieVoted: string = this.$cookies.get("isVoted");
+    const isCookieVoted = cookieVoted === "true";
+    if (!isCookieVoted || isCookieVoted === undefined) {
       this.isVoted = false;
     } else {
       this.isVoted = true;
     }
   },
   methods: {
+    async findTableViewRow(cookieId: string) {
+      const data: NocoTableRowType = await this.$nocoDb.dbViewRow.findOne(
+        "v1",
+        "bangkok-budgeting",
+        "User-data",
+        "BkkBudgetCsv",
+        { where: `(userId,eq,${cookieId})` },
+      );
+      return data;
+    },
+    async postTableRow(data: NocoTableRowType[]) {
+      await this.$nocoDb.dbTableRow.bulkCreate(
+        "v1",
+        "bangkok-budgeting",
+        "User-data",
+        data,
+      );
+    },
     openDialog() {
       this.dialogOpen = true;
     },
@@ -214,7 +243,6 @@ export default defineComponent({
       this.isShowLoading = true;
       await this.sendData();
       this.isShowLoading = false;
-      // eslint-disable-next-line no-console
     },
     setDistrict(district: District) {
       // eslint-disable-next-line no-console
@@ -223,135 +251,79 @@ export default defineComponent({
     },
     async sendData() {
       this.isShowLoading = true;
-      this.isVoted = true;
 
       const array = [] as any;
-      const arrayForExcel = [] as any;
-      const arrayFb = [] as any;
-
-      const messageRef = this.$fire.database.ref("user");
+      const arrayForNoco = [] as NocoTableRowType[];
+      const arrayNoco = [] as NocoTableRowType[];
 
       this.formData.projects.forEach(project => {
         array.push({
-          projectid: project.id,
-          userid: this.$cookies.get("uuid"),
+          projectId: project.id,
+          userId: this.$cookies.get("uuid"),
         });
-        arrayForExcel.push({
-          userid: this.$cookies.get("uuid"),
-          projectid: project.id,
-          name: project.name,
+        arrayForNoco.push({
+          userId: this.$cookies.get("uuid"),
+          projectId: project.id,
+          vote: project.name,
           dimension: project.desc,
-          district: "",
-          province: "",
-          hashousereg: "",
-          isinbkk: "",
+          district: this.formData.district.th_name,
+          province: null,
+          hasHouseReg: false,
+          isInBkk: false,
           date: this.$moment().format("DD-MM-YYYY"),
         });
       });
 
       try {
-        const data = await messageRef.once("value");
-        const r = data.val();
-        for (const [, value] of Object.entries(r) as any) {
-          if (value.userid === this.$cookies.get("uuid")) {
-            arrayFb.push(value);
-            break;
-          }
+        // find row from db that matches cookie uuid
+        const cookieId = this.$cookies.get("uuid");
+        const rowData: NocoTableRowType = await this.findTableViewRow(cookieId);
+        if (rowData.userId === cookieId) {
+          arrayNoco.push(rowData);
+        } else {
+          // eslint-disable-next-line no-console
+          console.log(`User not found: ${cookieId} `);
         }
       } catch (e) {
-        alert(e);
+        // eslint-disable-next-line no-console
+        console.error(e);
         return;
       }
 
-      this.updateVoteProjectCount(arrayFb, this.formData.projects);
-
-      for (let i = 0; i < arrayForExcel.length; i++) {
-        arrayForExcel[i].district =
-          arrayFb[0].district === "" ? "-" : arrayFb[0].district;
-        arrayForExcel[i].province =
-          arrayFb[0].province === "" ? "-" : arrayFb[0].province;
-
-        if (arrayFb[0].isInBkk) {
-          if (arrayFb[0].hasHouseReg) arrayForExcel[i].hashousereg = "มี";
-          else arrayForExcel[i].hashousereg = "ไม่มี";
-        } else arrayForExcel[i].hashousereg = "-";
-        arrayForExcel[i].isinbkk = arrayFb[0].isInBkk ? "อยู่" : "ไม่อยู่";
-      }
-
-      const sequence = this.$fire.database.ref("sequence").child("project_sequence");
-      const messageRefProject = this.$fire.database.ref("project");
+      // if (arrayNoco.length > 1) {
+      //   arrayForNoco.forEach(nocoRow => {
+      //     nocoRow.district = arrayNoco[0].district === "" ? "-" : arrayNoco[0].district;
+      //     nocoRow.province = arrayNoco[0].province === "" ? "-" : arrayNoco[0].province;
+      //     if (arrayNoco[0].isInBkk) {
+      //       if (arrayNoco[0].hasHouseReg) {
+      //         nocoRow.hasHouseReg = "มี";
+      //       } else nocoRow.hasHouseReg = "ไม่มี";
+      //     } else {
+      //       nocoRow.isInBkk = arrayNoco[0].isInBkk ? "อยู่" : "ไม่อยู่";
+      //     }
+      //   });
+      // }
 
       try {
-        const a = await sequence.once("value");
-        let count = a.val() as number;
-        for (let i = 0; i < array.length; i++) {
-          await messageRefProject.child((++count).toString()).set(array[i]);
-        }
-        sequence.set(count);
+        // add rows to nocodb
+        await this.postTableRow(arrayForNoco);
+        // eslint-disable-next-line no-console
+        console.log(`New row added`);
+        this.isVoted = true;
+        this.$cookies.set("isVoted", "true");
+        setTimeout(() => {
+          const element = document.getElementById("vote-result");
+          // eslint-disable-next-line no-console
+          console.log(element);
+          if (element) element.scrollIntoView();
+        }, 3000);
       } catch (e) {
-        alert(e);
-        return;
+        // eslint-disable-next-line no-console
+        console.error(e);
       }
-      await this.$axios
-        .$post(googleSheetUrlProject, arrayForExcel)
-        .then(() => {
-          // eslint-disable-next-line no-console
-          console.log("sent");
-        })
-        .catch(error => {
-          // eslint-disable-next-line no-console
-          console.log(error);
-        });
-      this.$cookies.set("isVoted", true);
-
-      setTimeout(() => {
-        // todo: use event bus to emit and execute in ideaVote
-        // this.$root.$refs.ideaVote?.getChartData();
-        // todo: deselect selection
-        const element = document.getElementById("vote-result");
-        if (element) element.scrollIntoView();
-      }, 3000);
     },
-    updateVoteProjectCount(data: any, selectedProjects: Project[]) {
-      const refHasHouseReg = this.$fire.database.ref("voteProject/all_district");
-      const refNoHouseReg = this.$fire.database.ref(
-        "voteProject/all_district_nohousereg",
-      );
-      if (data[0].isInBkk && data[0].hasHouseReg) {
-        const ref = this.$fire.database.ref(
-          "voteProject/choice_1/" + data[0].district.replace("เขต", ""),
-        );
-        selectedProjects.forEach(element => {
-          ref
-            .child("project_" + element)
-            .set(firebase.database.ServerValue.increment(1));
-          refHasHouseReg
-            .child("project_" + element)
-            .set(firebase.database.ServerValue.increment(1));
-        });
-      } else if (data[0].isInBkk && !data[0].hasHouseReg) {
-        const ref = this.$fire.database.ref(
-          "voteProject/choice_2/" + data[0].district.replace("เขต", ""),
-        );
-        selectedProjects.forEach(element => {
-          ref
-            .child("project_" + element)
-            .set(firebase.database.ServerValue.increment(1));
-          refNoHouseReg
-            .child("project_" + element)
-            .set(firebase.database.ServerValue.increment(1));
-        });
-      } else {
-        const ref = this.$fire.database.ref("voteProject/choice_3");
-        selectedProjects.forEach(element => {
-          ref
-            .child("project_" + element)
-            .set(firebase.database.ServerValue.increment(1));
-        });
-      }
-      const refCount = this.$fire.database.ref("voteProject/user_count");
-      refCount.set(firebase.database.ServerValue.increment(1));
-    },
+    // todo: update vote project count
+    // updateVoteProjectCount(data: any, selectedProjects: Project[]) {},
   },
 });
 </script>
