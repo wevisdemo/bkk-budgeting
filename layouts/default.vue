@@ -68,6 +68,8 @@ export default Vue.extend({
     async onCookieAccept(option: Option) {
       if (option.Functionality) {
         // Initialize or enable analytics
+      }
+      if (!this.$cookies.get("uuid")) {
         this.$cookies.set("uuid", this.uuid);
         this.$cookies.set("isVoted", "false");
         this.cookies = false;
