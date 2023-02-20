@@ -13,7 +13,11 @@
         <div
           class="py-2 px-2 rounded cursor-pointer flex-grow transition-colors max-w-[600px]"
           :class="[
-            formData.projects.includes(project) ? `bg-wv-${project.type}` : `bg-white`,
+            formData.projects.includes(project)
+              ? `bg-wv-${project.type}`
+              : formData.projects.length === 3
+              ? `opacity-50 bg-white`
+              : `bg-white`,
             `border-2 hover:border-wv-${project.type}`,
           ]"
           @click="selectProjects(project)"
@@ -26,7 +30,7 @@
       <div class="flex justify-center py-4">
         <button
           v-if="!isVoted"
-          class="border border-black rounded p-3"
+          class="border border-black rounded p-3 wv-bold"
           :class="formData.projects.length === 0 ? `opacity-20` : ``"
           :disabled="formData.projects.length === 0"
           @click.stop="openDialog"
@@ -84,6 +88,7 @@
             <DistrictDropdown :type="1" @change="district => setDistrict(district)" />
             <div class="pt-6">
               <button
+                v-if="formData.district"
                 class="bg-white text-black px-2 py-1 rounded-sm"
                 :class="formData.district.id === null ? `opacity-30` : ``"
                 type="submit"
@@ -159,6 +164,7 @@ interface ProjectDevelopmentData {
   formData: FormDataProps;
   isShowLoading: boolean;
   isVoted: boolean;
+  loadingTime: number;
 }
 
 interface NocoTableRowType {
@@ -172,16 +178,6 @@ interface NocoTableRowType {
   isInBkk: boolean;
   date: string;
 }
-
-// enum Dimension {
-//   safe = "มหานครปลอดภัย",
-//   management = "",
-//   environment = "มหานครสีเขียวสะดวกสบาย",
-//   economic = "",
-//   democracy = "มหานครประชาธิปไตย",
-//   equality = "มหานครสำหรับทุกคน",
-//   connectivity = "มหานครกระชับ"
-// }
 
 export default defineComponent({
   name: "ProjectDevelopment",
@@ -201,6 +197,7 @@ export default defineComponent({
       },
       projectsList: projectsData as Project[],
       isVoted: false,
+      loadingTime: 2000,
     };
   },
   mounted() {
@@ -256,9 +253,14 @@ export default defineComponent({
       this.isShowLoading = false;
     },
     setDistrict(district: District) {
-      // eslint-disable-next-line no-console
-      console.log(district);
       this.formData.district = district;
+    },
+    showLoading() {
+      return new Promise(resolve => {
+        setTimeout(() => {
+          resolve((this.isShowLoading = true));
+        }, this.loadingTime);
+      });
     },
     async sendData() {
       const array = [] as any;
@@ -289,6 +291,7 @@ export default defineComponent({
         // find if the current user is a returning user??
         const cookieId = this.$cookies.get("uuid");
         const rowData: NocoTableRowType = await this.findTableViewRow(cookieId);
+
         if (rowData.userId === cookieId) {
           arrayNoco.push(rowData);
         } else {
@@ -317,10 +320,12 @@ export default defineComponent({
       // }
 
       try {
-        this.isShowLoading = true;
+        await this.showLoading();
         await this.postTableRow(arrayForNoco);
+
         this.isVoted = true;
         this.$cookies.set("isVoted", "true");
+
         setTimeout(() => {
           const element = document.getElementById("vote-result");
           if (element) element.scrollIntoView();
