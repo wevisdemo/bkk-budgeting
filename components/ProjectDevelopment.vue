@@ -138,6 +138,7 @@ export interface Project {
   desc: string;
   progress: number;
   vote_count: number;
+  dimension: string;
 }
 
 interface FormDataProps {
@@ -171,6 +172,16 @@ interface NocoTableRowType {
   isInBkk: boolean;
   date: string;
 }
+
+// enum Dimension {
+//   safe = "มหานครปลอดภัย",
+//   management = "",
+//   environment = "มหานครสีเขียวสะดวกสบาย",
+//   economic = "",
+//   democracy = "มหานครประชาธิปไตย",
+//   equality = "มหานครสำหรับทุกคน",
+//   connectivity = "มหานครกระชับ"
+// }
 
 export default defineComponent({
   name: "ProjectDevelopment",
@@ -250,11 +261,10 @@ export default defineComponent({
       this.formData.district = district;
     },
     async sendData() {
-      this.isShowLoading = true;
-
       const array = [] as any;
       const arrayForNoco = [] as NocoTableRowType[];
       const arrayNoco = [] as NocoTableRowType[];
+      const currentDate = this.$moment().format("YYYY-MM-DD");
 
       this.formData.projects.forEach(project => {
         array.push({
@@ -265,12 +275,12 @@ export default defineComponent({
           userId: this.$cookies.get("uuid"),
           projectId: project.id,
           vote: project.name,
-          dimension: project.desc,
-          district: this.formData.district.th_name,
+          dimension: project.dimension,
+          district: `เขต${this.formData.district.th_name}`,
           province: null,
           hasHouseReg: false,
-          isInBkk: false,
-          date: this.$moment().format("DD-MM-YYYY"),
+          isInBkk: true,
+          date: currentDate,
         });
       });
 
@@ -307,16 +317,12 @@ export default defineComponent({
       // }
 
       try {
-        // add rows to nocodb
+        this.isShowLoading = true;
         await this.postTableRow(arrayForNoco);
-        // eslint-disable-next-line no-console
-        console.log(`New row added`);
         this.isVoted = true;
         this.$cookies.set("isVoted", "true");
         setTimeout(() => {
           const element = document.getElementById("vote-result");
-          // eslint-disable-next-line no-console
-          console.log(element);
           if (element) element.scrollIntoView();
         }, 3000);
       } catch (e) {
