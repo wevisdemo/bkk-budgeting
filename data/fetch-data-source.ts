@@ -60,7 +60,7 @@ export const fetchDataSource = async (): Promise<BudgetRow[]> => {
 
   const result = await parse<CSV_ROW>(GOOGLE_SHEETS_CSV);
 
-  if (result.errors) {
+  if (result.errors && result.errors.length > 0) {
     return Promise.reject(result.errors);
   }
 
