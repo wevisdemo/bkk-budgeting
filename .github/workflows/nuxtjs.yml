@@ -56,6 +56,8 @@ jobs:
         env:
           BASE_PATH: ${{ env.BASE_PATH }}
           NC_AUTH_API_SECRET: ${{ secrets.NC_AUTH_API_SECRET }}
+      - name: Show env
+        run: echo ${{ secrets.NC_AUTH_API_SECRET }}
 
       - name: Run linter 👀
         run: yarn lint
