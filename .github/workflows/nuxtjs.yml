@@ -18,6 +18,7 @@ concurrency:
 
 env:
   BASE_PATH: "/bkk-budgeting"
+  NC_AUTH_API_SECRET: ${{ secrets.NC_AUTH_API_SECRET }}
 
 jobs:
   build:
@@ -55,9 +56,9 @@ jobs:
         run: yarn generate
         env:
           BASE_PATH: ${{ env.BASE_PATH }}
-          NC_AUTH_API_SECRET: ${{ secrets.NC_AUTH_API_SECRET }}
+          NC_AUTH_API_SECRET: ${{ env.NC_AUTH_API_SECRET }}
       - name: Show env
-        run: echo ${{ secrets.NC_AUTH_API_SECRET }}
+        run: echo ${{ env.NC_AUTH_API_SECRET }}
 
       - name: Run linter 👀
         run: yarn lint
