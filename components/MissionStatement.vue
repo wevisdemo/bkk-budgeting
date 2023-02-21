@@ -2,7 +2,7 @@
   <BoxContainer>
     <div class="w-full flex justify-center">
       <div class="sm:max-w-2xl">
-        <div class="rounded-lg sm:py-10 grid gap-6">
+        <div class="rounded-lg sm:pb-10 grid gap-6">
           <p class="wv-b3 text-center">
             ทุกวันนี้เมืองที่เราใช้ชีวิต
             ยังมีหลายอย่างไม่ได้เป็นแบบที่เราวาดฝันไว้ใช่ไหม?

@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-1 sm:flex-none flex-col gap-2 p-3">
+  <div class="flex sm:flex-none flex-col gap-2 p-3">
     <p class="wv-b5 wv-bold">{{ title }}</p>
     <div class="divide-y divide-black divide-opacity-25">
       <NuxtLink

@@ -1,10 +1,5 @@
 <template>
   <BoxContainer class="relative landing-bg overflow-hidden">
-    <img
-      class="max-w-4xl hidden sm:block absolute opacity-95 bottom-0 left-0 right-0 pb-8 m-auto w-full"
-      :src="`${$config.path.images}/background/landing.png`"
-      alt="landing_bg"
-    />
     <div
       class="flex flex-col sm:flex-row gap-6 justify-between p-0 sm:px-10 lg:px-20 lg:pt-10"
     >
@@ -30,14 +25,14 @@
         />
       </div>
       <div class="flex sm:flex-col gap-2 w-full sm:max-w-[300px]">
-        <div class="bg-wv-cream-2 rounded">
+        <div class="bg-wv-cream-2 rounded flex-1 sm:flex-none">
           <NavLinks
             title="เข้าใจแผนการใช้งบ"
             :links="budgetPlans"
             arrow-direction="Down"
           />
         </div>
-        <div class="bg-wv-green rounded">
+        <div class="bg-wv-green rounded flex-1 sm:flex-none">
           <NavLinks
             title="สำรวจการใช้งบ"
             :links="budgetExplore"
@@ -46,6 +41,11 @@
         </div>
       </div>
     </div>
+    <img
+      class="max-w-[1000px] hidden sm:block opacity-95 mx-auto w-full"
+      :src="`${$config.path.images}/background/landing.png`"
+      alt="landing_bg"
+    />
   </BoxContainer>
 </template>
 
@@ -96,7 +96,7 @@ export default Vue.extend({
 .landing-bg {
   height: 100%;
 }
-@media (min-width: theme("screens.sm")) {
+/* @media (min-width: theme("screens.sm")) {
   .landing-bg {
     height: calc(100vh - 200px);
   }
@@ -104,7 +104,7 @@ export default Vue.extend({
 
 @media (min-width: theme("screens.md")) {
   .landing-bg {
-    height: calc(100vh - 52px);
+    height: calc(100vh - 180px);
   }
-}
+} */
 </style>
