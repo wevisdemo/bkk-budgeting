@@ -3,7 +3,7 @@
     <select
       v-model="selected_district"
       name="district"
-      class="rounded-sm px-2 py-1 outline outline-blackw-56"
+      class="rounded-sm px-2 py-1 outline outline-black max-w-[220px] w-full"
       :disabled="disabled"
       @change="onChange"
     >
