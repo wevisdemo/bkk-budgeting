@@ -97,12 +97,12 @@ import BoxContainer from "~/components/BoxContainer.vue";
 import DistrictDropdown from "~/components/DistrictDropdown.vue";
 
 import type { District } from "~/components/DistrictDropdown.vue";
-import type { Project } from "~/components/ProjectDevelopment.vue";
+import type { ProjectVote } from "~/components/ProjectDropdown.vue";
 import projectsData from "~/data/projects.json";
 
 interface IdeaVoteData {
   dialogOpen: boolean;
-  ideaVotes: Project[];
+  ideaVotes: ProjectVote[];
   isAllDistrict: boolean;
   selected_district_name: string;
 }
@@ -117,7 +117,7 @@ export default defineComponent({
         ...p,
         vote_count: 0,
         progress: 0,
-      })) as Project[],
+      })) as ProjectVote[],
       isAllDistrict: true,
       selected_district_name: "ทุกเขต",
     };

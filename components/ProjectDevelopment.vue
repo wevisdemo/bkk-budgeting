@@ -131,20 +131,10 @@ import BoxContainer from "~/components/BoxContainer.vue";
 import DistrictDropdown from "~/components/DistrictDropdown.vue";
 
 import type { District } from "~/components/DistrictDropdown.vue";
-import type { StrategyTypes } from "~/models/strategies";
+import type { Project } from "~/components/ProjectDropdown.vue";
 
 import animData from "~/assets/lottie/project-loading.json";
 import projectsData from "~/data/projects.json";
-
-export interface Project {
-  id: number;
-  type: StrategyTypes;
-  name: string;
-  desc: string;
-  progress: number;
-  vote_count: number;
-  dimension: string;
-}
 
 interface FormDataProps {
   district: District;

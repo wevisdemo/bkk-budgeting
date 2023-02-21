@@ -4,6 +4,7 @@
       v-model="selected_project"
       name="project"
       class="rounded-sm px-2 py-1 outline outline-black max-w-[220px] w-full"
+      :class="disabled ? `opacity-40` : ``"
       :disabled="disabled"
       @change="onChange"
     >
@@ -29,8 +30,11 @@ export interface Project {
   name: string;
   desc: string;
   dimension: string;
-  progress?: number;
-  vote_count?: number;
+}
+
+export interface ProjectVote extends Project {
+  progress: number;
+  vote_count: number;
 }
 
 interface DistrictDropdownData {
@@ -39,7 +43,7 @@ interface DistrictDropdownData {
 }
 
 const defaultOption = {
-  id: 0,
+  id: 1,
   type: "",
   name: "เลือกโครงการ",
   desc: "",

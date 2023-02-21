@@ -22,13 +22,13 @@
 import Vue, { PropType } from "vue";
 
 import type { TypeColor } from "~/models/strategies";
-import type { Project } from "~/components/ProjectDevelopment.vue";
+import type { ProjectVote } from "~/components/ProjectDropdown.vue";
 
 export default Vue.extend({
   name: "IdeaVote",
   props: {
     strategyVote: {
-      type: Object as PropType<Project>,
+      type: Object as PropType<ProjectVote>,
       required: true,
     },
     bgColor: {

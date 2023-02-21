@@ -56,7 +56,7 @@ export default defineComponent({
     if (this.type === 1) {
       this.districts = this.districts.filter(
         x =>
-          x.th_name !== "เลือกพื้นที่ของคุณ" &&
+          x.th_name !== "เลือกพื้นที่" &&
           x.th_name !== "ทุกเขต" &&
           x.th_name !== "จังหวัดอื่นๆ",
       );
@@ -66,7 +66,7 @@ export default defineComponent({
         x =>
           x.th_name !== "กรุณาเลือกเขต" &&
           x.th_name !== "จังหวัดอื่นๆ" &&
-          x.th_name !== "เลือกพื้นที่ของคุณ",
+          x.th_name !== "เลือกพื้นที่",
       );
       this.selected_district = this.districts[0];
     } else {
