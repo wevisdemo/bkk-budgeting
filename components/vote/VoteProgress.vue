@@ -8,6 +8,7 @@
       <p class="wv-b6 flex-grow text-left">{{ strategyVote.desc }}</p>
     </div>
     <div
+      class="voteBar"
       :class="`top-0 left-0 z-10 absolute h-full ${
         strategyVote.progress === 100 ? `rounded` : `rounded-l`
       } ${bgColor}`"
@@ -37,3 +38,9 @@ export default Vue.extend({
   },
 });
 </script>
+
+<style lang="scss">
+.voteBar {
+  transition: 0.3s;
+}
+</style>
