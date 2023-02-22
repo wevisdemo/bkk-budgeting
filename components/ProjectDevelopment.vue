@@ -156,7 +156,7 @@ import DistrictDropdown from "~/components/DistrictDropdown.vue";
 import type { District } from "~/components/DistrictDropdown.vue";
 import type { Project } from "~/components/ProjectDropdown.vue";
 
-import animData from "~/assets/lottie/project-loading.json";
+import projectAnimation from "~/assets/lottie/project-loading.json";
 import projectsData from "~/data/projects.json";
 
 interface FormDataProps {
@@ -199,7 +199,7 @@ export default defineComponent({
   data(): ProjectDevelopmentData {
     return {
       defaultOptions: {
-        animationData: animData,
+        animationData: projectAnimation,
         loop: true,
         autoplay: true,
       },
