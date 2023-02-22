@@ -49,15 +49,12 @@ export default Vue.extend({
       ],
       footerComponent: "AboutFooter",
       cookieOptions: ["Functionality"],
-      cookies: false,
       uuid: uuid.v1(),
     };
   },
   mounted() {
-    if (this.$cookies.get("uuid") === undefined) {
-      this.cookies = true;
-    } else {
-      this.cookies = false;
+    if (this.$cookies.get("uuid")) {
+      this.$store.commit("setCookieState", true);
     }
   },
   methods: {
@@ -72,7 +69,7 @@ export default Vue.extend({
       if (!this.$cookies.get("uuid")) {
         this.$cookies.set("uuid", this.uuid);
         this.$cookies.set("isVoted", "false");
-        this.cookies = false;
+        this.$store.commit("setCookieState", true);
 
         const messageRef = this.$fire.database.ref("user");
         const userSeq = this.$fire.database.ref("sequence").child("user_sequence");

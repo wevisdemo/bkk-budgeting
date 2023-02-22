@@ -4,12 +4,14 @@ export interface State {
   currentImage: number;
   strategyChoice: string;
   subStrategyChoice: string;
+  isCookieSet: boolean;
 }
 
 export const state = (): State => ({
   currentImage: 0,
   strategyChoice: "",
   subStrategyChoice: "",
+  isCookieSet: false,
 });
 
 export type RootState = ReturnType<typeof state>;
@@ -19,6 +21,7 @@ export const getters: GetterTree<RootState, RootState> = {
 };
 
 export const mutations: MutationTree<RootState> = {
+  setCookieState: (state, payload) => (state.isCookieSet = payload),
   setCurrentImage: (state, newImage: number) => (state.currentImage = newImage),
   setStrategyChoice: (state, newStrategy: string) =>
     (state.strategyChoice = newStrategy),
