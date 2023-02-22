@@ -48,9 +48,17 @@
           </div>
         </div>
         <img
+          v-show="onHoverImg === planIndex"
           :id="planIndex.toString()"
           class="w-20 h-28"
-          :src="setImageHover(item.icon, planIndex)"
+          :src="`${$config.path.images}/strategies/${item.icon}_hover.svg`"
+          :alt="item.strategy"
+        />
+        <img
+          v-show="onHoverImg !== planIndex"
+          :id="planIndex.toString()"
+          class="w-20 h-28"
+          :src="`${$config.path.images}/strategies/${item.icon}.svg`"
           :alt="item.strategy"
         />
         <div v-show="selectedStrategy === planIndex" class="point-up" />
@@ -150,15 +158,6 @@ export default Vue.extend({
     currentHoveredImage(newCount) {
       this.selectedStrategy = newCount;
       this.onHoverImg = newCount;
-    },
-  },
-  methods: {
-    setImageHover(icon: string, index: number) {
-      if (this.onHoverImg === index) {
-        return `${this.$config.path.images}/strategies/${icon}_hover.svg`;
-      } else {
-        return `${this.$config.path.images}/strategies/${icon}.svg`;
-      }
     },
   },
 });
