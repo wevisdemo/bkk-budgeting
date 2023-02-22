@@ -1,5 +1,5 @@
 <template>
-  <BoxContainer class="relative landing-bg overflow-hidden">
+  <BoxContainer class="relative overflow-hidden h-full">
     <div
       class="flex flex-col sm:flex-row gap-6 justify-between p-0 sm:px-10 lg:px-20 lg:pt-10"
     >
@@ -18,11 +18,9 @@
           <p>เปิดเผยอย่างโปร่งใส</p>
           <p>เพื่อใครๆก็มีส่วนร่วมกับงบฯ กรุงเทพได้</p>
         </div>
-        <img
-          class="w-full sm:hidden"
-          :src="`${$config.path.images}/background/landing.png`"
-          alt="landing_bg"
-        />
+        <div class="block sm:hidden w-full">
+          <Lottie :options="defaultOptions" />
+        </div>
       </div>
       <div class="flex sm:flex-col gap-2 w-full sm:max-w-[300px]">
         <div class="bg-wv-cream-2 rounded flex-1 sm:flex-none">
@@ -41,24 +39,42 @@
         </div>
       </div>
     </div>
-    <img
-      class="max-w-[1000px] hidden sm:block opacity-95 mx-auto w-full"
-      :src="`${$config.path.images}/background/landing.png`"
-      alt="landing_bg"
-    />
+    <div class="max-w-[1000px] hidden sm:block opacity-95 mx-auto w-full">
+      <Lottie :options="defaultOptions" />
+    </div>
   </BoxContainer>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
+import Lottie from "vue-lottie/src/lottie.vue";
 import NavLinks from "~/components/landing/NavLinks.vue";
 import BoxContainer from "~/components/BoxContainer.vue";
 
+import landingAnimation from "~/assets/lottie/landing.json";
+
+interface LottieOptions {
+  animationData: any;
+  loop: boolean;
+  autoplay: boolean;
+}
+
+interface LandingData {
+  budgetPlans: any;
+  budgetExplore: any;
+  defaultOptions: LottieOptions;
+}
+
 export default Vue.extend({
   name: "LandingPage",
-  components: { NavLinks, BoxContainer },
-  data() {
+  components: { NavLinks, BoxContainer, Lottie },
+  data(): LandingData {
     return {
+      defaultOptions: {
+        animationData: landingAnimation,
+        loop: true,
+        autoplay: true,
+      },
       budgetPlans: [
         {
           title: "วางแผนแก้ปัญหาแบบไหน",
@@ -91,20 +107,3 @@ export default Vue.extend({
   },
 });
 </script>
-
-<style scoped>
-.landing-bg {
-  height: 100%;
-}
-/* @media (min-width: theme("screens.sm")) {
-  .landing-bg {
-    height: calc(100vh - 200px);
-  }
-}
-
-@media (min-width: theme("screens.md")) {
-  .landing-bg {
-    height: calc(100vh - 180px);
-  }
-} */
-</style>
