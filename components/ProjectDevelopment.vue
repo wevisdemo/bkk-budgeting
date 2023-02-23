@@ -3,69 +3,58 @@
     <div class="mb-2">
       <h5 class="wv-h5 wv-bold text-center">เลือก 3 โครงการที่อยากพัฒนา</h5>
     </div>
-    <div class="grid gap-4">
-      <div
-        v-for="(project, index) in projectsList"
-        :key="index"
-        class="flex justify-center gap-10"
-      >
-        <CoinIcon :rotate="index" />
+    <div class="flex items-center gap-0 xs:gap-4 sm:gap-6 md:gap-10 m-auto">
+      <img
+        src="~/assets/icons/coins-vertical-left.svg"
+        class="h-full hidden sm:block"
+      />
+      <div class="grid gap-4 pb-4 sm:pb-0">
         <div
-          class="py-2 px-2 rounded cursor-pointer flex-grow transition-colors max-w-[600px]"
-          :class="[
-            formData.projects.includes(project)
-              ? `bg-wv-${project.type}`
-              : formData.projects.length === 3
-              ? `opacity-50 bg-white`
-              : `bg-white`,
-            `border-2 hover:border-wv-${project.type}`,
-          ]"
-          @click="() => selectProjects(project)"
+          v-for="(project, index) in projectsList"
+          :key="index"
+          class="flex justify-center gap-10"
         >
-          <p class="wv-b3 wv-bold">{{ project.name }}</p>
-          <p class="wv-b6">{{ project.desc }}</p>
+          <div
+            class="py-2 px-2 rounded cursor-pointer flex-grow transition-colors max-w-[600px]"
+            :class="[
+              formData.projects.includes(project)
+                ? `bg-wv-${project.type}`
+                : formData.projects.length === 3
+                ? `opacity-50 bg-white`
+                : `bg-white`,
+              `border-2 hover:border-wv-${project.type}`,
+            ]"
+            @click="() => selectProjects(project)"
+          >
+            <p class="wv-b3 wv-bold">{{ project.name }}</p>
+            <p class="wv-b6">{{ project.desc }}</p>
+          </div>
         </div>
-        <CoinIcon :rotate="index + 1" />
       </div>
-      <div class="flex justify-center py-4">
-        <button
-          v-if="!isVoted"
-          class="border border-black rounded p-3 wv-bold"
-          :class="formData.projects.length === 0 ? `opacity-20` : ``"
-          :disabled="formData.projects.length === 0"
-          @click.stop="openDialog"
-        >
-          ส่งความคิดเห็น
-        </button>
-      </div>
+      <img
+        src="~/assets/icons/coins-vertical-right.svg"
+        class="h-full hidden sm:block"
+      />
+    </div>
+    <div class="flex justify-center py-4">
+      <button
+        v-if="!isVoted"
+        class="border border-black rounded p-3 wv-bold"
+        :class="formData.projects.length === 0 ? `opacity-20` : ``"
+        :disabled="formData.projects.length === 0"
+        @click.stop="openDialog"
+      >
+        ส่งความคิดเห็น
+      </button>
+    </div>
+    <div class="flex justify-center sm:hidden -mx-10 sm:-mx-0">
+      <img src="~/assets/icons/coins-horizontal.svg" class="w-full" />
     </div>
     <FormDialog v-if="dialogOpen">
       <form @submit.prevent="e => handleSubmit(e)">
         <div v-click-outside="closeDialog" class="py-6 px-8 bg-black max-w-lg">
           <button class="text-white" @click.stop="closeDialog">
-            <svg
-              width="16px"
-              height="16px"
-              viewBox="0 0 17 17"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <!-- resolve by using svg loader as import component  -->
-              <path
-                d="M2.00012 1.66895L15.3311 14.9999"
-                stroke="currentColor"
-                stroke-width="3"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-              <path
-                d="M2 15L15.331 1.669"
-                stroke="white"
-                stroke-width="3"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </svg>
+            <img src="~/assets/icons/close.svg" />
           </button>
           <div class="text-center">
             <div class="text-white">
@@ -148,7 +137,6 @@
 import { defineComponent } from "vue";
 
 import Lottie from "vue-lottie/src/lottie.vue";
-import CoinIcon from "~/components/CoinIcon.vue";
 import FormDialog from "~/components/dialog/FormDialog.vue";
 import BoxContainer from "~/components/BoxContainer.vue";
 import DistrictDropdown from "~/components/DistrictDropdown.vue";
@@ -195,7 +183,7 @@ interface ProjectDevelopmentData {
 
 export default defineComponent({
   name: "ProjectDevelopment",
-  components: { CoinIcon, FormDialog, BoxContainer, Lottie, DistrictDropdown },
+  components: { FormDialog, BoxContainer, Lottie, DistrictDropdown },
   data(): ProjectDevelopmentData {
     return {
       defaultOptions: {
