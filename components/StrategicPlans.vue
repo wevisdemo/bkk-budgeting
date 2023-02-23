@@ -72,7 +72,10 @@
         <p class="hidden sm:block wv-b6">
           ประกอบด้วย {{ allStrategies[selectedStrategy].length }} มิติย่อย
         </p>
-        <p class="block sm:hidden">ประกอบด้วย 5 มิติย่อย (กด + เพื่ออ่านคำอธิบาย)</p>
+        <p class="block sm:hidden">
+          ประกอบด้วย 5 มิติย่อย
+          <span class="text-wv-gray-1">(กด + เพื่ออ่านคำอธิบาย)</span>
+        </p>
       </div>
       <!-- desktop -->
       <div class="hidden sm:block">
@@ -107,13 +110,19 @@
           </div>
         </div>
       </div>
-      <div class="block sm:hidden">
+      <div class="flex flex-col sm:hidden w-full divide-y">
         <div
           v-for="(strategy, strategyIndex) in allStrategies[selectedStrategy]"
           :key="strategyIndex"
-          class="flex flex-col w-full bg-white"
+          class="flex w-full bg-white py-2 gap-2"
         >
-          <div>{{ strategy.sub_strategy }}</div>
+          <div
+            class="text-white w-5 h-5 rounded-full flex justify-center wv-b6"
+            :class="`bg-wv-${plans[selectedStrategy].strategy_en}`"
+          >
+            <span>{{ strategyIndex + 1 }}</span>
+          </div>
+          <p class="wv-b5 wv-bold">{{ strategy.sub_strategy }}</p>
         </div>
       </div>
     </div>
