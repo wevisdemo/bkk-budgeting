@@ -16,7 +16,7 @@ module.exports = {
     "vue/no-undef-components": [
       "error",
       {
-        ignorePatterns: ["Nuxt"],
+        ignorePatterns: ["Nuxt", "NuxtLink"],
       },
     ],
   },
