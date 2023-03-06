@@ -27,7 +27,7 @@
             @click="() => selectProjects(project)"
           >
             <p class="wv-b3 wv-bold">{{ project.name }}</p>
-            <p class="wv-b6">{{ project.desc }}</p>
+            <p class="wv-b6">({{ project.desc }})</p>
           </div>
         </div>
       </div>
@@ -165,7 +165,7 @@ interface NocoTableRowType {
   dimension: string;
   district: string;
   province: string | null;
-  hasHouseReg: boolean;
+  hasHouseReg: boolean | null;
   isInBkk: boolean;
   date: string;
 }
@@ -290,7 +290,7 @@ export default defineComponent({
           dimension: project.dimension,
           district: `เขต${this.formData.district.th_name}`,
           province: null,
-          hasHouseReg: false,
+          hasHouseReg: null,
           isInBkk: true,
           date: currentDate,
         });
