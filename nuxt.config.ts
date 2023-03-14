@@ -1,5 +1,7 @@
 import type { NuxtConfig } from "@nuxt/types";
 import { createMetadata } from "./utils/metadata";
+import { generateOgImageRoutes } from "./utils/ogimages";
+
 const BASE_PATH = process.env.BASE_PATH || "";
 const { title, meta } = createMetadata();
 
@@ -86,6 +88,10 @@ const config: NuxtConfig = {
     manifest: {
       lang: "en",
     },
+  },
+
+  generate: {
+    routes: generateOgImageRoutes(),
   },
 };
 
