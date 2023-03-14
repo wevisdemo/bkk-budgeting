@@ -217,7 +217,7 @@ export default defineComponent({
       const data: NocoTableRowType = await this.$nocoDb.dbViewRow.findOne(
         "v1",
         "bangkok-budgeting",
-        "User-data",
+        "poll-data",
         "BkkBudgetCsv",
         { where: `(userId,eq,${cookieId})` },
       );
@@ -227,7 +227,7 @@ export default defineComponent({
       await this.$nocoDb.dbTableRow.bulkCreate(
         "v1",
         "bangkok-budgeting",
-        "User-data",
+        "poll-data",
         data,
       );
     },
