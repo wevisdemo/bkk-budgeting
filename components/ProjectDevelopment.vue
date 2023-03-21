@@ -164,10 +164,6 @@ interface NocoTableRowType {
   vote: string;
   dimension: string;
   district: string;
-  province: string | null;
-  hasHouseReg: boolean | null;
-  isInBkk: boolean;
-  date: string;
 }
 
 interface ProjectDevelopmentData {
@@ -213,23 +209,18 @@ export default defineComponent({
     }
   },
   methods: {
-    async findTableViewRow(cookieId: string) {
+    async findTableViewRow(table: string, view: string, cookieId: string) {
       const data: NocoTableRowType = await this.$nocoDb.dbViewRow.findOne(
         "v1",
         "bangkok-budgeting",
-        "poll-data",
-        "BkkBudgetCsv",
+        table,
+        view,
         { where: `(userId,eq,${cookieId})` },
       );
       return data;
     },
-    async postTableRow(data: NocoTableRowType[]) {
-      await this.$nocoDb.dbTableRow.bulkCreate(
-        "v1",
-        "bangkok-budgeting",
-        "poll-data",
-        data,
-      );
+    async postTableRow(table: string, data: NocoTableRowType[]) {
+      await this.$nocoDb.dbTableRow.bulkCreate("v1", "bangkok-budgeting", table, data);
     },
     openDialog() {
       this.dialogOpen = true;
@@ -276,7 +267,6 @@ export default defineComponent({
       const array = [] as any;
       const arrayForNoco = [] as NocoTableRowType[];
       const arrayNoco = [] as NocoTableRowType[];
-      const currentDate = this.$moment().format("YYYY-MM-DD");
 
       this.formData.projects.forEach(project => {
         array.push({
@@ -289,10 +279,6 @@ export default defineComponent({
           vote: project.name,
           dimension: project.dimension,
           district: `เขต${this.formData.district.th_name}`,
-          province: null,
-          hasHouseReg: null,
-          isInBkk: true,
-          date: currentDate,
         });
       });
 
@@ -300,13 +286,17 @@ export default defineComponent({
         // find row from db that matches cookie uuid
         // find if the current user is a returning user??
         const cookieId = this.$cookies.get("uuid");
-        const rowData: NocoTableRowType = await this.findTableViewRow(cookieId);
+        const rowData: NocoTableRowType = await this.findTableViewRow(
+          "poll-data",
+          "BkkBudgetCsv",
+          cookieId,
+        );
 
         if (rowData.userId === cookieId) {
           arrayNoco.push(rowData);
         } else {
           // eslint-disable-next-line no-console
-          console.log(`User not found: ${cookieId} `);
+          console.error(`User not found: ${cookieId}`);
         }
       } catch (e) {
         // eslint-disable-next-line no-console
@@ -314,24 +304,9 @@ export default defineComponent({
         return;
       }
 
-      // update current data for returning user??
-      // if (arrayNoco.length > 1) {
-      //   arrayForNoco.forEach(nocoRow => {
-      //     nocoRow.district = arrayNoco[0].district === "" ? "-" : arrayNoco[0].district;
-      //     nocoRow.province = arrayNoco[0].province === "" ? "-" : arrayNoco[0].province;
-      //     if (arrayNoco[0].isInBkk) {
-      //       if (arrayNoco[0].hasHouseReg) {
-      //         nocoRow.hasHouseReg = "มี";
-      //       } else nocoRow.hasHouseReg = "ไม่มี";
-      //     } else {
-      //       nocoRow.isInBkk = arrayNoco[0].isInBkk ? "อยู่" : "ไม่อยู่";
-      //     }
-      //   });
-      // }
-
       try {
         await this.showLoading();
-        await this.postTableRow(arrayForNoco);
+        await this.postTableRow("poll-data", arrayForNoco);
 
         this.isVoted = true;
         this.$cookies.set("isVoted", "true");
