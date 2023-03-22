@@ -46,32 +46,33 @@ import { saveAs } from "file-saver";
 import districtData from "~/data/districts.json";
 import projectsData from "~/data/projects.json";
 
-const PROJECT_ID = 10;
+const CURRENT_PROJECT_ID = 10;
 
 export default Vue.extend({
   data() {
     return {
       withLogo: true,
       districts: districtData.slice(4),
-      current_project: projectsData[PROJECT_ID - 1],
+      current_project: projectsData[CURRENT_PROJECT_ID - 1],
       wevis_logo: require("~/assets/logo/wevis_logo.svg"),
+      projectId: "",
+      projectName: "",
+      districtName: "",
     };
   },
-  // head() {
-  //   return {
-  //     meta: [
-  //     {
-  //         hid: "og-image",
-  //         property: "og:image",
-  //         content: this.$cookies.get("isUpCountry")
-  //           ? "https://d208eq9ndr4893.cloudfront.net/og-image/upcountry.png"
-  //           : "https://d208eq9ndr4893.cloudfront.net/og-image/" +
-  //             this.$route.params.variation +
-  //             ".png",
-  //       },
-  //     ]
-  //   }
-  // },
+  head() {
+    return {
+      meta: [
+        {
+          hid: "og-image",
+          property: "og:image",
+          content: this.$cookies.get("isUpCountry")
+            ? "https://wevisdemo.github.io/bkk-budgeting/images/og-share/upcountry.png"
+            : `https://wevisdemo.github.io/bkk-budgeting/images/og-share/${this.projectId}-og-${this.projectName}/${this.districtName}-${this.projectId}.jpg`,
+        },
+      ],
+    };
+  },
   mounted() {
     // this.convertHtml2Canvas();
     window.location.href = "https://wevisdemo.github.io/bkk-budgeting/";
@@ -98,9 +99,9 @@ export default Vue.extend({
       const TYPE = this.current_project.type;
 
       document.querySelectorAll("img").forEach(element => {
-        const zipFolder = zip.folder(`${PROJECT_ID}-og-${TYPE}`);
+        const zipFolder = zip.folder(`${CURRENT_PROJECT_ID}-og-${TYPE}`);
         zipFolder.file(
-          element.id.replace("result-", "") + `-${PROJECT_ID}.png`,
+          element.id.replace("result-", "") + `-${CURRENT_PROJECT_ID}.png`,
           element.src.replace(/^data:image\/(png|jpg);base64,/, ""),
           {
             base64: true,
@@ -108,7 +109,7 @@ export default Vue.extend({
         );
       });
       zip.generateAsync({ type: "blob" }).then(function (content: any) {
-        saveAs(content, `${PROJECT_ID}-og-${TYPE}.zip`);
+        saveAs(content, `${CURRENT_PROJECT_ID}-og-${TYPE}.zip`);
       });
     },
   },

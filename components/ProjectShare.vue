@@ -14,8 +14,8 @@
           <img
             :src="
               isUpCountry
-                ? `wevisdemo.github.io/bkk-budgeting/images/og-share/upcountry.png`
-                : `wevisdemo.github.io/bkk-budgeting/images/og-share/${project_id}-og-${project_name}/${district_name}-${project_id}.jpg`
+                ? `https://wevisdemo.github.io/bkk-budgeting/images/og-share/upcountry.png`
+                : `https://wevisdemo.github.io/bkk-budgeting/images/og-share/${project_id}-og-${project_type}/${district_name}-${project_id}.jpg`
             "
           />
         </div>
@@ -30,8 +30,8 @@
             data-sharer="facebook"
             :data-url="
               district == 'upcountry'
-                ? `wevisdemo.github.io/bkk-budgeting/images/og-share/upcountry`
-                : `wevisdemo.github.io/bkk-budgeting/images/og-share/${project_id}-og-${project_name}/${district_name}-${project_id}.jpg`
+                ? `https://wevisdemo.github.io/bkk-budgeting/images/og-share/upcountry`
+                : `https://wevisdemo.github.io/bkk-budgeting/images/og-share/${project_id}-og-${project_type}/${district_name}-${project_id}.jpg`
             "
           />
           <img
@@ -41,8 +41,8 @@
             data-sharer="twitter"
             :data-url="
               district == 'upcountry'
-                ? `wevisdemo.github.io/bkk-budgeting/images/og-share/upcountry`
-                : `wevisdemo.github.io/bkk-budgeting/images/og-share/${project_id}-og-${project_name}/${district_name}-${project_id}.jpg`
+                ? `https://wevisdemo.github.io/bkk-budgeting/images/og-share/upcountry`
+                : `https://wevisdemo.github.io/bkk-budgeting/images/og-share/${project_id}-og-${project_type}/${district_name}-${project_id}.jpg`
             "
           />
           <img
@@ -52,8 +52,8 @@
             data-sharer="line"
             :data-url="
               district == 'upcountry'
-                ? `wevisdemo.github.io/bkk-budgeting/images/og-share/upcountry`
-                : `wevisdemo.github.io/bkk-budgeting/images/og-share/${project_id}-og-${project_name}/${district_name}-${project_id}.jpg`
+                ? `https://wevisdemo.github.io/bkk-budgeting/images/og-share/upcountry`
+                : `https://wevisdemo.github.io/bkk-budgeting/images/og-share/${project_id}-og-${project_type}/${district_name}-${project_id}.jpg`
             "
           />
         </div>
@@ -87,7 +87,7 @@ export default Vue.extend({
     return {
       district_name: districtData[4].en_name,
       project_id: 1,
-      project_name: "",
+      project_type: "",
       isUpCountry: false,
       isDefault: true,
       icon_fb: require("~/assets/logo/facebook.svg"),
@@ -109,12 +109,22 @@ export default Vue.extend({
       } else {
         this.isUpCountry = false;
         this.isDefault = false;
-        if (district.en_name) this.district_name = district.en_name;
+        if (district.en_name) {
+          this.district_name = district.en_name;
+          this.$store.commit("setSelectedVoteDropdown", {
+            district_name: district.en_name,
+          });
+        }
       }
     },
     onProjectChange(project: Project) {
       this.project_id = project.id;
-      this.project_name = project.name;
+      this.project_type = project.type;
+      // save to store
+      this.$store.commit("setSelectedVoteDropdown", {
+        project_type: this.project_type,
+        project_id: this.project_id,
+      });
     },
   },
 });
