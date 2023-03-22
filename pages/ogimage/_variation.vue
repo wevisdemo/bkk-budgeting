@@ -55,9 +55,9 @@ export default Vue.extend({
       districts: districtData.slice(4),
       current_project: projectsData[CURRENT_PROJECT_ID - 1],
       wevis_logo: require("~/assets/logo/wevis_logo.svg"),
-      projectId: "",
-      projectName: "",
-      districtName: "",
+      projectId: this.$store.state.selectedVoteDropdown.projectId,
+      projectName: this.$store.state.selectedVoteDropdown.projectName,
+      districtName: this.$store.state.selectedVoteDropdown.districtName,
     };
   },
   head() {
