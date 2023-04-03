@@ -15,11 +15,7 @@
         <p class="wv-b6 text-wv-gray-1">ภาพปกเมื่อคุณแชร์เว็บไซต์นี้ :</p>
         <div class="ogimage max-w-[1000px] border rounded outline">
           <img
-            :src="
-              isUpCountry
-                ? `https://wevisdemo.github.io/bkk-budgeting/images/og-share/upcountry.png`
-                : `https://wevisdemo.github.io/bkk-budgeting/images/og-share/${project_id}-og-${project_type}/${district_name}-${project_id}.jpg`
-            "
+            :src="`https://wevisdemo.github.io/bkk-budgeting/images/og-share/${project_id}-og-${project_type}/${district_name}-${project_id}.jpg`"
           />
         </div>
       </div>
@@ -84,7 +80,6 @@ export default Vue.extend({
       project_id: 1,
       project_type: "environment",
       isUpCountry: false,
-      isDefault: true,
       icon_fb: require("~/assets/logo/facebook.svg"),
       icon_line: require("~/assets/logo/line.svg"),
       icon_twitter: require("~/assets/logo/twitter.svg"),
@@ -92,43 +87,33 @@ export default Vue.extend({
   },
   methods: {
     onDistrictChange(district: District) {
-      if (district.en_name === "upcountry") {
-        this.$cookies.set("isUpCountry", true);
-        this.isUpCountry = true;
-      } else if (district.en_name === null) {
-        // eslint-disable-next-line no-console
-        console.log(`default`);
-        this.isDefault = true;
-        this.isUpCountry = false;
-        if (!district.en_name) {
-          this.district_name = districtData.filter(
-            district => district.en_name === defaultDistrict,
-          )[0].en_name;
-        }
+      if (district.en_name !== null) {
+        this.district_name = district.en_name;
+        this.$store.commit("setSelectedVoteDropdown", {
+          district_name: district.en_name,
+        });
       } else {
-        this.isUpCountry = false;
-        this.isDefault = false;
-        if (district.en_name) {
-          this.district_name = district.en_name;
-          this.$store.commit("setSelectedVoteDropdown", {
-            district_name: district.en_name,
-          });
-        }
+        this.district_name = districtData.filter(
+          _district => _district.en_name === defaultDistrict,
+        )[0].en_name;
       }
     },
     onProjectChange(project: Project) {
       if (project.name === "เลือกโครงการ") {
         this.project_id = 1;
         this.project_type = "environment";
+        this.$store.commit("setSelectedVoteDropdown", {
+          project_type: "environment",
+          project_id: 1,
+        });
       } else {
         this.project_id = project.id;
         this.project_type = project.type;
-        // save to store
+        this.$store.commit("setSelectedVoteDropdown", {
+          project_type: project.type,
+          project_id: project.id,
+        });
       }
-      this.$store.commit("setSelectedVoteDropdown", {
-        project_type: this.project_type,
-        project_id: this.project_id,
-      });
     },
   },
 });
