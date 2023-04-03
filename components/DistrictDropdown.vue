@@ -69,6 +69,14 @@ export default defineComponent({
           x.th_name !== "เลือกพื้นที่",
       );
       this.selected_district = this.districts[0];
+    } else if (this.type === 3) {
+      this.districts = this.districts.filter(
+        x =>
+          x.th_name !== "กรุณาเลือกเขต" &&
+          x.th_name !== "ทุกเขต" &&
+          x.th_name !== "จังหวัดอื่นๆ",
+      );
+      this.selected_district = this.districts[0];
     } else {
       this.districts = this.districts.filter(
         x => x.th_name !== "กรุณาเลือกเขต" && x.th_name !== "ทุกเขต",

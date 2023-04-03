@@ -1,12 +1,15 @@
 <template>
   <div class="bg-white">
-    <BoxContainer>
+    <BoxContainer class="sm:py-20">
       <div class="flex flex-col items-center gap-6 text-center m-auto">
         <h5 class="wv-h5 wv-bold">
           ร่วมส่งต่อโครงการที่อยากให้เกิดขึ้นในพื้นที่ของคุณ
         </h5>
         <div class="grid grid-cols-2 gap-2">
-          <DistrictDropdown @change="district => onDistrictChange(district)" />
+          <DistrictDropdown
+            :type="3"
+            @change="district => onDistrictChange(district)"
+          />
           <ProjectDropdown @change="project => onProjectChange(project)" />
         </div>
         <p class="wv-b6 text-wv-gray-1">ภาพปกเมื่อคุณแชร์เว็บไซต์นี้ :</p>
@@ -20,45 +23,33 @@
           />
         </div>
       </div>
-      <div class="text-center">
-        <div class="flex justify-center">
+      <div class="text-center mt-4">
+        <div class="flex gap-3 justify-center items-center mb-4">
           <div>Share</div>
           <img
             v-sharer
             :src="icon_fb"
-            class="sharer social-icon pointer mx-1"
+            class="sharer social-icon pointer"
             data-sharer="facebook"
-            :data-url="
-              district == 'upcountry'
-                ? `https://wevisdemo.github.io/bkk-budgeting/images/og-share/upcountry`
-                : `https://wevisdemo.github.io/bkk-budgeting/images/og-share/${project_id}-og-${project_type}/${district_name}-${project_id}.jpg`
-            "
+            :data-url="`https://wevisdemo.github.io/bkk-budgeting/images/og-share/${project_id}-og-${project_type}/${district_name}-${project_id}.jpg`"
           />
           <img
             v-sharer
             :src="icon_twitter"
-            class="sharer social-icon pointer mx-1"
+            class="sharer social-icon pointer"
             data-sharer="twitter"
-            :data-url="
-              district == 'upcountry'
-                ? `https://wevisdemo.github.io/bkk-budgeting/images/og-share/upcountry`
-                : `https://wevisdemo.github.io/bkk-budgeting/images/og-share/${project_id}-og-${project_type}/${district_name}-${project_id}.jpg`
-            "
+            :data-url="`https://wevisdemo.github.io/bkk-budgeting/images/og-share/${project_id}-og-${project_type}/${district_name}-${project_id}.jpg`"
           />
           <img
             v-sharer
             :src="icon_line"
-            class="sharer social-icon pointer mx-1"
+            class="sharer social-icon pointer"
             data-sharer="line"
-            :data-url="
-              district == 'upcountry'
-                ? `https://wevisdemo.github.io/bkk-budgeting/images/og-share/upcountry`
-                : `https://wevisdemo.github.io/bkk-budgeting/images/og-share/${project_id}-og-${project_type}/${district_name}-${project_id}.jpg`
-            "
+            :data-url="`https://wevisdemo.github.io/bkk-budgeting/images/og-share/${project_id}-og-${project_type}/${district_name}-${project_id}.jpg`"
           />
         </div>
         <div class="wv-b">
-          <span class="text-wv-gray-1">หรือร่วมกันติดแฮชแท็ก</span>
+          <span>หรือร่วมกันติดแฮชแท็ก</span>
           <span class="text-wv-green">#BangkokBudgeting</span>
         </div>
       </div>
@@ -77,6 +68,8 @@ import ProjectDropdown, { Project } from "~/components/ProjectDropdown.vue";
 
 import districtData from "~/data/districts.json";
 
+const defaultDistrict = "pomprapsattruphai";
+
 export default Vue.extend({
   name: "ProjectShare",
   components: { BoxContainer, DistrictDropdown, ProjectDropdown },
@@ -85,9 +78,11 @@ export default Vue.extend({
   },
   data() {
     return {
-      district_name: districtData[4].en_name,
+      district_name: districtData.filter(
+        _district => _district.en_name === defaultDistrict,
+      )[0].en_name,
       project_id: 1,
-      project_type: "",
+      project_type: "environment",
       isUpCountry: false,
       isDefault: true,
       icon_fb: require("~/assets/logo/facebook.svg"),
@@ -105,7 +100,11 @@ export default Vue.extend({
         console.log(`default`);
         this.isDefault = true;
         this.isUpCountry = false;
-        if (!district.en_name) this.district_name = districtData[4].en_name;
+        if (!district.en_name) {
+          this.district_name = districtData.filter(
+            district => district.en_name === defaultDistrict,
+          )[0].en_name;
+        }
       } else {
         this.isUpCountry = false;
         this.isDefault = false;
@@ -118,9 +117,14 @@ export default Vue.extend({
       }
     },
     onProjectChange(project: Project) {
-      this.project_id = project.id;
-      this.project_type = project.type;
-      // save to store
+      if (project.name === "เลือกโครงการ") {
+        this.project_id = 1;
+        this.project_type = "environment";
+      } else {
+        this.project_id = project.id;
+        this.project_type = project.type;
+        // save to store
+      }
       this.$store.commit("setSelectedVoteDropdown", {
         project_type: this.project_type,
         project_id: this.project_id,
