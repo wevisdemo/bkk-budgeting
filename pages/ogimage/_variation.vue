@@ -66,19 +66,19 @@ export default Vue.extend({
         {
           hid: "og-image",
           property: "og:image",
-          content: this.$cookies.get("isUpCountry")
-            ? "https://wevisdemo.github.io/bkk-budgeting/images/og-share/upcountry.png"
-            : `https://wevisdemo.github.io/bkk-budgeting/images/og-share/${this.projectId}-og-${this.projectName}/${this.districtName}-${this.projectId}.jpg`,
+          content: `https://wevisdemo.github.io/bkk-budgeting/images/og-share/${this.projectId}-og-${this.projectName}/${this.districtName}-${this.projectId}.jpg`,
         },
       ],
     };
   },
   mounted() {
+    // used for generating og images - local dev only
     // this.convertHtml2Canvas();
     window.location.href = "https://wevisdemo.github.io/bkk-budgeting/";
   },
   methods: {
     convertHtml2Canvas() {
+      // convert images to canvas
       this.districts.forEach((element: any, index: number) => {
         const images = document.getElementById("district-" + index)!;
         html2canvas(images).then(canvas => {
@@ -94,6 +94,7 @@ export default Vue.extend({
       });
     },
     downloadImageZip() {
+      // zip canvas images and download zip
       const JSZip = require("jszip");
       const zip = new JSZip();
       const TYPE = this.current_project.type;
