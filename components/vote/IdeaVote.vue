@@ -26,7 +26,7 @@
     <div class="flex justify-center py-4">
       <button
         class="border border-black rounded p-3 flex items-center gap-2"
-        @click="openDialog"
+        @click.stop="openDialog"
       >
         <i
           ><svg
@@ -89,6 +89,42 @@
         <span>เสนอไอเดียเพิ่มเติม</span>
       </button>
     </div>
+    <FormDialog v-if="dialogOpen">
+      <form @submit.prevent="handleSendIdea">
+        <div class="flex flex-col items-center justify-center gap-2">
+          <p class="wv-h8 text-white">
+            ขอเสนอโครงการเพิ่มเติมเพื่อออกแบบงบประมาณพัฒนาเมือง
+          </p>
+          <div
+            v-click-outside="closeDialog"
+            class="py-6 px-8 max-w-lg w-full"
+            style="background-color: #dedede"
+          >
+            <div>
+              <p class="wv-b3 font-thin">มีอะไรเพิ่มเติมอยากเสนอกรุงเทพฯไหม?</p>
+              <textarea
+                v-model="voteIdeaComment"
+                class="w-full p-2"
+                name=""
+                placeholder="เช่น เสนอให้มีโครงการสอนภาษาญี่ปุ่น..."
+                cols="30"
+                rows="10"
+              ></textarea>
+              <div class="pt-6">
+                <button
+                  class="bg-white text-black px-2 py-1 rounded-sm"
+                  :class="voteIdeaComment.length === 0 ? `opacity-30` : ``"
+                  type="submit"
+                  :disabled="voteIdeaComment.length === 0"
+                >
+                  ส่ง
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </FormDialog>
   </BoxContainer>
 </template>
 
@@ -97,6 +133,7 @@ import { defineComponent } from "vue";
 import VoteProgress from "./VoteProgress.vue";
 import BoxContainer from "~/components/BoxContainer.vue";
 import DistrictDropdown from "~/components/DistrictDropdown.vue";
+import FormDialog from "~/components/dialog/FormDialog.vue";
 
 import type { District } from "~/components/DistrictDropdown.vue";
 import type { ProjectVote } from "~/components/ProjectDropdown.vue";
@@ -122,11 +159,12 @@ interface IdeaVoteData {
   projectResponseData: NocoDBResponseType;
   isAllDistrict: boolean;
   selected_district_name: string;
+  voteIdeaComment: any;
 }
 
 export default defineComponent({
   name: "IdeaVote",
-  components: { VoteProgress, BoxContainer, DistrictDropdown },
+  components: { VoteProgress, BoxContainer, DistrictDropdown, FormDialog },
   data(): IdeaVoteData {
     return {
       dialogOpen: false,
@@ -138,10 +176,11 @@ export default defineComponent({
       projectResponseData: {} as NocoDBResponseType,
       isAllDistrict: true,
       selected_district_name: "ทุกเขต",
+      voteIdeaComment: "",
     };
   },
   computed: {
-    totalVotes() {
+    totalVotes(): number | undefined {
       if (!this.projectResponseData.pageInfo) return;
       return this.projectResponseData.pageInfo.totalRows;
     },
@@ -152,7 +191,12 @@ export default defineComponent({
   },
   methods: {
     openDialog() {
+      // eslint-disable-next-line no-console
+      console.log(`open dialog`);
       this.dialogOpen = true;
+    },
+    closeDialog() {
+      this.dialogOpen = false;
     },
     async onChangeDistrict(district: District) {
       this.resetVotes();
@@ -176,6 +220,26 @@ export default defineComponent({
             where: districtThName ? `(district,eq,เขต${districtThName})` : ``,
           },
         );
+        return data;
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.error(error);
+      }
+    },
+    async handleSendIdea() {
+      if (!this.voteIdeaComment) return;
+
+      try {
+        const data = await this.$nocoDb.dbTableRow.create(
+          "v1",
+          "bangkok-budgeting",
+          "idea-data",
+          {
+            userId: this.$cookies.get("uuid"),
+            idea: this.voteIdeaComment,
+          },
+        );
+        this.dialogOpen = false;
         return data;
       } catch (error) {
         // eslint-disable-next-line no-console
