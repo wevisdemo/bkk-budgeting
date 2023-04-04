@@ -9,7 +9,9 @@
             <DistrictDropdown :type="2" @change="onChangeDistrict" />
           </div>
         </div>
-        <p class="wv-b5">ทั้งหมด <strong>xx,xxxx</strong> คน</p>
+        <p class="wv-b5">
+          ทั้งหมด <strong>{{ totalVotes }}</strong> คน
+        </p>
       </div>
     </div>
     <div class="flex flex-col gap-2 w-full my-4 max-w-[600px] m-auto">
@@ -100,9 +102,24 @@ import type { District } from "~/components/DistrictDropdown.vue";
 import type { ProjectVote } from "~/components/ProjectDropdown.vue";
 import projectsData from "~/data/projects.json";
 
+interface NocoDBResponseType {
+  list: {
+    projectId: string;
+    count: string;
+  }[];
+  pageInfo: {
+    isFirstPage: boolean;
+    isLastPage: boolean;
+    page: number;
+    pageSize: number;
+    totalRows: number;
+  };
+}
+
 interface IdeaVoteData {
   dialogOpen: boolean;
   ideaVotes: ProjectVote[];
+  projectResponseData: NocoDBResponseType;
   isAllDistrict: boolean;
   selected_district_name: string;
 }
@@ -118,14 +135,19 @@ export default defineComponent({
         vote_count: 0,
         progress: 0,
       })) as ProjectVote[],
+      projectResponseData: {} as NocoDBResponseType,
       isAllDistrict: true,
       selected_district_name: "ทุกเขต",
     };
   },
+  computed: {
+    totalVotes() {
+      if (!this.projectResponseData.pageInfo) return;
+      return this.projectResponseData.pageInfo.totalRows;
+    },
+  },
   async mounted() {
-    // todo: get unique rows in db for total amount of voters
-    // await this.$nocoDb.dbViewRow
-    await this.getChartData();
+    this.projectResponseData = await this.getProjectData();
     this.calculatePercentage();
   },
   methods: {
@@ -133,45 +155,62 @@ export default defineComponent({
       this.dialogOpen = true;
     },
     async onChangeDistrict(district: District) {
+      this.resetVotes();
       this.selected_district_name = district.th_name;
-      await this.getChartData();
+      this.projectResponseData = await this.getProjectData(district.th_name);
       this.calculatePercentage();
     },
-    async getChartData() {
+    async groubByTableRow(
+      columnName: string,
+      sortName?: string[],
+      districtThName?: District["th_name"],
+    ) {
+      try {
+        const data = await this.$nocoDb.dbTableRow.groupBy(
+          "v1",
+          "bangkok-budgeting",
+          "poll-data",
+          {
+            column_name: columnName,
+            sort: sortName,
+            where: districtThName ? `(district,eq,เขต${districtThName})` : ``,
+          },
+        );
+        return data;
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.error(error);
+      }
+    },
+    resetVotes() {
       this.ideaVotes.forEach(strategy => {
         strategy.progress = 0;
         strategy.vote_count = 0;
       });
-      const ref = this.$fire.database.ref("voteProject");
-      try {
-        const snapshots = await ref.once("value");
-        if (this.selected_district_name === "ทุกเขต") {
-          for (const [key, value] of Object.entries(snapshots.val().all_district)) {
-            const index = key.replace("project_", "");
-            const votes = value as number;
-            this.ideaVotes[parseInt(index) - 1].vote_count = votes;
-          }
-        } else {
-          for (const [key, value] of Object.entries(
-            snapshots.val().choice_1[this.selected_district_name],
-          )) {
-            const index = key.replace("project_", "");
-            const votes = value as number;
-            this.ideaVotes[parseInt(index) - 1].vote_count = votes;
-          }
-        }
-      } catch (e) {
-        alert(e);
+    },
+    async getProjectData(districtThName?: string) {
+      const result: NocoDBResponseType = await this.groubByTableRow(
+        "projectId",
+        ["projectId"],
+        districtThName,
+      );
+
+      if (result.list.length > 0) {
+        this.ideaVotes.forEach((strategy, index) => {
+          const _vouteCount = parseInt(result.list[index]?.count);
+          strategy.vote_count = _vouteCount;
+        });
       }
+      return result;
     },
     calculatePercentage() {
-      const totalVoteCount = this.ideaVotes.reduce(
-        (previous, current) => previous + current.vote_count,
-        0,
-      );
+      const totalVote = this.projectResponseData.pageInfo.totalRows;
+
       this.ideaVotes.forEach(project => {
-        const percentage = (project.vote_count / totalVoteCount) * 100;
-        project.progress = parseFloat(percentage.toFixed(2));
+        if (project.vote_count > 0) {
+          const percentage = (project.vote_count / totalVote) * 100;
+          project.progress = parseFloat(percentage.toFixed(2));
+        }
       });
     },
   },
