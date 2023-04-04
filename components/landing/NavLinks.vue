@@ -5,7 +5,7 @@
       <NuxtLink
         v-for="(item, index) in links"
         :key="index"
-        :to="item.link"
+        :to="item.anchorLink || item.pageLink"
         class="py-1 flex items-center justify-between gap-2"
       >
         <p class="wv-b5">{{ item.title }}</p>
@@ -22,7 +22,8 @@ import { PropType, defineComponent } from "vue";
 
 interface Link {
   title: string;
-  link: string;
+  pageLink: string;
+  anchorLink: string;
 }
 
 type ArrowDirection = "Down" | "Right";

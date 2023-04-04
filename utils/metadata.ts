@@ -1,8 +1,7 @@
 export const BASE_TITLE = "Bangkok Budgeting";
 const DESCRIPTION = "เปิดเผยอย่างโปร่งใส เพื่อใครๆ ก็มีส่วนร่วมกับงบกรุงเทพฯ ได้";
 // todo: update url to production
-export const DEFAULT_OG_IMAGE =
-  "https://wevisdemo.github.io/bkk-budgeting/og_default.jpg";
+export const DEFAULT_OG_IMAGE = `https://wevisdemo.github.io/bkk-budgeting/images/og_default.jpg`;
 
 interface createMetadataParams {
   pageName?: string;

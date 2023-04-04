@@ -78,29 +78,29 @@ export default Vue.extend({
       budgetPlans: [
         {
           title: "วางแผนแก้ปัญหาแบบไหน",
-          link: "",
+          anchorLink: "#problemPlanning",
         },
         {
           title: "ใช้ทำอะไรไปแล้ว",
-          link: "",
+          anchorLink: "#budgetplans",
         },
         {
           title: "อยากให้งบทำเรื่องอะไร",
-          link: "",
+          anchorLink: "#projectsDevelopment",
         },
       ],
       budgetExplore: [
         {
           title: "รายปี",
-          link: "",
+          pageLink: "problemPlanning",
         },
         {
           title: "รายหน่วยงาน",
-          link: "",
+          pageLink: "problemPlanning",
         },
         {
           title: "ค้นด้วยคีย์เวิร์ด",
-          link: "",
+          pageLink: "problemPlanning",
         },
       ],
     };

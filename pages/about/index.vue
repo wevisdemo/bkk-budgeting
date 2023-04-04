@@ -49,7 +49,7 @@
       </div>
       <!-- data and restrictions -->
       <div class="grid gap-6">
-        <h5 class="wv-h5 wv-bold">เกี่ยวกับโปรเจกต์นี้</h5>
+        <h5 class="wv-h5 wv-bold">ที่มาของข้อมูล & ข้อจำกัด</h5>
         <div class="grid gap-4">
           <p>
             ทางทีมผู้พัฒนา ได้ใช้ข้อมูลจากเว็บไซต์ทางการของกรุงเทพมหานครตามลิงก์ต่างๆ
@@ -67,7 +67,7 @@
       </div>
       <!-- refs -->
       <div class="grid gap-6">
-        <h5 class="wv-h5 wv-bold">เกี่ยวกับโปรเจกต์นี้</h5>
+        <h5 class="wv-h5 wv-bold">อ้างอิงข้อมูลจาก</h5>
         <div class="grid gap-4">
           <ul class="list-disc list-inside">
             <li v-for="(ref, refIndex) in references" :key="refIndex">
@@ -78,7 +78,7 @@
       </div>
       <!-- policy -->
       <div class="grid gap-6">
-        <h5 class="wv-h5 wv-bold">เกี่ยวกับโปรเจกต์นี้</h5>
+        <h5 class="wv-h5 wv-bold">นโยบายการนำข้อมูลไปใช้ต่อ</h5>
         <div class="grid gap-4">
           <p>
             ทางทีมมีความตั้งใจที่พัฒนาทุกโปรเจ็กต์ให้เป็น Open Source และเปิดข้อมูลเป็น
@@ -113,7 +113,7 @@
       </div>
       <!-- partners -->
       <div class="grid gap-6">
-        <h5 class="wv-h5 wv-bold">เกี่ยวกับโปรเจกต์นี้</h5>
+        <h5 class="wv-h5 wv-bold">PARTNERS</h5>
         <div class="grid gap-4">
           <ul class="list-disc list-inside">
             <li
@@ -138,20 +138,81 @@
           </div>
         </div>
       </div>
+      <!-- download -->
+      <div class="flex justify-center">
+        <WvButton color="black" @click.stop="handleDownloadData">
+          <svg
+            width="40"
+            height="40"
+            viewBox="0 0 40 40"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M20 3V27.2101M10.1719 17.9494L20 27.3424L29.8281 17.9494M3 27.3424V37H37V27.8716"
+              stroke="currentColor"
+              stroke-width="5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+          <span class="wv-h5 wv-bold">ดาวน์โหลดข้อมูล</span>
+        </WvButton>
+      </div>
+      <div class="text-center mt-4">
+        <div class="flex gap-3 justify-center items-center mb-4">
+          <div>Share</div>
+          <img
+            v-sharer
+            :src="icon_fb"
+            class="sharer social-icon pointer"
+            data-sharer="facebook"
+            :data-url="shareUrl"
+          />
+          <img
+            v-sharer
+            :src="icon_twitter"
+            class="sharer social-icon pointer"
+            data-sharer="twitter"
+            :data-url="shareUrl"
+          />
+          <img
+            v-sharer
+            :src="icon_line"
+            class="sharer social-icon pointer"
+            data-sharer="line"
+            :data-url="shareUrl"
+          />
+        </div>
+      </div>
     </div>
   </BoxContainer>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
+// @ts-ignore
+import VueSharer from "vue-sharer";
+// @ts-ignore
+import WvButton from "@wevisdemo/ui/vue2/button";
+
 import BoxContainer from "~/components/BoxContainer.vue";
 import { createMetadata } from "~/utils/metadata";
 
 export default Vue.extend({
   name: "AboutPage",
-  components: { BoxContainer },
+  components: { BoxContainer, WvButton },
+  directives: {
+    sharer: VueSharer,
+  },
   data() {
     return {
+      shareUrl: `https://wevisdemo.github.io/bkk-budgeting/images/og_default.jpg`,
+      isDownloadReady: false,
+      download: require("~/assets/icons/download.svg"),
+      icon_fb: require("~/assets/logo/facebook.svg"),
+      icon_line: require("~/assets/logo/line.svg"),
+      icon_twitter: require("~/assets/logo/twitter.svg"),
       references: [
         "http://dp2.bangkok.go.th/mobile/mymenu.php",
         "https://main.bangkok.go.th/",
@@ -201,5 +262,28 @@ export default Vue.extend({
     };
   },
   head: createMetadata({ pageName: "เกี่ยวกับโครงการ" }),
+  methods: {
+    async handleDownloadData() {
+      try {
+        const result = await this.$nocoDb.dbTableRow.csvExport(
+          "v1",
+          "bangkok-budgeting",
+          "poll-data",
+          "csv",
+        );
+
+        const blob = new Blob([result.data], { type: "text/csv;charset=utf-8;" });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.setAttribute("href", url);
+        link.setAttribute("download", "bangkok_budget_data.csv");
+        link.click();
+        return result;
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.error(error);
+      }
+    },
+  },
 });
 </script>

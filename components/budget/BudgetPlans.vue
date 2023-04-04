@@ -1,6 +1,9 @@
 <template>
   <BoxContainer>
-    <div class="flex flex-col gap-16 relative -mx-14 sm:mx-4">
+    <div
+      id="budgetplans"
+      class="flex flex-col gap-16 relative -mx-14 sm:mx-4 scroll-mt-8"
+    >
       <div class="flex justify-center items-center w-full text-center">
         <img
           src="~/assets/illustrations/budgetplans.svg"

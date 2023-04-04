@@ -1,9 +1,12 @@
 <template>
   <BoxContainer>
-    <div class="wv-h5 font-extrabold pb-1 text-center hidden sm:block">
+    <div
+      id="problemPlanning"
+      class="wv-h5 font-extrabold pb-1 text-center hidden sm:block scroll-mt-8"
+    >
       {{ title }}
     </div>
-    <div class="wv-h5 sm:pb-8 text-center block sm:hidden wv-bold">
+    <div id="problemPlanning" class="wv-h5 sm:pb-8 text-center block sm:hidden wv-bold">
       {{ title }}
     </div>
     <p class="text-center">เลือกได้ 1 ข้อ</p>
