@@ -125,6 +125,9 @@
         </div>
       </form>
     </FormDialog>
+    <Transition name="slide-fade">
+      <CookieWarning v-if="showCookieWarning" />
+    </Transition>
   </BoxContainer>
 </template>
 
@@ -134,6 +137,7 @@ import VoteProgress from "./VoteProgress.vue";
 import BoxContainer from "~/components/BoxContainer.vue";
 import DistrictDropdown from "~/components/DistrictDropdown.vue";
 import FormDialog from "~/components/dialog/FormDialog.vue";
+import CookieWarning from "~/components/CookieWarning.vue";
 
 import type { District } from "~/components/DistrictDropdown.vue";
 import type { ProjectVote } from "~/components/ProjectDropdown.vue";
@@ -160,11 +164,18 @@ interface IdeaVoteData {
   isAllDistrict: boolean;
   selected_district_name: string;
   voteIdeaComment: any;
+  showCookieWarning: boolean;
 }
 
 export default defineComponent({
   name: "IdeaVote",
-  components: { VoteProgress, BoxContainer, DistrictDropdown, FormDialog },
+  components: {
+    VoteProgress,
+    BoxContainer,
+    DistrictDropdown,
+    FormDialog,
+    CookieWarning,
+  },
   data(): IdeaVoteData {
     return {
       dialogOpen: false,
@@ -177,6 +188,7 @@ export default defineComponent({
       isAllDistrict: true,
       selected_district_name: "ทุกเขต",
       voteIdeaComment: "",
+      showCookieWarning: false,
     };
   },
   computed: {
@@ -191,9 +203,14 @@ export default defineComponent({
   },
   methods: {
     openDialog() {
-      // eslint-disable-next-line no-console
-      console.log(`open dialog`);
-      this.dialogOpen = true;
+      if (this.$store.state.isCookieSet) {
+        this.dialogOpen = true;
+      } else {
+        this.showCookieWarning = true;
+        setTimeout(() => {
+          this.showCookieWarning = false;
+        }, 2000);
+      }
     },
     closeDialog() {
       this.dialogOpen = false;
@@ -280,3 +297,18 @@ export default defineComponent({
   },
 });
 </script>
+
+<style lang="scss" scoped>
+.slide-fade-enter-active {
+  transition: all 0.3s ease-out;
+}
+
+.slide-fade-leave-active {
+  transition: all 0.5s cubic-bezier(1, 0.5, 0.8, 1);
+}
+
+.slide-fade-enter,
+.slide-fade-leave-to {
+  opacity: 0;
+}
+</style>
