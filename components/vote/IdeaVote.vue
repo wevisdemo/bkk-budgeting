@@ -193,8 +193,8 @@ export default defineComponent({
   },
   computed: {
     totalVotes(): number | undefined {
-      if (!this.projectResponseData.pageInfo) return;
-      return this.projectResponseData.pageInfo.totalRows;
+      if (!this.projectResponseData?.pageInfo) return;
+      return this.projectResponseData?.pageInfo.totalRows;
     },
   },
   async mounted() {
@@ -276,7 +276,7 @@ export default defineComponent({
         districtThName,
       );
 
-      if (result.list.length > 0) {
+      if (result?.list.length > 0) {
         this.ideaVotes.forEach((strategy, index) => {
           const _vouteCount = parseInt(result.list[index]?.count);
           strategy.vote_count = _vouteCount;
@@ -285,7 +285,7 @@ export default defineComponent({
       return result;
     },
     calculatePercentage() {
-      const totalVote = this.projectResponseData.pageInfo.totalRows;
+      const totalVote = this.projectResponseData?.pageInfo.totalRows;
 
       this.ideaVotes.forEach(project => {
         if (project.vote_count > 0) {
