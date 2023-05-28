@@ -9,7 +9,6 @@ interface SelectedVoteDropdownProps {
 export interface State {
   currentImage: number;
   strategyChoice: string;
-  subStrategyChoice: string;
   isCookieSet: boolean;
   selectedVoteDropdown: SelectedVoteDropdownProps;
 }
@@ -17,7 +16,6 @@ export interface State {
 export const state = (): State => ({
   currentImage: 0,
   strategyChoice: "",
-  subStrategyChoice: "",
   isCookieSet: false,
   selectedVoteDropdown: {
     district_name: "",
@@ -39,8 +37,6 @@ export const mutations: MutationTree<RootState> = {
     (state.selectedVoteDropdown = vote),
   setStrategyChoice: (state, newStrategy: string) =>
     (state.strategyChoice = newStrategy),
-  setSubStrategyChoice: (state, newSubStrategy: string) =>
-    (state.subStrategyChoice = newSubStrategy),
 };
 
 export const actions: ActionTree<RootState, RootState> = {
@@ -48,12 +44,5 @@ export const actions: ActionTree<RootState, RootState> = {
     state.strategyChoice === payload
       ? commit("setStrategyChoice", "")
       : commit("setStrategyChoice", payload);
-
-    commit("setSubStrategyChoice", "");
-  },
-  updateSubStrategy({ commit, state }, payload) {
-    state.subStrategyChoice === payload
-      ? commit("setSubStrategyChoice", "")
-      : commit("setSubStrategyChoice", payload);
   },
 };

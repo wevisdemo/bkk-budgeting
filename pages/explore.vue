@@ -1,5 +1,5 @@
 <template>
-  <div class="container mx-auto">
+  <div class="container mx-auto min-h-[90vh] px-8">
     <div id="nav" class="flex justify-between my-5">
       <div class="wv-b6">สรุปภาพรวม</div>
       <div class="wv-b7 text-wv-gray-1">
@@ -18,6 +18,7 @@
 import budget66 from "~/data/budgets/66";
 import budget67 from "~/data/budgets/67";
 import SurveyByYears from "~/components/expore/SurveyByYears.vue";
+// import { getChartData } from "~/data/get-chart-data";
 
 export default {
   components: { SurveyByYears },
@@ -25,6 +26,14 @@ export default {
     return {
       groupOfData: [{ 66: budget66 }, { 67: budget67 }, { 68: budget67 }],
     };
+  },
+  mounted() {
+    // this.fetchdata();
+  },
+  methods: {
+    // async fetchdata() {
+    //   await getChartData().then(d => console.log(d));
+    // },
   },
 };
 </script>
