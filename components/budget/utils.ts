@@ -17,3 +17,15 @@ export const colorFilter = (strategy: number) => {
   if (strategy === 6) return "bg-wv-economic";
   if (strategy === 7) return "bg-wv-management";
 };
+
+export const handleAddSelected = (selector: string, className: string) => {
+  return [...(document.querySelectorAll(selector) as any)].map(elem =>
+    elem.classList.add(className),
+  );
+};
+
+export const handleRemoveSelected = (selector: string, className: string) => {
+  return [...(document.querySelectorAll(selector) as any)].map(elem =>
+    elem.classList.remove(className),
+  );
+};

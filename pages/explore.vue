@@ -18,22 +18,24 @@
 import budget66 from "~/data/budgets/66";
 import budget67 from "~/data/budgets/67";
 import SurveyByYears from "~/components/expore/SurveyByYears.vue";
-// import { getChartData } from "~/data/get-chart-data";
-
+import { getChartData } from "~/data/get-chart-data";
+// getBudgetItems
 export default {
   components: { SurveyByYears },
+
   data() {
     return {
       groupOfData: [{ 66: budget66 }, { 67: budget67 }, { 68: budget67 }],
+      chartData: [],
     };
   },
   mounted() {
-    // this.fetchdata();
+    this.fetchdata();
   },
   methods: {
-    // async fetchdata() {
-    //   await getChartData().then(d => console.log(d));
-    // },
+    async fetchdata() {
+      await getChartData().then(d => (this.chartData = d));
+    },
   },
 };
 </script>

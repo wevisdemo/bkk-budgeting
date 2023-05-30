@@ -71,7 +71,7 @@ const mapBudgetRowToBudgetItem = (row: BudgetRow): BudgetItem => {
   return {
     budgetYear: row.budgetYear,
     outputProjectName: row.outputProjName,
-    amount: row.amount,
+    amount: row.amount || 0,
     purposeProject: row.purposeProj,
     substrategy: row.subStrategy,
     strategy: row.strategy,

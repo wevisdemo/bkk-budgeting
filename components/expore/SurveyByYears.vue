@@ -81,9 +81,6 @@ export default {
       default: [],
     },
   },
-  data() {
-    return {};
-  },
   computed: {
     ...mapState(["strategyChoice"]),
     navData() {
