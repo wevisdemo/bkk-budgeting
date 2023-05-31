@@ -12,7 +12,7 @@
             @click="haddleStategy(strategy.no)"
             :class="
               handleButton(
-                Number(String(strategyChoice)[0]) === strategy.no,
+                Number(String(chartSelected)[0]) === strategy.no,
                 strategy.no,
               )
             "
@@ -20,20 +20,20 @@
             <div class="flex justify-between w-full">
               <div class="flex items-center">
                 <div
-                  :class="selectHandle(strategy.no === strategyChoice, strategy.no)"
+                  :class="selectHandle(strategy.no === chartSelected, strategy.no)"
                   class="w-0 h-0 mr-2 border-t-[6px] border-t-transparent border-l-[8px] border-l-rose-600 border-b-[6px] border-b-transparent"
                 />
                 <p class="wv-b6">{{ strategy.no }}. {{ strategy.name }}</p>
               </div>
               <div
                 class="w-[10px] h-[10px] min-w-[10px] rounded-full border-black border ml-[10px] flex items-center justify-center p-[1px]"
-                :class="strategyChoice === strategy.no && 'bg-black'"
+                :class="chartSelected === strategy.no && 'bg-black'"
               >
                 <img src="~/assets/icons/selected.svg" alt="selected" class="w-full" />
               </div>
             </div>
           </button>
-          <div v-if="Number(String(strategyChoice)[0]) === strategy.no">
+          <div v-if="Number(String(chartSelected)[0]) === strategy.no">
             <p class="wv-b7 my-1 text-wv-gray-1">
               ประกอบด้วย {{ strategy.sub_strategy.length }} มิติย่อย
             </p>
@@ -49,7 +49,7 @@
 
                 <div
                   class="w-[10px] min-w-[10px] h-[10px] rounded-full border-black border ml-[10px] flex items-center justify-center p-[1px]"
-                  :class="strategyChoice === sub.no && 'bg-black'"
+                  :class="chartSelected === sub.no && 'bg-black'"
                 >
                   <img
                     src="~/assets/icons/selected.svg"
@@ -82,7 +82,7 @@ export default {
     },
   },
   computed: {
-    ...mapState(["strategyChoice"]),
+    ...mapState(["chartSelected", "strategyChoice"]),
     navData() {
       return Object.values(this.data[0])[0];
     },
@@ -91,7 +91,7 @@ export default {
   methods: {
     ...mapActions({
       updateStrategy: "updateStrategy",
-      updateSubStrategy: "updateSubStrategy",
+      updateChartSelected: "updateChartSelected",
     }),
 
     selectHandle(isSlect, strategy) {
@@ -104,14 +104,19 @@ export default {
     },
     handleButton(isSlect, strategy) {
       if (isSlect)
-        return `${this.strategyChoice === strategy && colorFilter(strategy)} font-bold`;
+        return `${this.chartSelected === strategy && colorFilter(strategy)} font-bold`;
       return "";
     },
     handleSubButton(strategy) {
-      if (this.strategyChoice === strategy) {
-        return `${colorFilter(Number(String(this.strategyChoice)[0]))} font-bold`;
+      if (this.chartSelected === strategy) {
+        return `${colorFilter(Number(String(this.chartSelected)[0]))} font-bold`;
       }
       return "";
+    },
+  },
+  watch: {
+    strategyChoice(newValue) {
+      if (!newValue) this.updateChartSelected();
     },
   },
 };

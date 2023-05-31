@@ -3,7 +3,6 @@
     id=" wrapper-horizontal-barchart"
     class="flex space-x-6 max-w-[685px] h-[621px] flex-1 mx-auto"
   >
-    {{ strategyChoice }}{{ subStrategyChoice }}
     <div v-for="(d, index) in data" :key="index" class="flex flex-col-reverse flex-1">
       <p class="wv-b5 text-center mt-2">’{{ Object.keys(d)[0] }}</p>
       <div
@@ -24,10 +23,12 @@
           v-for="(subStrategy, key) in strategy.sub_strategy"
           :key="key"
           :class="colorFilter(strategy.no)"
-          :id="'subStrategy-' + subStrategy.no"
-          class="borderSubStrategy cursor-pointer"
+          :id="'subStrategy-' + replaceDotName(subStrategy.no)"
+          class="borderSubStrategy cursor-pointer wrapper-sub-strategy"
           :style="`height: ${heightChart(subStrategy.amount)}px`"
           @click="() => handleSubStrategy(subStrategy.no)"
+          @mouseenter="e => mouseEnter(e, 'isSubStrategy')"
+          @mouseleave="e => mouseLeave(e, 'isSubStrategy')"
         ></div>
       </div>
     </div>
@@ -36,17 +37,25 @@
 
 <script>
 import _ from "lodash";
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 import { colorFilter } from "../utils";
 import { handleAddSelected, handleRemoveSelected } from "~/components/budget/utils";
+
 export default {
   props: {
     data: {
       default: [],
     },
   },
+  data() {
+    return {
+      prevSelected: "",
+      currentSelected: "",
+    };
+  },
+
   computed: {
-    ...mapState(["strategyChoice", "subStrategyChoice"]),
+    ...mapState(["strategyChoice", "chartSelected"]),
     summaryBudgets() {
       return this.data.map(d =>
         _.sumBy(Object.values(d)[0], strategy => strategy.amount),
@@ -63,10 +72,10 @@ export default {
       return startNumber + zero.repeat(digits);
     },
   },
-  mounted() {
-    console.log(this.data, "data ja");
-  },
   methods: {
+    ...mapActions({
+      updateChartSelected: "updateChartSelected",
+    }),
     colorFilter,
     sumByStrategy(subStrategy) {
       return divideMillion(_.sumBy(subStrategy, sub => sub.amount));
@@ -80,22 +89,57 @@ export default {
       return height;
     },
 
-    mouseEnter(e) {
+    mouseEnter(e, isSubStrategy) {
       const elemId = e.target.id;
-      handleAddSelected("#strategy-" + elemId, "hoverActive");
+
+      isSubStrategy
+        ? handleAddSelected("#" + elemId, "hoverActive")
+        : handleAddSelected("#strategy-" + elemId, "hoverActive");
     },
-    mouseLeave(e) {
+    mouseLeave(e, isSubStrategy) {
       const elemId = e.target.id;
-      handleRemoveSelected("#strategy-" + elemId, "hoverActive");
+      isSubStrategy
+        ? handleRemoveSelected("#" + elemId, "hoverActive")
+        : handleRemoveSelected("#strategy-" + elemId, "hoverActive");
     },
     handleStrategy(strategy) {
-      handleAddSelected(".wrapper-strategy", "bg-wv-gray-4");
+      handleRemoveSelected(".wrapper-sub-strategy", "grayScale");
+      handleAddSelected(".wrapper-strategy", "grayScale");
       handleRemoveSelected(".wrapper-strategy", "hidden");
       handleAddSelected("#strategy-" + strategy, "hidden");
-      handleRemoveSelected("#strategy-" + strategy, "bg-wv-gray-4");
+      handleRemoveSelected("#strategy-" + strategy, "grayScale");
+      this.updateChartSelected(strategy);
     },
     handleSubStrategy(strategy) {
-      console.log(strategy);
+      this.currentSelected = strategy;
+      handleAddSelected(".wrapper-sub-strategy", "grayScale");
+      handleRemoveSelected(
+        "#subStrategy-" + this.replaceDotName(strategy),
+        "grayScale",
+      );
+      if (this.prevSelected === this.currentSelected) {
+        this.updateChartSelected();
+        handleRemoveSelected(".wrapper-strategy", "grayScale");
+        handleRemoveSelected(".wrapper-strategy", "hidden");
+      } else {
+        this.updateChartSelected(strategy);
+      }
+      this.prevSelected = this.currentSelected;
+    },
+    replaceDotName(name) {
+      return name.toString().replace(/\./g, "-");
+    },
+  },
+  watch: {
+    strategyChoice(newValue) {
+      if (newValue.toString().length > 1) {
+        this.handleSubStrategy(newValue);
+      } else if (newValue.toString().length === 1) {
+        this.handleStrategy(newValue);
+      } else {
+        handleRemoveSelected(".wrapper-strategy", "grayScale");
+        handleRemoveSelected(".wrapper-strategy", "hidden");
+      }
     },
   },
 };
@@ -111,5 +155,8 @@ export default {
 }
 .hoverActive {
   @apply border-[2px] border-black;
+}
+.grayScale {
+  @apply bg-wv-gray-4;
 }
 </style>
