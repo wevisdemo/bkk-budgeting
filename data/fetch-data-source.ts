@@ -63,7 +63,6 @@ export const fetchDataSource = async (): Promise<BudgetRow[]> => {
   if (result.errors && result.errors.length > 0) {
     return Promise.reject(result.errors);
   }
-
   const mapped = result.data.map(
     (row): BudgetRow => ({
       budgetYear: Number(row.budget_year),
@@ -72,7 +71,7 @@ export const fetchDataSource = async (): Promise<BudgetRow[]> => {
       os: row.O_S,
       outputProj: row["output/proj"],
       outputProjName: row.output_proj_name,
-      amount: Number(row.amount),
+      amount: formatAmount(row.amount),
       outputNo: row.output_no,
       outputName: row.output_name,
       outputName1: row.output_name1,
@@ -89,6 +88,10 @@ export const fetchDataSource = async (): Promise<BudgetRow[]> => {
   );
   cached = mapped;
   return mapped;
+};
+
+const formatAmount = (amount: string) => {
+  return Number(amount.replace(/,/g, ""));
 };
 
 const isIntegration = (rawValue: string): boolean => {

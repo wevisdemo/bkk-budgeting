@@ -7,18 +7,26 @@ interface SelectedVoteDropdownProps {
 }
 
 export interface State {
+  chartData: any;
   currentImage: number;
   strategyChoice: string;
-  chartSelected: number;
+  chartSelected: string;
   isCookieSet: boolean;
+  isMillion: boolean;
   selectedVoteDropdown: SelectedVoteDropdownProps;
+  isModalDetails: any;
+  subTitleModal: string;
 }
 
 export const state = (): State => ({
+  chartData: [],
   currentImage: 0,
   strategyChoice: "",
-  chartSelected: 0,
+  chartSelected: "",
   isCookieSet: false,
+  isMillion: true,
+  isModalDetails: [],
+  subTitleModal: "ตามแผนยุทธศาสตร์ 7 ด้าน",
   selectedVoteDropdown: {
     district_name: "",
     project_type: "",
@@ -39,8 +47,12 @@ export const mutations: MutationTree<RootState> = {
     (state.selectedVoteDropdown = vote),
   setStrategyChoice: (state, newStrategy: string) =>
     (state.strategyChoice = newStrategy),
-  setChartSelected: (state, chartSelected: number) =>
+  setChartSelected: (state, chartSelected: string) =>
     (state.chartSelected = chartSelected),
+  setChartData: (state, chartData) => (state.chartData = chartData),
+  setIsMillion: (state, isMillion) => (state.isMillion = isMillion),
+  setIsModalDetails: (state, isModalDetails) => (state.isModalDetails = isModalDetails),
+  setSubTitleModal: (state, subTitleModal) => (state.subTitleModal = subTitleModal),
 };
 
 export const actions: ActionTree<RootState, RootState> = {
@@ -51,5 +63,17 @@ export const actions: ActionTree<RootState, RootState> = {
   },
   updateChartSelected({ commit }, payload) {
     commit("setChartSelected", payload);
+  },
+  updateChartData({ commit }, payload) {
+    commit("setChartData", payload);
+  },
+  updateIsMillion({ commit }, payload) {
+    commit("setIsMillion", payload);
+  },
+  updateIsModalDetails({ commit }, payload) {
+    commit("setIsModalDetails", payload);
+  },
+  updateSubTitleModal({ commit }, payload) {
+    commit("setSubTitleModal", payload);
   },
 };

@@ -10,31 +10,30 @@
       <div>สำรวจการใช้งบกรุงเทพฯ ตามแผนยุทธศาสตร์</div>
       <div>toggle</div>
     </div>
-    <SurveyByYears :data="groupOfData" />
+    <SurveyByYears />
   </div>
 </template>
 
 <script>
-import budget66 from "~/data/budgets/66";
-import budget67 from "~/data/budgets/67";
+import { mapActions } from "vuex";
 import SurveyByYears from "~/components/expore/SurveyByYears.vue";
 import { getChartData } from "~/data/get-chart-data";
+
 // getBudgetItems
 export default {
   components: { SurveyByYears },
 
-  data() {
-    return {
-      groupOfData: [{ 66: budget66 }, { 67: budget67 }, { 68: budget67 }],
-      chartData: [],
-    };
-  },
   mounted() {
     this.fetchdata();
   },
   methods: {
+    ...mapActions({
+      updateChartData: "updateChartData",
+    }),
     async fetchdata() {
-      await getChartData().then(d => (this.chartData = d));
+      await getChartData().then(response => {
+        this.updateChartData(response);
+      });
     },
   },
 };

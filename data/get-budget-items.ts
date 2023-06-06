@@ -16,7 +16,6 @@ export interface BudgetItemResult {
 
 export const getBudgetItems = async (filters?: Filters): Promise<BudgetItemResult> => {
   let rows = await fetchDataSource();
-
   if (filters) {
     if (filters.budgetYear) {
       rows = rows.filter(filterBudgetYear(filters.budgetYear));

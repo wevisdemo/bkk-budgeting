@@ -32,7 +32,6 @@ const getYearChartDatas = (items: BudgetItem[]): YearChartData[] => {
   for (const year of Object.keys(yearGroups)) {
     const itemsInYear = yearGroups[year];
     const strategyChartDatas = getStrategyChartDatas(itemsInYear);
-
     chartDatas.push({
       year: Number(year),
       amount: strategyChartDatas.reduce(sumAmount, 0),
@@ -70,7 +69,6 @@ const getStrategyChartDatas = (items: BudgetItem[]): StrategyChartData[] => {
   for (const strategy of Object.keys(strategyGroups)) {
     const itemsInStrategy = strategyGroups[strategy];
     const substrategyChartDatas = getSubStrategyChartDatas(itemsInStrategy);
-
     chartDatas.push({
       name: strategy,
       amount: substrategyChartDatas.reduce(sumAmount, 0),
@@ -83,18 +81,14 @@ const getStrategyChartDatas = (items: BudgetItem[]): StrategyChartData[] => {
 
 const getSubStrategyChartDatas = (items: BudgetItem[]): SubstrategyChartData[] => {
   const chartDatas: SubstrategyChartData[] = [];
-
   const substrategyGroups = groupByKey("substrategy", items);
-
   for (const substrategy of Object.keys(substrategyGroups)) {
     const itemsInSubstrategy = substrategyGroups[substrategy];
-
     chartDatas.push({
       name: substrategy,
       amount: itemsInSubstrategy.reduce(sumAmount, 0),
     });
   }
-
   return chartDatas;
 };
 
