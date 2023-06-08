@@ -286,7 +286,6 @@ export default defineComponent({
     },
     calculatePercentage() {
       const totalVote = this.projectResponseData?.pageInfo.totalRows;
-
       this.ideaVotes.forEach(project => {
         if (project.vote_count > 0) {
           const percentage = (project.vote_count / totalVote) * 100;

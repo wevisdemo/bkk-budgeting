@@ -6,34 +6,64 @@
         *เว็บไซต์นี้แสดงเฉพาะงบที่ใช้ตามยุทธศาสตร์ ซึ่งไม่ใช่งบทั้งหมดของกรุงเทพฯ
       </div>
     </div>
-    <div id="header" class="flex wv-h5 wv-kondolar justify-between wv-black">
-      <div>สำรวจการใช้งบกรุงเทพฯ ตามแผนยุทธศาสตร์</div>
-      <div>toggle</div>
+    <div id="header" class="flex wv-kondolar justify-between">
+      <div class="wv-black wv-h5">สำรวจการใช้งบกรุงเทพฯ ตามแผนยุทธศาสตร์</div>
+      <div class="flex wv-b5 items-center">
+        <div
+          v-for="item in toppics"
+          :key="item.id"
+          @click="chooseTopic(item.name)"
+          class="px-[14px] hover:border-black cursor-pointer text-center whitespace-nowrap py-[5px] border border-wv-gray-4 min-w-[120px]"
+          :class="topic === item.name ? 'bg-wv-gray-4 text-black' : 'text-gray-400'"
+        >
+          {{ item.name }}
+        </div>
+      </div>
     </div>
-    <SurveyByYears />
+    <SurveyByYears v-if="topic === 'รายปี'" />
+    <SurveyByOrganize v-if="topic === 'รายหน่วยงาน'" />
+    <SurveyByKeyword v-if="topic === 'ค้นด้วยคีย์เวิร์ด'" />
   </div>
 </template>
 
 <script>
 import { mapActions } from "vuex";
 import SurveyByYears from "~/components/expore/SurveyByYears.vue";
-import { getChartData } from "~/data/get-chart-data";
+import SurveyByOrganize from "~/components/expore/SurveyByOrganize.vue";
+import SurveyByKeyword from "~/components/expore/SurveyByKeyword.vue";
+import { getChartData, getChartDataGroupByOrganizations } from "~/data/get-chart-data";
 
-// getBudgetItems
 export default {
-  components: { SurveyByYears },
+  components: { SurveyByYears, SurveyByOrganize, SurveyByKeyword },
 
+  data() {
+    return {
+      toppics: [
+        { name: "รายปี" },
+        { name: "รายหน่วยงาน" },
+        { name: "ค้นด้วยคีย์เวิร์ด" },
+      ],
+      topic: "รายปี",
+    };
+  },
   mounted() {
     this.fetchdata();
   },
   methods: {
     ...mapActions({
       updateChartData: "updateChartData",
+      updateOrganizeData: "updateOrganizeData",
     }),
     async fetchdata() {
       await getChartData().then(response => {
         this.updateChartData(response);
       });
+      await getChartDataGroupByOrganizations().then(response => {
+        this.updateOrganizeData(response);
+      });
+    },
+    chooseTopic(topicName) {
+      this.topic = topicName;
     },
   },
 };

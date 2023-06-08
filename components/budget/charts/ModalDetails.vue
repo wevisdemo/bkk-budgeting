@@ -1,15 +1,10 @@
 <template>
   <div>
-    <div
-      @click="handleModal"
-      class="bg-black text-white w-fit wv-b6 px-[10px] py-[6px] rounded-[5px] cursor-pointer"
-    >
-      ดูรายการใช้งบ
-    </div>
-    <div class="fixed inset-0 z-20" v-if="isOpen">
-      <div class="fixed inset-0 bg-wv-gray-4 bg-opacity-70" @click="handleModal" />
+    <slot></slot>
+    <div class="fixed inset-0 z-40" v-if="isOpen">
+      <div class="fixed inset-0 bg-wv-gray-4 bg-opacity-70 z-40" @click="handleModal" />
       <div
-        class="w-[850px] h-[600px] px-12 py-8 bg-white absolute top-[50%] translate-y-[-50%] translate-x-[-50%] left-[50%]"
+        class="w-[850px] h-[600px] px-12 py-8 bg-white absolute z-50 top-[50%] translate-y-[-50%] translate-x-[-50%] left-[50%]"
       >
         <div class="absolute top-0 right-0">
           <img
@@ -23,26 +18,14 @@
             <!-- ------- header -->
             <div class="wv-b5 flex space-x-2 items-center justify-center">
               <p>ปีงบประมาณ</p>
-              <div
-                class="border relative border-wv-gray-3 w-[150px] px-[10px] py-[5px] rounded-[5px] flex items-center cursor-pointer"
-                @click="handleSelectedYear"
+              <DropDownYearList
+                :handleSelectedYear="() => handleSelectedYear()"
+                :isOpenYearSelected="isOpenYearSelected"
+                :isSelectedYear="year => isSelectedYear(year)"
               >
-                <p class="font-bold">{{ selectedYear.label }}</p>
-                <div
-                  id="yearSelected"
-                  v-if="isOpenYearSelected"
-                  class="absolute top-[120%] bg-white w-[150px] z-20 left-0 border border-wv-gray-3 py-[5px]"
-                >
-                  <div
-                    @click="() => isSlectedYear(item)"
-                    v-for="item in yearList"
-                    :key="item.id"
-                    class="hover:bg-wv-gray-3 cursor-pointer px-[10px]"
-                  >
-                    {{ item.label }}
-                  </div>
-                </div>
-              </div>
+                <span v-if="page === 'organize'"> {{ selectYearOrganize.label }}</span>
+                <span v-if="page === 'strategy'"> {{ selectYearStrategy.label }}</span>
+              </DropDownYearList>
               <span>มี </span>
               <span class="font-bold">{{ filterYears?.total }}</span>
               <span>รายการ ({{ sumAllBudget() }} ล้านบาท)</span>
@@ -62,7 +45,7 @@
                     v-for="item in filterList"
                     :key="item.id"
                     class="hover:bg-wv-gray-3 cursor-pointer px-[10px]"
-                    @click="() => filterBy(item.label)"
+                    @click="() => selectFilter(item.label)"
                   >
                     {{ item.label }}
                   </div>
@@ -106,54 +89,62 @@
 import { mapState, mapActions } from "vuex";
 import _ from "lodash";
 import { BPagination } from "bootstrap-vue";
-import { convertMillion, orderByStrategy } from "../utils";
+import { convertMillion } from "../utils";
+import { filterBy } from "./filterBy";
+import DropDownYearList from "./DropDownYearList.vue";
 import { getBudgetItems } from "~/data/get-budget-items";
 
 export default {
+  props: {
+    handleModal: {
+      type: Function,
+    },
+    isOpen: {
+      type: Boolean,
+      default: false,
+    },
+    page: {
+      type: String,
+    },
+  },
   components: {
     "b-pagination": BPagination,
+    DropDownYearList,
   },
   data() {
     return {
-      isOpen: false,
       perPage: 5,
       currentPage: 1,
-      yearList: [
-        { label: "2561-2566", value: "" },
-        { label: "2561", value: 61 },
-        { label: "2562", value: 62 },
-        { label: "2563", value: 63 },
-        { label: "2564", value: 64 },
-        { label: "2565", value: 65 },
-        { label: "2566", value: 66 },
-      ],
       filterList: [
         { label: "งบมากไปน้อย" },
         { label: "งบน้อยไปมาก" },
         { label: "ตัวอักษร" },
       ],
       selectedFilter: "งบมากไปน้อย",
-      selectedYear: "",
       isOpenYearSelected: false,
       isFilterModal: false,
       filterYears: [],
+      defaultByFilter: [],
     };
   },
 
   computed: {
-    ...mapState(["isModalDetails", "chartData", "subTitleModal"]),
+    ...mapState([
+      "isModalDetails",
+      "subTitleModal",
+      "selectYearOrganize",
+      "selectYearStrategy",
+    ]),
   },
   methods: {
     convertMillion,
-    orderByStrategy,
+    filterBy,
     ...mapActions({
       updateIsModalDetails: "updateIsModalDetails",
+      updateSelectYearOrganize: "updateSelectYearOrganize",
+      updateSelectYearStrategy: "updateSelectYearStrategy",
     }),
-    handleModal() {
-      this.isOpen = !this.isOpen;
-      this.selectedYear = this.yearList[0];
-      if (this.subTitleModal === "ตามแผนยุทธศาสตร์ 7 ด้าน") this.fetchByYear();
-    },
+
     async fetchByYear(year) {
       await getBudgetItems({
         budgetYear: year,
@@ -175,30 +166,15 @@ export default {
       this.isFilterModal = !this.isFilterModal;
       this.isOpenYearSelected = false;
     },
-    filterBy(label) {
+    selectFilter(label) {
       this.selectedFilter = label;
-      if (label === "งบมากไปน้อย") {
-        this.filterYears = {
-          items: orderByStrategy(this.filterYears.items, "amount", "desc"),
-          total: this.filterYears.total,
-        };
-      }
-      if (label === "งบน้อยไปมาก") {
-        this.filterYears = {
-          items: orderByStrategy(this.filterYears.items, "amount", "asc"),
-          total: this.filterYears.total,
-        };
-      }
-      if (label === "ตัวอักษร") {
-        this.filterYears = {
-          items: orderByStrategy(this.filterYears.items, "outputProjectName", "asc"),
-          total: this.filterYears.total,
-        };
-      }
+      const resultFilter = filterBy(label, this.filterYears);
+      this.filterYears = resultFilter;
     },
-    isSlectedYear(year) {
+    isSelectedYear(year) {
       if (year?.value) {
-        this.selectedYear = year;
+        if (this.page === "organize") this.updateSelectYearOrganize(year);
+        if (this.page === "strategy") this.updateSelectYearStrategy(year);
         this.filterYears = {
           items: this.isModalDetails?.items?.filter(
             str => str.budgetYear === year.value,
@@ -208,7 +184,10 @@ export default {
           ).length,
         };
       } else {
-        this.selectedYear = this.yearList[0];
+        if (this.page === "organize")
+          this.updateSelectYearOrganize({ label: "2561-2566", value: "" });
+        if (this.page === "strategy")
+          this.updateSelectYearStrategy({ label: "2561-2566", value: "" });
         this.filterYears = this.isModalDetails;
       }
     },
@@ -217,15 +196,12 @@ export default {
     },
   },
   mounted() {
-    this.selectedYear = this.yearList[0];
-    this.filterYears = this.isModalDetails;
+    this.filterYears = filterBy(this.selectedFilter, this.isModalDetails);
+    if (this.subTitleModal === "ตามแผนยุทธศาสตร์ 7 ด้าน") this.fetchByYear();
   },
   watch: {
     isModalDetails(newValue) {
-      this.filterYears = {
-        items: orderByStrategy(newValue.items, "amount", "desc"),
-        total: newValue.total,
-      };
+      this.filterYears = filterBy(this.selectedFilter, newValue);
     },
   },
 };

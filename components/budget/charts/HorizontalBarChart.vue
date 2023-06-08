@@ -5,13 +5,25 @@
     id="wrapper-horizontal-barchart"
   >
     <div>{{ formatYAxis(chartData?.years) }}</div>
-    <div class="flex justify-between items-center">
+    <div class="flex justify-between items-center mb-6">
       <p class="wv-b4 font-bold">
         ใช้งบรวม {{ convertMillion(chartData.amount) }} ล้านบาท
       </p>
-      <ModalDetails />
+      <ModalDetails
+        :handleModal="() => handleModal()"
+        :isOpen="isOpen"
+        :isSelectedYear="year => isSelectedYear(year)"
+        page="strategy"
+      >
+        <div
+          @click="handleModal"
+          class="bg-black text-white w-fit wv-b6 px-[10px] py-[6px] rounded-[5px] cursor-pointer"
+        >
+          ดูรายการใช้งบ
+        </div>
+      </ModalDetails>
     </div>
-    <ToggleUnit isMillion />
+    <ToggleUnit :toggle="() => toggle()" :isMillion="isMillion" />
     <div class="flex space-x-6 flex-1 mx-auto w-full h-[500px]">
       <div
         v-for="(d, index) in chartData.years"
@@ -64,15 +76,18 @@ import {
 import ModalDetails from "./ModalDetails.vue";
 import ToggleUnit from "./ToggleUnit.vue";
 import { getBudgetItems } from "~/data/get-budget-items";
+
 export default {
   components: { ToggleUnit, ModalDetails },
   data() {
     return {
       prevSelected: "",
+      isOpen: false,
+      isMillion: true,
     };
   },
   computed: {
-    ...mapState(["strategyChoice", "chartSelected", "chartData", "isMillion"]),
+    ...mapState(["strategyChoice", "chartSelected", "chartData"]),
     maxBudgets() {
       return Math.max(...this.chartData.years.map(o => o.amount)).toString();
     },
@@ -88,10 +103,17 @@ export default {
       updateChartSelected: "updateChartSelected",
       updateIsModalDetails: "updateIsModalDetails",
       updateSubTitleModal: "updateSubTitleModal",
+      updateSelectYearStrategy: "updateSelectYearStrategy",
     }),
     colorFilter,
     convertMillion,
     strategyList,
+    handleModal() {
+      this.isOpen = !this.isOpen;
+    },
+    toggle() {
+      this.isMillion = !this.isMillion;
+    },
     sumByStrategy(subStrategy) {
       return divideMillion(_.sumBy(subStrategy, sub => sub.amount));
     },
@@ -117,6 +139,7 @@ export default {
         : handleRemoveSelected("#strategy-" + elemId, "hoverActive");
     },
     handleStrategy(strategy) {
+      console.log("first landing");
       handleRemoveSelected(".wrapper-sub-strategy", "grayScale");
       handleAddSelected(".wrapper-strategy", "grayScale");
       handleRemoveSelected(".wrapper-strategy", "hidden");
@@ -124,7 +147,7 @@ export default {
       handleRemoveSelected("#strategy-" + strategy, "grayScale");
       this.updateChartSelected(strategy);
       this.fetchByStrategy(strategy);
-      this.updateSubTitleModal(`เพื่อ"${strategy}""`);
+      this.updateSubTitleModal(`เพื่อ "${strategy}""`);
     },
     handleSubStrategy(strategy) {
       this.currentSelected = strategy;
@@ -151,7 +174,6 @@ export default {
       //   return object.amount;
       // });
       // const max = Math.max(...amounts);
-      console.log("formatYAxis");
     },
     async fetchByStrategy(strategy) {
       await getBudgetItems({
@@ -159,6 +181,22 @@ export default {
       }).then(response => {
         this.updateIsModalDetails(response);
       });
+    },
+    isSelectedYear(year) {
+      if (year?.value) {
+        this.updateSelectYearStrategy(year);
+        this.filterYears = {
+          items: this.isModalDetails?.items?.filter(
+            str => str.budgetYear === year.value,
+          ),
+          total: this.isModalDetails?.items?.filter(
+            str => str.budgetYear === year.value,
+          ).length,
+        };
+      } else {
+        this.updateSelectYearStrategy({ label: "2561-2566", value: "" });
+        this.filterYears = this.isModalDetails;
+      }
     },
   },
   watch: {

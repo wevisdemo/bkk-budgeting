@@ -5,8 +5,7 @@
         <b>ยุทธศาสตร์ 7 ด้าน</b> เป็นแผนพัฒนาที่กรุงเทพฯ <br />วางไว้
         เพื่อจะก้าวไปสู่การเป็น “มหานครแห่งเอเชีย” <br />ภายใน 20 ปี (2561-2580)
       </p>
-      {{ chartSelected }}
-      <div id="explantion" class="mt-6" v-if="chartData.years">
+      <div id="explantion" class="mt-6">
         <div v-for="(strategy, key) in navData()" :key="key">
           <button
             class="flex items-center border-b border-b-wv-gray-4 text-start py-[10px] bg-opacity-30 rounded-[2px] px-3 w-full"
