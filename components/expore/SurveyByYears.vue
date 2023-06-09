@@ -28,7 +28,12 @@
               </div>
             </div>
           </button>
-          <div v-if="chartSelected === strategy.name">
+          <div
+            v-if="
+              chartSelected === strategy.name ||
+              strategy.substrategies.includes(chartSelected)
+            "
+          >
             <p class="wv-b7 my-1 text-wv-gray-1">
               ประกอบด้วย {{ strategy.substrategies.length }} มิติย่อย
             </p>
@@ -38,7 +43,7 @@
                 :key="index"
                 class="p-[10px] w-full border-b border-b-wv-gray-4 text-start bg-opacity-30 rounded-[5px] flex justify-between"
                 @click="handleStategy(sub)"
-                :class="handleSubButton(sub)"
+                :class="handleSubButton(sub, strategy.name)"
               >
                 <p class="wv-b6">{{ key + 1 }}.{{ index + 1 }}. {{ sub }}</p>
 
@@ -87,7 +92,6 @@ export default {
       return borderFilter(strategy);
     },
     handleStategy(strategy) {
-      console.log(strategy, "handleStategy");
       this.updateStrategy(strategy);
     },
     handleButton(isSlect, strategy) {
@@ -95,9 +99,9 @@ export default {
         return `${this.chartSelected === strategy && colorFilter(strategy)} font-bold`;
       return "";
     },
-    handleSubButton(strategy) {
+    handleSubButton(strategy, name) {
       if (this.chartSelected === strategy) {
-        return `${colorFilter(this.chartSelected)} font-bold`;
+        return `${colorFilter(name)} font-bold`;
       }
       return "";
     },

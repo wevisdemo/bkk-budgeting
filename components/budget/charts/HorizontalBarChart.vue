@@ -76,6 +76,7 @@ import {
 import ModalDetails from "./ModalDetails.vue";
 import ToggleUnit from "./ToggleUnit.vue";
 import { getBudgetItems } from "~/data/get-budget-items";
+import { navData } from "~/components/expore/navData";
 
 export default {
   components: { ToggleUnit, ModalDetails },
@@ -104,6 +105,7 @@ export default {
       updateIsModalDetails: "updateIsModalDetails",
       updateSubTitleModal: "updateSubTitleModal",
       updateSelectYearStrategy: "updateSelectYearStrategy",
+      updateStrategy: "updateStrategy",
     }),
     colorFilter,
     convertMillion,
@@ -139,7 +141,6 @@ export default {
         : handleRemoveSelected("#strategy-" + elemId, "hoverActive");
     },
     handleStrategy(strategy) {
-      console.log("first landing");
       handleRemoveSelected(".wrapper-sub-strategy", "grayScale");
       handleAddSelected(".wrapper-strategy", "grayScale");
       handleRemoveSelected(".wrapper-strategy", "hidden");
@@ -156,12 +157,16 @@ export default {
         "#subStrategy-" + this.replaceDotName(strategy),
         "grayScale",
       );
+
       if (this.prevSelected === this.currentSelected) {
         this.updateChartSelected();
         handleRemoveSelected(".wrapper-strategy", "grayScale");
         handleRemoveSelected(".wrapper-strategy", "hidden");
         this.updateSubTitleModal("ตามแผนยุทธศาสตร์ 7 ด้าน");
+        this.currentSelected = "";
       } else {
+        this.fetchBySubStrategy(strategy);
+        this.updateSubTitleModal(`เพื่อ "${strategy}""`);
         this.updateChartSelected(strategy);
       }
       this.prevSelected = this.currentSelected;
@@ -178,6 +183,13 @@ export default {
     async fetchByStrategy(strategy) {
       await getBudgetItems({
         strategy,
+      }).then(response => {
+        this.updateIsModalDetails(response);
+      });
+    },
+    async fetchBySubStrategy(substrategy) {
+      await getBudgetItems({
+        substrategy,
       }).then(response => {
         this.updateIsModalDetails(response);
       });
@@ -201,24 +213,19 @@ export default {
   },
   watch: {
     strategyChoice(newValue) {
-      if (strategyList().includes(newValue)) {
+      const filterStrategy = navData().filter(d => d.name === newValue);
+      const filterSubStrategy = navData().find(d =>
+        d.substrategies.filter(s => s === newValue),
+      );
+      if (filterStrategy[0]) {
         this.handleStrategy(newValue);
+      } else if (!filterStrategy[0] && filterSubStrategy && newValue) {
+        this.handleSubStrategy(newValue);
       } else {
         this.updateIsModalDetails("");
         handleRemoveSelected(".wrapper-strategy", "grayScale");
         handleRemoveSelected(".wrapper-strategy", "hidden");
       }
-      // if (newValue.toString().length > 1) {
-      //   this.updateIsModalDetails("b");
-      //   this.handleSubStrategy(newValue);
-      // } else if (strategyList.includes(newValue)) {
-      //   this.handleStrategy(newValue);
-      //   this.updateIsModalDetails("a");
-      // } else {
-      //   this.updateIsModalDetails("");
-      //   handleRemoveSelected(".wrapper-strategy", "grayScale");
-      //   handleRemoveSelected(".wrapper-strategy", "hidden");
-      // }
     },
   },
 };

@@ -175,14 +175,13 @@ export default {
       if (year?.value) {
         if (this.page === "organize") this.updateSelectYearOrganize(year);
         if (this.page === "strategy") this.updateSelectYearStrategy(year);
-        this.filterYears = {
-          items: this.isModalDetails?.items?.filter(
-            str => str.budgetYear === year.value,
-          ),
-          total: this.isModalDetails?.items?.filter(
-            str => str.budgetYear === year.value,
-          ).length,
-        };
+        const itemsList = this.isModalDetails?.items?.filter(
+          str => str.budgetYear === year.value,
+        );
+        this.filterYears = filterBy(this.selectedFilter, {
+          items: itemsList,
+          total: itemsList.length,
+        });
       } else {
         if (this.page === "organize")
           this.updateSelectYearOrganize({ label: "2561-2566", value: "" });
