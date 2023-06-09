@@ -32,23 +32,26 @@
       >
         <p class="wv-b5 text-center mt-2">’{{ d.year }}</p>
         <div
-          v-for="(strategy, i) in d.strategies"
+          v-for="(strategy, i) in strategyList()"
           :key="i"
           class="relative my-[0.5px]"
           @mouseenter="e => mouseEnter(e)"
           @mouseleave="mouseLeave"
-          :id="strategy.name"
+          :id="strategy"
         >
           <div
             class="absolute inset-0 z-10 borderSubStrategy cursor-pointer wrapper-strategy"
-            :class="colorFilter(strategy.name)"
-            :id="'strategy-' + strategy.name"
-            @click="() => handleStrategy(strategy.name)"
+            :class="colorFilter(strategy)"
+            :id="'strategy-' + strategy"
+            @click="() => handleStrategy(strategy)"
           />
+
           <div
-            v-for="(subStrategy, key) in strategy.substrategies"
+            v-for="(subStrategy, key) in d.strategies.filter(
+              d => d.name === strategy,
+            )[0]?.substrategies"
             :key="key"
-            :class="colorFilter(strategy.name)"
+            :class="colorFilter(strategy)"
             :id="'subStrategy-' + replaceDotName(subStrategy.name)"
             class="borderSubStrategy cursor-pointer wrapper-sub-strategy"
             :style="`height: ${heightChart(subStrategy.amount, d.amount)}px`"
@@ -210,6 +213,9 @@ export default {
         this.filterYears = this.isModalDetails;
       }
     },
+  },
+  mounted() {
+    console.log(this.chartData, "chartData");
   },
   watch: {
     strategyChoice(newValue) {
