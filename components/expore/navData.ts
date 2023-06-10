@@ -64,5 +64,9 @@ export const navData = () => {
         "เทคโนโลยีสารสนเทศ",
       ],
     },
+    {
+      name: "ไม่พบข้อมูล",
+      substrategies: [],
+    },
   ];
 };

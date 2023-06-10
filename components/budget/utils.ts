@@ -13,7 +13,7 @@ export const borderFilter = (strategy: string) => {
     return "border-l-wv-economic";
   if (strategy === "การสร้างความเป็นมืออาชีพในการบริหาร")
     return "border-l-wv-management";
-  return "border-l-wv-gray-4";
+  return "border-l-gray-600";
 };
 
 export const colorFilter = (strategy: string) => {
@@ -24,23 +24,26 @@ export const colorFilter = (strategy: string) => {
   if (strategy === "การสร้างเมืองประชาธิปไตยแบบมีส่วนร่วม") return "bg-wv-democracy";
   if (strategy === "การต่อยอดความเป็นเมืองศูนย์กลางเศรษฐกิจ") return "bg-wv-economic";
   if (strategy === "การสร้างความเป็นมืออาชีพในการบริหาร") return "bg-wv-management";
-  return "bg-wv-gray-4";
+  return "bg-gray-600";
 };
 
 export const handleAddSelected = (selector: string, className: string) => {
-  return [...(document.querySelectorAll(selector) as any)].map(elem =>
-    elem.classList.add(className),
-  );
+  if (document.querySelectorAll(selector))
+    [...(document.querySelectorAll(selector) as any)]?.map(elem =>
+      elem.classList.add(className),
+    );
 };
 
 export const handleRemoveSelected = (selector: string, className: string) => {
-  return [...(document.querySelectorAll(selector) as any)].map(elem =>
-    elem.classList.remove(className),
-  );
+  if (document.querySelectorAll(selector))
+    [...(document.querySelectorAll(selector) as any)]?.map(elem =>
+      elem.classList.remove(className),
+    );
 };
 
 export const convertMillion = (num: number) => {
-  return Math.round(num / 1000000).toLocaleString("en-US", {});
+  const numFormat = Math.round(num / 1000000);
+  return numFormat > 1 ? numFormat.toLocaleString("en-US", {}) : "";
 };
 
 export const strategyList = () => [

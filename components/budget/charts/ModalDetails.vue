@@ -1,7 +1,7 @@
 <template>
   <div>
     <slot></slot>
-    <div class="fixed inset-0 z-40" v-if="isOpen">
+    <div class="fixed inset-0 z-[50]" v-if="isOpen">
       <div class="fixed inset-0 bg-wv-gray-4 bg-opacity-70 z-40" @click="handleModal" />
       <div
         class="w-[850px] h-[600px] px-12 py-8 bg-white absolute z-50 top-[50%] translate-y-[-50%] translate-x-[-50%] left-[50%]"

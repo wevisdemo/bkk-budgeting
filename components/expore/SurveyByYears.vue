@@ -1,6 +1,10 @@
 <template>
-  <div id="byYears" class="mt-7 flex space-x-[35px] justify-center">
-    <div class="max-w-[400px]">
+  <div
+    id="byYears"
+    class="mt-7 flex space-x-[35px] justify-center"
+    :class="chartData.years ? 'pointer-events-auto' : 'pointer-events-none'"
+  >
+    <div class="w-[400px]">
       <p class="wv-b5 text-wv-gray-1">
         <b>ยุทธศาสตร์ 7 ด้าน</b> เป็นแผนพัฒนาที่กรุงเทพฯ <br />วางไว้
         เพื่อจะก้าวไปสู่การเป็น “มหานครแห่งเอเชีย” <br />ภายใน 20 ปี (2561-2580)
@@ -34,7 +38,10 @@
               strategy.substrategies.includes(chartSelected)
             "
           >
-            <p class="wv-b7 my-1 text-wv-gray-1">
+            <p
+              class="wv-b7 my-1 text-wv-gray-1"
+              v-if="strategy.substrategies.length > 1"
+            >
               ประกอบด้วย {{ strategy.substrategies.length }} มิติย่อย
             </p>
             <div class="ml-5">

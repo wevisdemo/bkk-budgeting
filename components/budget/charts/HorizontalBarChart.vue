@@ -1,10 +1,9 @@
 <template>
   <div
     v-if="chartData.years"
-    class="max-w-[685px] flex-1 flex flex-col justify-between"
+    class="max-w-[685px] h-fit flex-1 flex flex-col justify-between"
     id="wrapper-horizontal-barchart"
   >
-    <div>{{ formatYAxis(chartData?.years) }}</div>
     <div class="flex justify-between items-center mb-6">
       <p class="wv-b4 font-bold">
         ใช้งบรวม {{ convertMillion(chartData.amount) }} ล้านบาท
@@ -24,46 +23,99 @@
       </ModalDetails>
     </div>
     <ToggleUnit :toggle="() => toggle()" :isMillion="isMillion" />
-    <div class="flex space-x-6 flex-1 mx-auto w-full h-[500px]">
+    <div
+      class="flex pl-[25px] flex-1 mx-auto w-full h-[500px] min-h-[500px] max-h-[500px] relative mt-5"
+    >
+      <div class="absolute inset-0 flex flex-col-reverse mt-[0.5px]">
+        <div
+          v-for="item in formatYAxis()"
+          :key="item.id"
+          class="flex-1 relative border-t-[0.5px] border-t-wv-gray-3"
+        >
+          <div class="translate-y-[-50%] absolute top-0 bg-white text-wv-gray-1 wv-b7">
+            {{ item.toLocaleString("en-US", {}) }}
+          </div>
+        </div>
+      </div>
       <div
         v-for="(d, index) in chartData.years"
         :key="index"
-        class="flex flex-col-reverse flex-1"
+        class="flex flex-col-reverse flex-1 pl-[25px] relative"
       >
-        <p class="wv-b5 text-center mt-2">’{{ d.year }}</p>
         <div
-          v-for="(strategy, i) in strategyList()"
+          class="wv-b5 text-center mt-2 absolute pl-[25px] bottom-[-5px] translate-y-[100%] left-[50%] translate-x-[-51%]"
+        >
+          ’{{ d.year }}
+        </div>
+
+        <div
+          v-for="(strategy, i) in navData()"
           :key="i"
-          class="relative my-[0.5px]"
+          class="relative"
           @mouseenter="e => mouseEnter(e)"
           @mouseleave="mouseLeave"
-          :id="strategy"
+          :id="strategy.name"
         >
           <div
-            class="absolute inset-0 z-10 borderSubStrategy cursor-pointer wrapper-strategy"
-            :class="colorFilter(strategy)"
-            :id="'strategy-' + strategy"
-            @click="() => handleStrategy(strategy)"
-          />
+            class="borderSubStrategy cursor-pointer wrapper-strategy z-10 absolute inset-0 h-full"
+            :class="colorFilter(strategy.name)"
+            :id="'strategy-' + strategy.name"
+            @click="() => handleStrategy(strategy.name)"
+          ></div>
+          <div
+            class="absolute inset-0 h-full wv-b7 font-bold wrapper-amount-strategy pointer-events-none"
+            :id="'strategy-amount-' + strategy.name"
+          >
+            <p
+              class="absolute top-0 translate-y-[-100%] left-[50%] translate-x-[-50%] z-40"
+              v-if="chartSelected === strategy.name"
+            >
+              {{
+                convertMillion(
+                  d.strategies.filter(d => d.name === strategy.name)[0]?.amount,
+                )
+              }}
+            </p>
+          </div>
 
           <div
             v-for="(subStrategy, key) in d.strategies.filter(
-              d => d.name === strategy,
+              d => d.name === strategy.name,
             )[0]?.substrategies"
             :key="key"
-            :class="colorFilter(strategy)"
-            :id="'subStrategy-' + replaceDotName(subStrategy.name)"
-            class="borderSubStrategy cursor-pointer wrapper-sub-strategy"
-            :style="`height: ${heightChart(subStrategy.amount, d.amount)}px`"
-            @click="() => handleSubStrategy(subStrategy.name)"
-            @mouseenter="e => mouseEnter(e, 'isSubStrategy')"
-            @mouseleave="e => mouseLeave(e, 'isSubStrategy')"
-          ></div>
+          >
+            <div
+              :class="colorFilter(strategy.name)"
+              :id="'subStrategy-' + subStrategy.name"
+              class="borderSubStrategy cursor-pointer wrapper-sub-strategy relative"
+              :style="`height: ${heightChart(subStrategy.amount, d.amount)}px`"
+              @click="() => handleSubStrategy(subStrategy.name)"
+              @mouseenter="e => mouseEnter(e, 'isSubStrategy')"
+              @mouseleave="e => mouseLeave(e, 'isSubStrategy')"
+            >
+              <div
+                class="absolute top-0 t wv-b7 translate-y-[-100%] left-[50%] translate-x-[-50%] font-bold pointer-events-none"
+                v-if="chartSelected === subStrategy.name"
+              >
+                {{ convertMillion(subStrategy.amount) }}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="relative wv-b7 font-bold left-[50%] pl-[25px] translate-x-[-52%]"
+          v-if="!chartSelected"
+        >
+          {{ convertMillion(d.amount) }}
         </div>
       </div>
     </div>
   </div>
-  <div v-else class="min-w-[685px] min-h-[550px]" id="wrapper-horizontal-barchart" />
+  <div
+    v-else
+    class="min-w-[685px] min-h-[550px] h-fit"
+    id="wrapper-horizontal-barchart "
+  />
 </template>
 
 <script>
@@ -72,7 +124,6 @@ import { mapState, mapActions } from "vuex";
 import {
   colorFilter,
   convertMillion,
-  strategyList,
   handleAddSelected,
   handleRemoveSelected,
 } from "../utils";
@@ -112,7 +163,7 @@ export default {
     }),
     colorFilter,
     convertMillion,
-    strategyList,
+    navData,
     handleModal() {
       this.isOpen = !this.isOpen;
     },
@@ -144,44 +195,57 @@ export default {
         : handleRemoveSelected("#strategy-" + elemId, "hoverActive");
     },
     handleStrategy(strategy) {
+      this.currentSelected = strategy;
+      handleRemoveSelected(".wrapper-sub-strategy", "z-[20]");
       handleRemoveSelected(".wrapper-sub-strategy", "grayScale");
       handleAddSelected(".wrapper-strategy", "grayScale");
       handleRemoveSelected(".wrapper-strategy", "hidden");
-      handleAddSelected("#strategy-" + strategy, "hidden");
       handleRemoveSelected("#strategy-" + strategy, "grayScale");
-      this.updateChartSelected(strategy);
+      if (strategy !== "ไม่พบข้อมูล") {
+        handleAddSelected("#strategy-" + strategy, "hidden");
+      }
+
+      if (this.prevSelected === this.currentSelected) {
+        this.updateChartSelected();
+        handleRemoveSelected(".wrapper-strategy", "grayScale");
+      } else {
+        this.updateChartSelected(strategy);
+      }
       this.fetchByStrategy(strategy);
-      this.updateSubTitleModal(`เพื่อ "${strategy}""`);
+      strategy === "ไม่พบข้อมูล"
+        ? this.updateSubTitleModal(`"${strategy}"`)
+        : this.updateSubTitleModal(`เพื่อ "${strategy}""`);
+      this.prevSelected = this.currentSelected;
     },
     handleSubStrategy(strategy) {
       this.currentSelected = strategy;
       handleAddSelected(".wrapper-sub-strategy", "grayScale");
-      handleRemoveSelected(
-        "#subStrategy-" + this.replaceDotName(strategy),
-        "grayScale",
-      );
-
+      handleRemoveSelected(`[id='subStrategy-${strategy}']`, "grayScale");
       if (this.prevSelected === this.currentSelected) {
         this.updateChartSelected();
+        handleRemoveSelected(".wrapper-sub-strategy", "z-[20]");
         handleRemoveSelected(".wrapper-strategy", "grayScale");
         handleRemoveSelected(".wrapper-strategy", "hidden");
         this.updateSubTitleModal("ตามแผนยุทธศาสตร์ 7 ด้าน");
         this.currentSelected = "";
       } else {
+        handleRemoveSelected(".wrapper-sub-strategy", "z-[20]");
+        handleAddSelected(`[id='subStrategy-${strategy}']`, "z-[20]");
         this.fetchBySubStrategy(strategy);
-        this.updateSubTitleModal(`เพื่อ "${strategy}""`);
+        strategy === "ไม่พบข้อมูล"
+          ? this.updateSubTitleModal(`"${strategy}"`)
+          : this.updateSubTitleModal(`เพื่อ "${strategy}""`);
         this.updateChartSelected(strategy);
       }
       this.prevSelected = this.currentSelected;
     },
-    replaceDotName(name) {
-      return name?.toString().replace(/\./g, "-");
-    },
+
     formatYAxis() {
-      // const amounts = data.map(object => {
-      //   return object.amount;
-      // });
-      // const max = Math.max(...amounts);
+      const result = [...Array(5)].map(
+        (_, index) => ((parseInt(this.roundBudget) / 5) * (index + 1)) / 1000000,
+      );
+      const percent = [...Array(5)].map((_, index) => (100 / 5) * (index + 1));
+      return this.isMillion ? [...result] : [...percent];
     },
     async fetchByStrategy(strategy) {
       await getBudgetItems({
@@ -214,9 +278,6 @@ export default {
       }
     },
   },
-  mounted() {
-    console.log(this.chartData, "chartData");
-  },
   watch: {
     strategyChoice(newValue) {
       const filterStrategy = navData().filter(d => d.name === newValue);
@@ -229,6 +290,7 @@ export default {
         this.handleSubStrategy(newValue);
       } else {
         this.updateIsModalDetails("");
+        this.updateChartSelected();
         handleRemoveSelected(".wrapper-strategy", "grayScale");
         handleRemoveSelected(".wrapper-strategy", "hidden");
       }
@@ -255,6 +317,6 @@ export default {
   background: #ffffff;
   box-shadow: 0px 0px 45px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
-  padding: 20px;
+  @apply px-[20px] pt-[20px] py-[40px];
 }
 </style>
