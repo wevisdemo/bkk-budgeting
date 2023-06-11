@@ -1,14 +1,17 @@
 <template>
-  <div class="container mx-auto min-h-[90vh] px-8">
+  <div class="container mx-auto min-h-[90vh] px-2 lg:px-8">
     <div id="nav" class="flex justify-between my-5">
       <div class="wv-b6">สรุปภาพรวม</div>
       <div class="wv-b7 text-wv-gray-1">
         *เว็บไซต์นี้แสดงเฉพาะงบที่ใช้ตามยุทธศาสตร์ ซึ่งไม่ใช่งบทั้งหมดของกรุงเทพฯ
       </div>
     </div>
-    <div id="header" class="flex wv-kondolar justify-between">
+    <div
+      id="header"
+      class="flex wv-kondolar lg:justify-between text-center lg:text-left items-center flex-col lg:flex-row"
+    >
       <div class="wv-black wv-h5">สำรวจการใช้งบกรุงเทพฯ ตามแผนยุทธศาสตร์</div>
-      <div class="flex wv-b5 items-center">
+      <div class="flex wv-b5 items-center mt-3 lg:mt-0">
         <div
           v-for="item in toppics"
           :key="item.id"
@@ -62,9 +65,6 @@ export default {
       await getChartDataGroupByOrganizations().then(response => {
         this.updateOrganizeData(response);
       });
-      // await getBudgetItems({keyword:'เขตปลอดบุหรี่'}).then(response => {
-      //   console.log(response,'response')
-      // });
     },
     chooseTopic(topicName) {
       this.topic = topicName;

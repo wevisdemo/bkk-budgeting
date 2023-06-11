@@ -59,7 +59,22 @@ const config: NuxtConfig = {
     standalone: false,
   },
 
-  modules: ["@nuxtjs/tailwindcss", "@nuxtjs/axios", "@nuxtjs/pwa"],
+  modules: [
+    "@nuxtjs/tailwindcss",
+    "@nuxtjs/axios",
+    "@nuxtjs/pwa",
+    [
+      "nuxt-mq",
+      {
+        // Default breakpoint for SSR
+        defaultBreakpoint: "sm",
+        breakpoints: {
+          md: 1024,
+          lg: Infinity,
+        },
+      },
+    ],
+  ],
 
   extends: ["@nuxtjs/eslint-config-typescript"],
 

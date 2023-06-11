@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="chartData.years"
-    class="max-w-[685px] h-fit flex-1 flex flex-col justify-between"
+    class="max-w-[685px] h-fit flex-1 flex flex-col justify-between w-full mx-auto"
     id="wrapper-horizontal-barchart"
   >
     <div class="flex justify-between items-center mb-6">
@@ -24,7 +24,7 @@
     </div>
     <ToggleUnit :toggle="() => toggle()" :isMillion="isMillion" />
     <div
-      class="flex pl-[25px] flex-1 mx-auto w-full h-[500px] min-h-[500px] max-h-[500px] relative mt-5"
+      class="flex pl-[35px] md:pl-[50px] lg:pl-[25px] flex-1 mx-auto w-full lg:h-[500px] lg:min-h-[500px] lg:max-h-[500px] h-[250px] relative mt-5"
     >
       <div class="absolute inset-0 flex flex-col-reverse mt-[0.5px]">
         <div
@@ -40,10 +40,10 @@
       <div
         v-for="(d, index) in chartData.years"
         :key="index"
-        class="flex flex-col-reverse flex-1 pl-[25px] relative"
+        class="flex flex-col-reverse flex-1 pl-[5px] lg:pl-[25px] relative"
       >
         <div
-          class="wv-b5 text-center mt-2 absolute pl-[25px] bottom-[-5px] translate-y-[100%] left-[50%] translate-x-[-51%]"
+          class="wv-b5 text-center mt-2 absolute pl-[5px] lg:pl-[25px] bottom-[-5px] translate-y-[100%] left-[50%] translate-x-[-51%]"
         >
           ’{{ d.year }}
         </div>
@@ -102,10 +102,7 @@
             </div>
           </div>
         </div>
-        <div
-          class="relative wv-b7 font-bold left-[50%] pl-[25px] translate-x-[-52%]"
-          v-if="!chartSelected"
-        >
+        <div class="relative wv-b7 font-bold text-center" v-if="!chartSelected">
           {{ convertMillion(d.amount) }}
         </div>
       </div>
@@ -113,7 +110,7 @@
   </div>
   <div
     v-else
-    class="min-w-[685px] min-h-[550px] h-fit"
+    class="lg:min-w-[685px] min-h-[550px] h-fit"
     id="wrapper-horizontal-barchart "
   />
 </template>
@@ -179,7 +176,8 @@ export default {
     heightChart(amount, strategyAmount) {
       const divide = this.isMillion ? this.roundBudget : strategyAmount;
       const percent = Number(amount / divide) * 100;
-      const height = Number((percent * 500) / 100);
+      const mqHeight = this.$mq === "lg" ? 500 : 250;
+      const height = Number((percent * mqHeight) / 100);
       return height;
     },
     mouseEnter(e, isSubStrategy) {

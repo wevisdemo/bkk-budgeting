@@ -1,15 +1,35 @@
 <template>
   <div
     id="byYears"
-    class="mt-7 flex space-x-[35px] justify-center"
+    class="mt-7 flex lg:space-x-[35px] justify-center flex-col lg:flex-row"
     :class="chartData.years ? 'pointer-events-auto' : 'pointer-events-none'"
   >
-    <div class="w-[400px]">
-      <p class="wv-b5 text-wv-gray-1">
+    <div class="lg:w-[400px] mb-4 lg:mb-0">
+      <p class="wv-b5 text-wv-gray-1 text-center lg:text-left">
         <b>ยุทธศาสตร์ 7 ด้าน</b> เป็นแผนพัฒนาที่กรุงเทพฯ <br />วางไว้
         เพื่อจะก้าวไปสู่การเป็น “มหานครแห่งเอเชีย” <br />ภายใน 20 ปี (2561-2580)
       </p>
-      <div id="explantion" class="mt-6">
+      <div
+        v-if="this.$mq === 'md'"
+        @click="mobileStrategy = true"
+        class="p-[10px] my-[10px] text-left flex justify-between wv-b5 border-black border max-w-[300px] mx-auto rounded-[5px]"
+      >
+        {{ chartSelected || "ทุกแผนยุทธศาสตร์" }}
+        <img src="~/assets/images/open-modal.svg" />
+      </div>
+      <div
+        id="explantion"
+        class="lg:mt-6"
+        :class="this.$mq === 'mq' ? 'fixed inset-0 bg-white p-10 z-50' : ''"
+        v-if="(this.$mq === 'md' && mobileStrategy) || this.$mq === 'lg'"
+      >
+        <img
+          src="~/assets/images/close-black.svg"
+          class="absolute top-0 right-0 m-5"
+          @click="mobileStrategy = false"
+        />
+        <p class="wv-b5 font-bold mb-2 lg:hidden">แผนยุทธศาสตร์ 7 ด้าน</p>
+
         <div v-for="(strategy, key) in navData()" :key="key">
           <button
             class="flex items-center border-b border-b-wv-gray-4 text-start py-[10px] bg-opacity-30 rounded-[2px] px-3 w-full"
@@ -70,7 +90,7 @@
         </div>
       </div>
     </div>
-    <HorizontalBarChartVue class="mb-6" />
+    <HorizontalBarChartVue class="mb-6" :pointer="pointer" />
   </div>
 </template>
 
@@ -83,6 +103,12 @@ import { navData } from "~/components/expore/navData";
 export default {
   components: {
     HorizontalBarChartVue,
+  },
+  data() {
+    return {
+      mobileStrategy: false,
+      pointer: "",
+    };
   },
 
   computed: {

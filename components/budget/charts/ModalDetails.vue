@@ -4,17 +4,17 @@
     <div class="fixed inset-0 z-[50]" v-if="isOpen">
       <div class="fixed inset-0 bg-wv-gray-4 bg-opacity-70 z-40" @click="handleModal" />
       <div
-        class="w-[850px] h-[600px] px-12 py-8 bg-white absolute z-50 top-[50%] translate-y-[-50%] translate-x-[-50%] left-[50%]"
+        class="lg:w-[850px] inset-0 lg:h-[600px] px-12 py-8 bg-white absolute z-50 lg:top-[50%] lg:translate-y-[-50%] lg:translate-x-[-50%] lg:left-[50%]"
       >
-        <div class="absolute top-0 right-0">
+        <div class="absolute top-0 right-0 m-5 lg:m-0">
           <img
             @click="handleModal"
             src="~/assets/images/cancel.svg"
-            class="translate-y-[-50%] translate-x-[50%] cursor-pointer"
+            class="lg:translate-y-[-50%] lg:translate-x-[50%] cursor-pointer"
           />
         </div>
-        <div class="flex justify-between flex-col h-full">
-          <div>
+        <div class="flex justify-between flex-col h-auto lg:h-full">
+          <div class="mb-4">
             <!-- ------- header -->
             <div class="wv-b5 flex space-x-2 items-center justify-center">
               <p>ปีงบประมาณ</p>
