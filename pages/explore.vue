@@ -1,7 +1,7 @@
 <template>
   <div class="container mx-auto min-h-[90vh] px-2 lg:px-8">
     <div id="nav" class="flex justify-between my-5">
-      <div class="wv-b6">สรุปภาพรวม</div>
+      <NuxtLink :to="{ path: '/', hash: `#${topic}` }">สรุปภาพรวม</NuxtLink>
       <div class="wv-b7 text-wv-gray-1">
         *เว็บไซต์นี้แสดงเฉพาะงบที่ใช้ตามยุทธศาสตร์ ซึ่งไม่ใช่งบทั้งหมดของกรุงเทพฯ
       </div>
@@ -15,17 +15,17 @@
         <div
           v-for="item in toppics"
           :key="item.id"
-          @click="chooseTopic(item.name)"
+          @click="chooseTopic(item.value)"
           class="px-[14px] hover:border-black cursor-pointer text-center whitespace-nowrap py-[5px] border border-wv-gray-4 min-w-[120px]"
-          :class="topic === item.name ? 'bg-wv-gray-4 text-black' : 'text-gray-400'"
+          :class="topic === item.value ? 'bg-wv-gray-4 text-black' : 'text-gray-400'"
         >
           {{ item.name }}
         </div>
       </div>
     </div>
-    <SurveyByYears v-if="topic === 'รายปี'" />
-    <SurveyByOrganize v-if="topic === 'รายหน่วยงาน'" />
-    <SurveyByKeyword v-if="topic === 'ค้นด้วยคีย์เวิร์ด'" />
+    <SurveyByYears v-if="topic === 'YearlyBudget'" />
+    <SurveyByOrganize v-if="topic === 'OrganizeBudget'" />
+    <SurveyByKeyword v-if="topic === 'KeyWordBudget'" />
   </div>
 </template>
 
@@ -42,15 +42,18 @@ export default {
   data() {
     return {
       toppics: [
-        { name: "รายปี" },
-        { name: "รายหน่วยงาน" },
-        { name: "ค้นด้วยคีย์เวิร์ด" },
+        { name: "รายปี", value: "YearlyBudget" },
+        { name: "รายหน่วยงาน", value: "OrganizeBudget" },
+        { name: "ค้นด้วยคีย์เวิร์ด", value: "KeyWordBudget" },
       ],
-      topic: "รายหน่วยงาน",
+      topic: { name: "รายปี", value: "YearlyBudget" },
     };
   },
   mounted() {
     this.fetchdata();
+    if (!this.$route.select)
+      this.$router.push({ path: "explore", query: { select: "YearlyBudget" } });
+    this.topic = this.$route.select || "YearlyBudget";
   },
   methods: {
     ...mapActions({
@@ -65,8 +68,9 @@ export default {
         this.updateOrganizeData(response);
       });
     },
-    chooseTopic(topicName) {
-      this.topic = topicName;
+    chooseTopic(topicValue) {
+      this.topic = topicValue;
+      this.$router.push({ path: "explore", query: { select: topicValue } });
     },
   },
 };

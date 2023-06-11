@@ -1,6 +1,6 @@
 <template>
   <VizChart>
-    <div class="max-w-[400px] flex flex-col gap-4 justify-between">
+    <div class="max-w-[400px] flex flex-col gap-4 justify-between" id="KeyWordBudget">
       <p class="wv-b3 flex-grow text-center sm:text-left">
         หากไม่รู้ว่าจะเริ่มสำรวจการใช้งบจากตรงไหน ลองค้นหาด้วย คีย์เวิร์ดที่พบบ่อย
         ในชื่อและคำอธิบายรายการใช้งบ
@@ -14,7 +14,7 @@
       <div class="hidden sm:block">Chart</div>
       <div class="flex justify-center sm:justify-end">
         <NuxtLink
-          :to="{ path: 'explore', query: { select: 'YearlyBudget' } }"
+          :to="{ path: 'explore', query: { select: 'KeyWordBudget' } }"
           class="inline-block py-1 px-2 rounded border-wv-gray-1 border text-wv-gray-1 h-min"
         >
           ค้นหางบด้วยคีย์เวิร์ด
@@ -29,7 +29,7 @@ import Vue from "vue";
 import VizChart from "~/components/budget/charts/VizChartContainer.vue";
 
 export default Vue.extend({
-  name: "YearlyBudget",
+  name: "KeyWordBudget",
   components: { VizChart },
 });
 </script>

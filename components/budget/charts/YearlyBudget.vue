@@ -1,6 +1,6 @@
 <template>
   <VizChart>
-    <div class="max-w-[400px] flex flex-col gap-4 justify-between">
+    <div class="max-w-[400px] flex flex-col gap-4 justify-between" id="YearlyBudget">
       <p class="wv-b3 flex-grow text-center sm:text-left">
         งบยุทธศาสตร์ส่วนใหญ่ถูกใช้กับการสร้างเมืองปลอดภัย
         แต่ยังไม่พบการใช้งบในการสร้างเมืองประชาธิปไตยแบบมีส่วนร่วมเลย
