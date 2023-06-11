@@ -40,7 +40,7 @@
               <div class="flex items-center">
                 <div
                   :class="selectHandle(strategy.name === chartSelected, strategy.name)"
-                  class="w-0 h-0 mr-2 border-t-[6px] border-t-transparent border-l-[8px] border-l-rose-600 border-b-[6px] border-b-transparent"
+                  class="w-0 h-0 mr-2 border-t-[6px] border-t-transparent border-l-[8px] border-b-[6px] border-b-transparent"
                 />
                 <p class="wv-b6">{{ key + 1 }}. {{ strategy.name }}</p>
               </div>
@@ -122,6 +122,7 @@ export default {
     selectHandle(isSlect, strategy) {
       if (isSlect)
         return `rotate-90 ${borderFilter(strategy)} ${colorFilter(strategy)}}`;
+      console.log(borderFilter(strategy));
       return borderFilter(strategy);
     },
     handleStategy(strategy) {

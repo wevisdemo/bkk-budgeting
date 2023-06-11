@@ -1,26 +1,29 @@
 <template>
-  <div id="byYears" class="mt-7 flex space-x-[35px] min-h-screen justify-center">
+  <div
+    id="byYears"
+    class="mt-7 flex lg:space-x-[35px] min-h-screen flex-col lg:flex-row justify-center"
+  >
     <ModalDetails :handleModal="() => handleModal()" :isOpen="isOpen" page="organize" />
-    <div class="max-w-[400px]">
+    <div class="lg:max-w-[400px] text-center lg:text-left">
       <p class="wv-b5 text-wv-gray-1">
         <b>ยุทธศาสตร์ 7 ด้าน</b> เป็นแผนพัฒนาที่กรุงเทพฯ <br />วางไว้
         เพื่อจะก้าวไปสู่การเป็น “มหานครแห่งเอเชีย” <br />ภายใน 20 ปี (2561-2580)
       </p>
-      <div class="mt-5">
+      <div class="mt-5 flex flex-wrap lg:block text-start">
         <div
           v-for="(item, key) in navData()"
           :key="key"
-          class="flex items-center space-x-2 py-[5px]"
+          class="flex items-center space-x-2 py-[5px] w-[50%] lg:w-full"
         >
           <div
-            class="w-[10px] h-[10px] rounded-[2px]"
+            class="min-w-[10px] min-h-[10px] rounded-[2px]"
             :class="colorFilter(item.name)"
           />
           <div class="flex wv-b5 text-wv-gray-1">{{ key + 1 }}. {{ item.name }}</div>
         </div>
       </div>
     </div>
-    <div class="max-w-[685px] flex-1 flex flex-col justify-between">
+    <div class="lg:max-w-[685px] mt-3 flex-1 flex flex-col justify-between">
       <div class="flex">
         <p class="wv-h8 font-bold">หน่วยงานที่ได้รับงบในปี</p>
         <DropDownYearList
