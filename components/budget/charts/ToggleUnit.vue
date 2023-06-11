@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex wv-b7 cursor-pointer bg-wv-gray-3 relative w-fit py-[2.8px] px-[12.5px] rounded-[20px]"
+    class="flex wv-b7 h-fit cursor-pointer bg-wv-gray-3 relative w-fit py-[2.8px] px-[12.5px] rounded-[20px]"
     @click="toggle"
   >
     <div class="mr-[30px] opacity-50">ล้านบาท</div>

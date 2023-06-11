@@ -19,14 +19,14 @@
       </div>
       <div
         id="explantion"
-        class="lg:mt-6"
-        :class="this.$mq === 'mq' ? 'fixed inset-0 bg-white p-10 z-50' : ''"
+        class="lg:mt-6 fixed lg:relative inset-0 bg-white p-10 z-50 lg:p-0"
         v-if="(this.$mq === 'md' && mobileStrategy) || this.$mq === 'lg'"
       >
         <img
           src="~/assets/images/close-black.svg"
           class="absolute top-0 right-0 m-5"
           @click="mobileStrategy = false"
+          v-if="this.$mq === 'md'"
         />
         <p class="wv-b5 font-bold mb-2 lg:hidden">แผนยุทธศาสตร์ 7 ด้าน</p>
 
@@ -122,7 +122,6 @@ export default {
     selectHandle(isSlect, strategy) {
       if (isSlect)
         return `rotate-90 ${borderFilter(strategy)} ${colorFilter(strategy)}}`;
-      console.log(borderFilter(strategy));
       return borderFilter(strategy);
     },
     handleStategy(strategy) {

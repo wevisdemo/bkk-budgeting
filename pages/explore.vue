@@ -35,7 +35,6 @@ import SurveyByYears from "~/components/expore/SurveyByYears.vue";
 import SurveyByOrganize from "~/components/expore/SurveyByOrganize.vue";
 import SurveyByKeyword from "~/components/expore/SurveyByKeyword.vue";
 import { getChartData, getChartDataGroupByOrganizations } from "~/data/get-chart-data";
-// import {getBudgetItems } from '~/data/get-budget-items'
 
 export default {
   components: { SurveyByYears, SurveyByOrganize, SurveyByKeyword },

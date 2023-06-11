@@ -19,3 +19,15 @@ export const filterBy = (label: string, filterYears: any) => {
     });
   }
 };
+
+export const filterByOrganize = (label: string, filterYears: any) => {
+  if (label === "งบมากไปน้อย") {
+    return (filterYears = orderByStrategy(filterYears, "amount", "desc"));
+  }
+  if (label === "งบน้อยไปมาก") {
+    return (filterYears = orderByStrategy(filterYears, "amount", "asc"));
+  }
+  if (label === "ตัวอักษร") {
+    return (filterYears = orderByStrategy(filterYears, "nameOrganization", "asc"));
+  }
+};

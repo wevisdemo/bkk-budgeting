@@ -20,7 +20,9 @@ export const getChartData = async (): Promise<ChartData> => {
 export const getChartDataGroupByOrganizations = async (
   year: number,
 ): Promise<OrganizationChartData[]> => {
-  const { items } = await getBudgetItems({ budgetYear: year });
+  const { items } = await getBudgetItems({
+    budgetYear: year ? Number(Object.values(year)) : undefined,
+  });
   return getOrganizationChartDatas(items);
 };
 

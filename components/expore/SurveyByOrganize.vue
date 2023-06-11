@@ -1,7 +1,7 @@
 <template>
   <div
     id="byYears"
-    class="mt-7 flex lg:space-x-[35px] min-h-screen flex-col lg:flex-row justify-center"
+    class="mt-7 md:w-[80%] mx-auto lg:w-full flex lg:space-x-[35px] min-h-screen flex-col lg:flex-row justify-center"
   >
     <ModalDetails :handleModal="() => handleModal()" :isOpen="isOpen" page="organize" />
     <div class="lg:max-w-[400px] text-center lg:text-left">
@@ -24,8 +24,8 @@
       </div>
     </div>
     <div class="lg:max-w-[685px] mt-3 flex-1 flex flex-col justify-between">
-      <div class="flex">
-        <p class="wv-h8 font-bold">หน่วยงานที่ได้รับงบในปี</p>
+      <div class="flex items-center">
+        <p class="wv-h8 font-bold mr-2">หน่วยงานที่ได้รับงบในปี</p>
         <DropDownYearList
           :handleSelectedYear="() => handleSelectedYear()"
           :isOpenYearSelected="isOpenYearSelected"
@@ -33,7 +33,29 @@
           >{{ selectYearOrganize.label }}</DropDownYearList
         >
       </div>
-      <ToggleUnit :toggle="() => toggle()" :isMillion="isMillion" />
+      <div class="flex justify-between mt-5">
+        <div class="text-wv-gray-1 wv-b6 flex space-x-2 justify-center cursor-pointer">
+          <p class="">เรียงตาม</p>
+          <div class="underline pb-2 relative" @click="handleFilter">
+            <p class="font-bold">{{ selectedFilter }}</p>
+            <div
+              v-if="isFilterModal"
+              class="absolute top-[100%] bg-white w-[150px] left-0 border border-wv-gray-3 py-[5px]"
+            >
+              <div
+                v-for="item in filterList"
+                :key="item.id"
+                class="hover:bg-wv-gray-3 cursor-pointer px-[10px]"
+                @click="() => selectFilter(item.label)"
+              >
+                {{ item.label }}
+              </div>
+            </div>
+          </div>
+        </div>
+        <ToggleUnit :toggle="() => toggle()" :isMillion="isMillion" />
+      </div>
+
       <div
         v-for="(item, key) in barChartData"
         :key="key"
@@ -48,18 +70,25 @@
             <div class="wv-b4 font-bold">
               {{ item.nameOrganization }}
             </div>
-            <div>
-              <span class="wv-b6 font-bold">
-                {{
-                  (item.amount / 1000000).toLocaleString("en-US", {
-                    maximumFractionDigits: 2,
-                    minimumFractionDigits: 2,
-                  })
-                }}
-              </span>
-              <span class="wv-b7">ล้านบาท</span>
+            <div class="flex items-center">
+              <div v-if="isMillion">
+                <span class="wv-b6 font-bold">
+                  {{
+                    (item.amount / 1000000).toLocaleString("en-US", {
+                      maximumFractionDigits: 2,
+                      minimumFractionDigits: 2,
+                    })
+                  }}
+                </span>
+                <span class="wv-b7">ล้านบาท</span>
+              </div>
+              <div v-else class="wv-b6 font-bold">
+                {{ ((item.amount / chartData.amount) * 100).toFixed(2) }} %
+              </div>
+              <div class="ml-1"><img src="~/assets/images/list-button.svg" /></div>
             </div>
           </div>
+
           <div class="h-[10px] w-full bg-wv-gray-4 flex">
             <div
               v-for="strategy in strategyList()"
@@ -77,9 +106,11 @@
 
 <script>
 import { mapState, mapActions } from "vuex";
+import { filterByOrganize } from "../budget/charts/filterBy";
 import { navData } from "~/components/expore/navData";
 import { colorFilter, orderByStrategy, strategyList } from "~/components/budget/utils";
 import { getBudgetItems } from "~/data/get-budget-items";
+import { getChartDataGroupByOrganizations } from "~/data/get-chart-data";
 import ModalDetails from "~/components/budget/charts/ModalDetails.vue";
 import ToggleUnit from "~/components/budget/charts/ToggleUnit.vue";
 import DropDownYearList from "~/components/budget/charts/DropDownYearList.vue";
@@ -93,6 +124,13 @@ export default {
       isMillion: true,
       isOpenYearSelected: false,
       filterYears: [],
+      filterList: [
+        { label: "งบมากไปน้อย" },
+        { label: "งบน้อยไปมาก" },
+        { label: "ตัวอักษร" },
+      ],
+      selectedFilter: "งบมากไปน้อย",
+      isFilterModal: false,
     };
   },
   components: { ModalDetails, ToggleUnit, DropDownYearList },
@@ -106,9 +144,19 @@ export default {
     colorFilter,
     orderByStrategy,
     strategyList,
+    filterByOrganize,
+    getChartDataGroupByOrganizations,
     handleModal() {
       this.isOpen = !this.isOpen;
     },
+    async fetchByOrganizeYear(year) {
+      await getChartDataGroupByOrganizations({
+        year,
+      }).then(response => {
+        this.barChartData = filterByOrganize(this.selectedFilter, response);
+      });
+    },
+
     async fetchByOrganize(nameOrganization) {
       await getBudgetItems({
         nameOrganization,
@@ -126,6 +174,15 @@ export default {
           total: this.selectYearOrganize.value ? filterYear.length : response.total,
         });
       });
+    },
+    handleFilter() {
+      this.isFilterModal = !this.isFilterModal;
+      this.isOpenYearSelected = false;
+    },
+    selectFilter(label) {
+      this.selectedFilter = label;
+      const resultFilter = filterByOrganize(label, this.barChartData);
+      this.barChartData = resultFilter;
     },
     selectOrganize(nameOrganization) {
       this.fetchByOrganize(nameOrganization);
@@ -158,6 +215,7 @@ export default {
         this.updateSelectYearOrganize({ label: "2561-2566", value: "" });
         this.filterYears = this.isModalDetails;
       }
+      this.fetchByOrganizeYear(year.value);
     },
   },
   computed: {
