@@ -1,4 +1,4 @@
-import { BudgetRow, fetchDataSource } from "./fetch-data-source";
+import { BudgetRow } from "./fetch-data-source";
 import { BudgetItem } from "~/models/budget-item";
 
 export interface Filters {
@@ -14,8 +14,10 @@ export interface BudgetItemResult {
   items: BudgetItem[];
 }
 
-export const getBudgetItems = async (filters?: Filters): Promise<BudgetItemResult> => {
-  let rows = await fetchDataSource();
+export const getBudgetItems = (
+  rows: BudgetRow[],
+  filters?: Filters,
+): BudgetItemResult => {
   if (filters) {
     if (filters.budgetYear) {
       rows = rows.filter(filterBudgetYear(filters.budgetYear));

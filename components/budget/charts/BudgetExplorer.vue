@@ -1,6 +1,6 @@
 <template>
   <VizChart>
-    <div class="max-w-[400px] flex flex-col gap-4 justify-between" id="KeyWordBudget">
+    <div id="KeyWordBudget" class="max-w-[400px] flex flex-col gap-4 justify-between">
       <p class="wv-b3 flex-grow text-center sm:text-left">
         หากไม่รู้ว่าจะเริ่มสำรวจการใช้งบจากตรงไหน ลองค้นหาด้วย คีย์เวิร์ดที่พบบ่อย
         ในชื่อและคำอธิบายรายการใช้งบ

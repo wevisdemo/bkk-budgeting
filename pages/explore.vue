@@ -15,9 +15,9 @@
         <div
           v-for="item in toppics"
           :key="item.id"
-          @click="chooseTopic(item.value)"
           class="px-[14px] hover:border-black cursor-pointer text-center whitespace-nowrap py-[5px] border border-wv-gray-4 min-w-[120px]"
           :class="topic === item.value ? 'bg-wv-gray-4 text-black' : 'text-gray-400'"
+          @click="chooseTopic(item.value)"
         >
           {{ item.name }}
         </div>
@@ -34,7 +34,6 @@ import { mapActions } from "vuex";
 import SurveyByYears from "~/components/expore/SurveyByYears.vue";
 import SurveyByOrganize from "~/components/expore/SurveyByOrganize.vue";
 import SurveyByKeyword from "~/components/expore/SurveyByKeyword.vue";
-import { getChartData, getChartDataGroupByOrganizations } from "~/data/get-chart-data";
 
 export default {
   components: { SurveyByYears, SurveyByOrganize, SurveyByKeyword },
@@ -60,13 +59,13 @@ export default {
       updateChartData: "updateChartData",
       updateOrganizeData: "updateOrganizeData",
     }),
-    async fetchdata() {
-      await getChartData().then(response => {
-        this.updateChartData(response);
-      });
-      await getChartDataGroupByOrganizations().then(response => {
-        this.updateOrganizeData(response);
-      });
+    fetchdata() {
+      const chartResponse = this.$store.getters["data/getChartData"]();
+      this.updateChartData(chartResponse);
+
+      const chartDataByOrganizations =
+        this.$store.getters["data/getChartDataGroupByOrganizations"]();
+      this.updateOrganizeData(chartDataByOrganizations);
     },
     chooseTopic(topicValue) {
       this.topic = topicValue;

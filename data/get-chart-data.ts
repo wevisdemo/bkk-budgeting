@@ -1,4 +1,5 @@
 import { getBudgetItems } from "./get-budget-items";
+import { BudgetRow } from "./fetch-data-source";
 import { BudgetItem } from "~/models/budget-item";
 import {
   ChartData,
@@ -8,8 +9,8 @@ import {
   YearChartData,
 } from "~/models/chart-data";
 
-export const getChartData = async (): Promise<ChartData> => {
-  const { items } = await getBudgetItems();
+export const getChartData = (rows: BudgetRow[]): ChartData => {
+  const { items } = getBudgetItems(rows);
   const chartDatas = getYearChartDatas(items);
   return {
     amount: chartDatas.reduce(sumAmount, 0),
@@ -17,10 +18,11 @@ export const getChartData = async (): Promise<ChartData> => {
   };
 };
 
-export const getChartDataGroupByOrganizations = async (
+export const getChartDataGroupByOrganizations = (
+  rows: BudgetRow[],
   year: number,
-): Promise<OrganizationChartData[]> => {
-  const { items } = await getBudgetItems({
+): OrganizationChartData[] => {
+  const { items } = getBudgetItems(rows, {
     budgetYear: year ? Number(Object.values(year)) : undefined,
   });
   return getOrganizationChartDatas(items);

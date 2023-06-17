@@ -58,7 +58,8 @@ export const fetchDataSource = async (): Promise<BudgetRow[]> => {
     return Promise.resolve(cached);
   }
 
-  const result = await parse<CSV_ROW>(GOOGLE_SHEETS_CSV);
+  const dataText = await (await fetch(GOOGLE_SHEETS_CSV)).text();
+  const result = await parse<CSV_ROW>(dataText);
 
   if (result.errors && result.errors.length > 0) {
     return Promise.reject(result.errors);
@@ -98,10 +99,10 @@ const isIntegration = (rawValue: string): boolean => {
   return rawValue !== "-" && rawValue !== "";
 };
 
-function parse<T>(url: string) {
+function parse<T>(text: string) {
   return new Promise<ParseResult<T>>((resolve, reject) => {
-    papaParse<T>(url, {
-      download: true,
+    papaParse<T>(text, {
+      download: false,
       complete: resolve,
       error: reject,
       header: true,

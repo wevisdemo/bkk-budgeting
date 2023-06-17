@@ -90,4 +90,8 @@ export const actions: ActionTree<RootState, RootState> = {
   updateSelectYearStrategy({ commit }, payload) {
     commit("setSelectYearStrategy", payload);
   },
+
+  async nuxtServerInit({ dispatch }) {
+    await dispatch("data/nuxtServerInit", null, { root: true });
+  },
 };

@@ -21,22 +21,22 @@
           v-for="(item, index) in filterKeyword"
           :key="index"
           class="flex justify-between py-[2.5px] px-[10px] rounded-[5px] cursor-pointer"
-          @click="() => selectKey(item)"
           :class="
             selectedKey.Word === item.Word
               ? 'text-white bg-black '
               : 'hover:bg-wv-gray-4'
           "
+          @click="() => selectKey(item)"
         >
           <div class="flex items-center">
             <div
               class="w-[10px] h-[10px] rounded-full border border-wv-gray-2 mr-[5px]"
             >
               <img
+                v-if="selectedKey.Word === item.Word"
                 src="~/assets/icons/selected.svg"
                 alt="selected"
                 class="w-full"
-                v-if="selectedKey.Word === item.Word"
               />
             </div>
             <p class="wv-b5 font-bold">{{ item.Word }}</p>
@@ -44,9 +44,9 @@
           <p class="wv-b7 opacity-50">{{ item.Count }}</p>
         </div>
       </div>
-      <div class="ml-5 p-5 borderKey flex-1 h-fit" v-if="chartData.years">
+      <div v-if="chartData.years" class="ml-5 p-5 borderKey flex-1 h-fit">
         <p class="wv-h8 font-bold">{{ selectedKey.Word }}</p>
-        <ToggleUnit :toggle="() => toggle()" :isMillion="isMillion" />
+        <ToggleUnit :toggle="() => toggle()" :is-million="isMillion" />
         <div class="h-[500px]">
           <div class="flex h-full items-end">
             <div
@@ -68,7 +68,6 @@ import { mapState } from "vuex";
 import { convertMillion } from "../budget/utils";
 import ToggleUnit from "../budget/charts/ToggleUnit.vue";
 import { keywords } from "~/data/budgets/keywords";
-import { getBudgetItems } from "~/data/get-budget-items";
 
 export default {
   components: {
@@ -95,6 +94,15 @@ export default {
       isMillion: false,
     };
   },
+  watch: {
+    data(newValue) {
+      const result = keywords().filter(d => d.Word.toString().includes(newValue));
+      this.filterKeyword = result;
+    },
+  },
+  mounted() {
+    this.filterKeyword = keywords();
+  },
   methods: {
     convertMillion,
     keywords,
@@ -108,23 +116,14 @@ export default {
     calHeight(item) {
       return this.isMillion ? "100%" : `${(item / this.roundBudget) * 100}%`;
     },
-
-    async fetchbudgetItem(item) {
-      await getBudgetItems({ keyword: item.Word }).then(response => {
-        this.itemsChart = {
-          years: _.groupBy(response.items, "budgetYear"),
-          total: response.total,
-        };
+    fetchbudgetItem(item) {
+      const response = this.$store.getters["data/getBudgetItems"]({
+        keyword: item.Word,
       });
-    },
-  },
-  mounted() {
-    this.filterKeyword = keywords();
-  },
-  watch: {
-    data(newValue) {
-      const result = keywords().filter(d => d.Word.toString().includes(newValue));
-      this.filterKeyword = result;
+      this.itemsChart = {
+        years: _.groupBy(response.items, "budgetYear"),
+        total: response.total,
+      };
     },
   },
 };

@@ -3,7 +3,11 @@
     id="byYears"
     class="mt-7 md:w-[80%] mx-auto lg:w-full flex lg:space-x-[35px] min-h-screen flex-col lg:flex-row justify-center"
   >
-    <ModalDetails :handleModal="() => handleModal()" :isOpen="isOpen" page="organize" />
+    <ModalDetails
+      :handle-modal="() => handleModal()"
+      :is-open="isOpen"
+      page="organize"
+    />
     <div class="lg:max-w-[400px] text-center lg:text-left">
       <p class="wv-b5 text-wv-gray-1">
         <b>ยุทธศาสตร์ 7 ด้าน</b> เป็นแผนพัฒนาที่กรุงเทพฯ <br />วางไว้
@@ -27,9 +31,9 @@
       <div class="flex items-center">
         <p class="wv-h8 font-bold mr-2">หน่วยงานที่ได้รับงบในปี</p>
         <DropDownYearList
-          :handleSelectedYear="() => handleSelectedYear()"
-          :isOpenYearSelected="isOpenYearSelected"
-          :isSelectedYear="year => isSelectedYear(year)"
+          :handle-selected-year="() => handleSelectedYear()"
+          :is-open-year-selected="isOpenYearSelected"
+          :is-selected-year="year => isSelectedYear(year)"
           >{{ selectYearOrganize.label }}</DropDownYearList
         >
       </div>
@@ -53,14 +57,14 @@
             </div>
           </div>
         </div>
-        <ToggleUnit :toggle="() => toggle()" :isMillion="isMillion" />
+        <ToggleUnit :toggle="() => toggle()" :is-million="isMillion" />
       </div>
 
       <div
         v-for="(item, key) in barChartData"
         :key="key"
-        @click="() => selectOrganize(item.nameOrganization)"
         class="borderOrganize my-[5px] flex hover:border-black hover:border-[2px] border-[2px] border-transparent cursor-pointer"
+        @click="() => selectOrganize(item.nameOrganization)"
       >
         <div class="wv-h8 text-gray-300">
           {{ key + 1 }}
@@ -109,13 +113,13 @@ import { mapState, mapActions } from "vuex";
 import { filterByOrganize } from "../budget/charts/filterBy";
 import { navData } from "~/components/expore/navData";
 import { colorFilter, orderByStrategy, strategyList } from "~/components/budget/utils";
-import { getBudgetItems } from "~/data/get-budget-items";
 import { getChartDataGroupByOrganizations } from "~/data/get-chart-data";
 import ModalDetails from "~/components/budget/charts/ModalDetails.vue";
 import ToggleUnit from "~/components/budget/charts/ToggleUnit.vue";
 import DropDownYearList from "~/components/budget/charts/DropDownYearList.vue";
 
 export default {
+  components: { ModalDetails, ToggleUnit, DropDownYearList },
   data() {
     return {
       barChartData: [],
@@ -133,7 +137,6 @@ export default {
       isFilterModal: false,
     };
   },
-  components: { ModalDetails, ToggleUnit, DropDownYearList },
   methods: {
     ...mapActions({
       updateIsModalDetails: "updateIsModalDetails",
@@ -149,30 +152,26 @@ export default {
     handleModal() {
       this.isOpen = !this.isOpen;
     },
-    async fetchByOrganizeYear(year) {
-      await getChartDataGroupByOrganizations({
+    fetchByOrganizeYear(year) {
+      const response = this.$store.getters["data/getChartDataGroupByOrganizations"]({
         year,
-      }).then(response => {
-        this.barChartData = filterByOrganize(this.selectedFilter, response);
       });
+      this.barChartData = filterByOrganize(this.selectedFilter, response);
     },
 
-    async fetchByOrganize(nameOrganization) {
-      await getBudgetItems({
-        nameOrganization,
-      }).then(response => {
-        let filterYear;
-        if (this.selectYearOrganize.value) {
-          filterYear = response.items.filter(
-            i => i.budgetYear === this.selectYearOrganize.value,
-          );
-        } else {
-          filterYear = response;
-        }
-        this.updateIsModalDetails({
-          items: this.selectYearOrganize.value ? filterYear : response.items,
-          total: this.selectYearOrganize.value ? filterYear.length : response.total,
-        });
+    fetchByOrganize(nameOrganization) {
+      const response = this.$store.getters["data/getBudgetItems"]({ nameOrganization });
+      let filterYear;
+      if (this.selectYearOrganize.value) {
+        filterYear = response.items.filter(
+          i => i.budgetYear === this.selectYearOrganize.value,
+        );
+      } else {
+        filterYear = response;
+      }
+      this.updateIsModalDetails({
+        items: this.selectYearOrganize.value ? filterYear : response.items,
+        total: this.selectYearOrganize.value ? filterYear.length : response.total,
       });
     },
     handleFilter() {

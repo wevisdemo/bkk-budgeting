@@ -1,6 +1,6 @@
 <template>
   <VizChart>
-    <div class="max-w-[400px] flex flex-col gap-4 justify-between" id="OrganizeBudget">
+    <div id="OrganizeBudget" class="max-w-[400px] flex flex-col gap-4 justify-between">
       <p class="wv-b3 flex-grow text-center sm:text-left">
         5 อันดับหน่วยงานที่ได้รับงบปีล่าสุด (25xx) สูงที่สุด จาก xx หน่วยงาน
       </p>

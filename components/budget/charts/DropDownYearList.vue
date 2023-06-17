@@ -7,15 +7,15 @@
       <slot></slot>
     </p>
     <div
-      id="yearSelected"
       v-if="isOpenYearSelected"
+      id="yearSelected"
       class="absolute top-[120%] bg-white w-[150px] z-20 left-0 border border-wv-gray-3 py-[5px]"
     >
       <div
-        @click="() => isSelectedYear(item)"
         v-for="item in yearList"
         :key="item.id"
         class="hover:bg-wv-gray-3 cursor-pointer px-[10px]"
+        @click="() => isSelectedYear(item)"
       >
         {{ item.label }}
       </div>

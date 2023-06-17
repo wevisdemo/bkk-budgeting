@@ -1,16 +1,16 @@
 <template>
   <div>
     <slot></slot>
-    <div class="fixed inset-0 z-[50]" v-if="isOpen">
+    <div v-if="isOpen" class="fixed inset-0 z-[50]">
       <div class="fixed inset-0 bg-wv-gray-4 bg-opacity-70 z-40" @click="handleModal" />
       <div
         class="lg:w-[850px] inset-0 lg:h-[600px] px-12 py-8 bg-white absolute z-50 lg:top-[50%] lg:translate-y-[-50%] lg:translate-x-[-50%] lg:left-[50%]"
       >
         <div class="absolute top-0 right-0 m-5 lg:m-0">
           <img
-            @click="handleModal"
             src="~/assets/images/cancel.svg"
             class="lg:translate-y-[-50%] lg:translate-x-[50%] cursor-pointer"
+            @click="handleModal"
           />
         </div>
         <div class="flex justify-between flex-col h-auto lg:h-full">
@@ -19,9 +19,9 @@
             <div class="wv-b5 flex space-x-2 items-center justify-center">
               <p>ปีงบประมาณ</p>
               <DropDownYearList
-                :handleSelectedYear="() => handleSelectedYear()"
-                :isOpenYearSelected="isOpenYearSelected"
-                :isSelectedYear="year => isSelectedYear(year)"
+                :handle-selected-year="() => handleSelectedYear()"
+                :is-open-year-selected="isOpenYearSelected"
+                :is-selected-year="year => isSelectedYear(year)"
               >
                 <span v-if="page === 'organize'"> {{ selectYearOrganize.label }}</span>
                 <span v-if="page === 'strategy'"> {{ selectYearStrategy.label }}</span>
@@ -92,9 +92,12 @@ import { BPagination } from "bootstrap-vue";
 import { convertMillion } from "../utils";
 import { filterBy } from "./filterBy";
 import DropDownYearList from "./DropDownYearList.vue";
-import { getBudgetItems } from "~/data/get-budget-items";
 
 export default {
+  components: {
+    "b-pagination": BPagination,
+    DropDownYearList,
+  },
   props: {
     handleModal: {
       type: Function,
@@ -106,10 +109,6 @@ export default {
     page: {
       type: String,
     },
-  },
-  components: {
-    "b-pagination": BPagination,
-    DropDownYearList,
   },
   data() {
     return {
@@ -145,12 +144,9 @@ export default {
       updateSelectYearStrategy: "updateSelectYearStrategy",
     }),
 
-    async fetchByYear(year) {
-      await getBudgetItems({
-        budgetYear: year,
-      }).then(response => {
-        this.updateIsModalDetails(response);
-      });
+    fetchByYear(year) {
+      const response = this.$store.getters["data/getBudgetItems"]({ budgetYear: year });
+      this.updateIsModalDetails(response);
     },
     paginate(pageNumber) {
       return this.filterYears?.items?.slice(
@@ -194,14 +190,14 @@ export default {
       return convertMillion(_.sumBy(this.filterYears.items, a => a.amount));
     },
   },
-  mounted() {
-    this.filterYears = filterBy(this.selectedFilter, this.isModalDetails);
-    if (this.subTitleModal === "ตามแผนยุทธศาสตร์ 7 ด้าน") this.fetchByYear();
-  },
   watch: {
     isModalDetails(newValue) {
       this.filterYears = filterBy(this.selectedFilter, newValue);
     },
+  },
+  mounted() {
+    this.filterYears = filterBy(this.selectedFilter, this.isModalDetails);
+    if (this.subTitleModal === "ตามแผนยุทธศาสตร์ 7 ด้าน") this.fetchByYear();
   },
 };
 </script>

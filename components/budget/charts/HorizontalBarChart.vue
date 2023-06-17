@@ -1,28 +1,28 @@
 <template>
   <div
     v-if="chartData.years"
-    class="max-w-[685px] h-fit flex-1 flex flex-col justify-between w-full mx-auto"
     id="wrapper-horizontal-barchart"
+    class="max-w-[685px] h-fit flex-1 flex flex-col justify-between w-full mx-auto"
   >
     <div class="flex justify-between items-center mb-6">
       <p class="wv-b4 font-bold">
         ใช้งบรวม {{ convertMillion(chartData.amount) }} ล้านบาท
       </p>
       <ModalDetails
-        :handleModal="() => handleModal()"
-        :isOpen="isOpen"
-        :isSelectedYear="year => isSelectedYear(year)"
+        :handle-modal="() => handleModal()"
+        :is-open="isOpen"
+        :is-selected-year="year => isSelectedYear(year)"
         page="strategy"
       >
         <div
-          @click="handleModal"
           class="bg-black text-white w-fit wv-b6 px-[10px] py-[6px] rounded-[5px] cursor-pointer"
+          @click="handleModal"
         >
           ดูรายการใช้งบ
         </div>
       </ModalDetails>
     </div>
-    <ToggleUnit :toggle="() => toggle()" :isMillion="isMillion" />
+    <ToggleUnit :toggle="() => toggle()" :is-million="isMillion" />
     <div
       class="flex pl-[35px] md:pl-[50px] lg:pl-[25px] flex-1 mx-auto w-full lg:h-[500px] lg:min-h-[500px] lg:max-h-[500px] h-[250px] relative mt-5"
     >
@@ -50,25 +50,25 @@
 
         <div
           v-for="(strategy, i) in navData()"
+          :id="strategy.name"
           :key="i"
           class="relative"
           @mouseenter="e => mouseEnter(e)"
           @mouseleave="mouseLeave"
-          :id="strategy.name"
         >
           <div
+            :id="'strategy-' + strategy.name"
             class="borderSubStrategy cursor-pointer wrapper-strategy z-10 absolute inset-0 h-full"
             :class="colorFilter(strategy.name)"
-            :id="'strategy-' + strategy.name"
             @click="() => handleStrategy(strategy.name)"
           ></div>
           <div
-            class="absolute inset-0 h-full wv-b7 font-bold wrapper-amount-strategy pointer-events-none"
             :id="'strategy-amount-' + strategy.name"
+            class="absolute inset-0 h-full wv-b7 font-bold wrapper-amount-strategy pointer-events-none"
           >
             <p
-              class="absolute top-0 translate-y-[-100%] left-[50%] translate-x-[-50%] z-40"
               v-if="chartSelected === strategy.name"
+              class="absolute top-0 translate-y-[-100%] left-[50%] translate-x-[-50%] z-40"
             >
               {{
                 convertMillion(
@@ -85,8 +85,8 @@
             :key="key"
           >
             <div
-              :class="colorFilter(strategy.name)"
               :id="'subStrategy-' + subStrategy.name"
+              :class="colorFilter(strategy.name)"
               class="borderSubStrategy cursor-pointer wrapper-sub-strategy relative"
               :style="`height: ${heightChart(subStrategy.amount, d.amount)}px`"
               @click="() => handleSubStrategy(subStrategy.name)"
@@ -94,15 +94,15 @@
               @mouseleave="e => mouseLeave(e, 'isSubStrategy')"
             >
               <div
-                class="absolute top-0 t wv-b7 translate-y-[-100%] left-[50%] translate-x-[-50%] font-bold pointer-events-none"
                 v-if="chartSelected === subStrategy.name"
+                class="absolute top-0 t wv-b7 translate-y-[-100%] left-[50%] translate-x-[-50%] font-bold pointer-events-none"
               >
                 {{ convertMillion(subStrategy.amount) }}
               </div>
             </div>
           </div>
         </div>
-        <div class="relative wv-b7 font-bold text-center" v-if="!chartSelected">
+        <div v-if="!chartSelected" class="relative wv-b7 font-bold text-center">
           {{ convertMillion(d.amount) }}
         </div>
       </div>
@@ -110,8 +110,8 @@
   </div>
   <div
     v-else
-    class="lg:min-w-[685px] min-h-[550px] h-fit"
     id="wrapper-horizontal-barchart "
+    class="lg:min-w-[685px] min-h-[550px] h-fit"
   />
 </template>
 
@@ -126,7 +126,6 @@ import {
 } from "../utils";
 import ModalDetails from "./ModalDetails.vue";
 import ToggleUnit from "./ToggleUnit.vue";
-import { getBudgetItems } from "~/data/get-budget-items";
 import { navData } from "~/components/expore/navData";
 
 export default {
@@ -245,19 +244,13 @@ export default {
       const percent = [...Array(5)].map((_, index) => (100 / 5) * (index + 1));
       return this.isMillion ? [...result] : [...percent];
     },
-    async fetchByStrategy(strategy) {
-      await getBudgetItems({
-        strategy,
-      }).then(response => {
-        this.updateIsModalDetails(response);
-      });
+    fetchByStrategy(strategy) {
+      const response = this.$store.getters["data/getBudgetItems"]({ strategy });
+      this.updateIsModalDetails(response);
     },
-    async fetchBySubStrategy(substrategy) {
-      await getBudgetItems({
-        substrategy,
-      }).then(response => {
-        this.updateIsModalDetails(response);
-      });
+    fetchBySubStrategy(substrategy) {
+      const response = this.$store.getters["data/getBudgetItems"]({ substrategy });
+      this.updateIsModalDetails(response);
     },
     isSelectedYear(year) {
       if (year?.value) {

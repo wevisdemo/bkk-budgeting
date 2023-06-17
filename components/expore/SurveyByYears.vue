@@ -10,31 +10,31 @@
         เพื่อจะก้าวไปสู่การเป็น “มหานครแห่งเอเชีย” <br />ภายใน 20 ปี (2561-2580)
       </p>
       <div
-        v-if="this.$mq === 'md'"
-        @click="mobileStrategy = true"
+        v-if="$mq === 'md'"
         class="p-[10px] my-[10px] text-left flex justify-between wv-b5 border-black border max-w-[300px] mx-auto rounded-[5px]"
+        @click="mobileStrategy = true"
       >
         {{ chartSelected || "ทุกแผนยุทธศาสตร์" }}
         <img src="~/assets/images/open-modal.svg" />
       </div>
       <div
+        v-if="($mq === 'md' && mobileStrategy) || $mq === 'lg'"
         id="explantion"
         class="lg:mt-6 fixed lg:relative inset-0 bg-white p-10 z-50 lg:p-0"
-        v-if="(this.$mq === 'md' && mobileStrategy) || this.$mq === 'lg'"
       >
         <img
+          v-if="$mq === 'md'"
           src="~/assets/images/close-black.svg"
           class="absolute top-0 right-0 m-5"
           @click="mobileStrategy = false"
-          v-if="this.$mq === 'md'"
         />
         <p class="wv-b5 font-bold mb-2 lg:hidden">แผนยุทธศาสตร์ 7 ด้าน</p>
 
         <div v-for="(strategy, key) in navData()" :key="key">
           <button
             class="flex items-center border-b border-b-wv-gray-4 text-start py-[10px] bg-opacity-30 rounded-[2px] px-3 w-full"
-            @click="handleStategy(strategy.name)"
             :class="handleButton(chartSelected === strategy.name, strategy.name)"
+            @click="handleStategy(strategy.name)"
           >
             <div class="flex justify-between w-full">
               <div class="flex items-center">
@@ -59,8 +59,8 @@
             "
           >
             <p
-              class="wv-b7 my-1 text-wv-gray-1"
               v-if="strategy.substrategies.length > 1"
+              class="wv-b7 my-1 text-wv-gray-1"
             >
               ประกอบด้วย {{ strategy.substrategies.length }} มิติย่อย
             </p>
@@ -69,8 +69,8 @@
                 v-for="(sub, index) in strategy.substrategies"
                 :key="index"
                 class="p-[10px] w-full border-b border-b-wv-gray-4 text-start bg-opacity-30 rounded-[5px] flex justify-between"
-                @click="handleStategy(sub)"
                 :class="handleSubButton(sub, strategy.name)"
+                @click="handleStategy(sub)"
               >
                 <p class="wv-b6">{{ key + 1 }}.{{ index + 1 }}. {{ sub }}</p>
 
