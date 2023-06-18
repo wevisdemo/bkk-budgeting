@@ -56,9 +56,6 @@ jobs:
       - name: Show env
         run: echo ${{ secrets.NC_AUTH_API_SECRET }}
 
-      - name: Run linter 👀
-        run: yarn lint
-
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:

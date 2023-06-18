@@ -254,6 +254,7 @@ export default {
     data(newValue) {
       const result = keywords().filter(d => d.Word.toString().includes(newValue));
       this.filterKeyword = result;
+      //format data for filter keyword
     },
   },
   mounted() {
