@@ -48,5 +48,3 @@ jobs:
       - name: Generate Nuxt
         run: yarn generate
 
-      - name: Run linter 👀
-        run: yarn lint

@@ -46,16 +46,32 @@
         </div>
       </div>
       <div class="ml-5 px-5 pt-5 pb-10 borderKey flex-1 h-fit" v-if="chartData.years">
-        <p class="wv-h8 font-bold">{{ selectedKey.Word }}</p>
-        <p class="wv-b5">
-          พบใน
-          <span class="font-bold">{{
-            rawData?.total?.toLocaleString("en-US", {})
-          }}</span>
-          รายการ ใช้งบรวม
-          <span class="font-bold">{{ convertMillion(totalFilterAmout) }}</span> ล้านบาท
-          ({{ ((totalFilterAmout / chartData.amount) * 100).toFixed() }}%)
-        </p>
+        <div class="flex justify-between">
+          <div>
+            <p class="wv-h8 font-bold">{{ selectedKey.Word }}</p>
+            <p class="wv-b5">
+              พบใน
+              <span class="font-bold">{{
+                rawData?.total?.toLocaleString("en-US", {})
+              }}</span>
+              รายการ ใช้งบรวม
+              <span class="font-bold">{{ convertMillion(totalFilterAmout) }}</span>
+              ล้านบาท ({{ ((totalFilterAmout / chartData.amount) * 100).toFixed() }}%)
+            </p>
+          </div>
+          <ModalDetails
+            :handle-modal="() => handleModal()"
+            :is-open="isOpen"
+            page="keyword"
+          >
+            <div
+              class="bg-black text-white w-fit wv-b6 px-[10px] py-[6px] rounded-[5px] cursor-pointer"
+              @click="handleModal"
+            >
+              ดูรายการใช้งบ
+            </div>
+          </ModalDetails>
+        </div>
         <!-- dropdown÷ -->
         <div class="flex items-center my-3 wv-b5">
           โดย
@@ -164,14 +180,16 @@
 
 <script>
 import _ from "lodash";
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 import { convertMillion, colorFilter, strategyList } from "../budget/utils";
 import ToggleUnit from "../budget/charts/ToggleUnit.vue";
 import { keywords } from "~/data/budgets/keywords";
+import ModalDetails from "~/components/budget/charts/ModalDetails.vue";
 
 export default {
   components: {
     ToggleUnit,
+    ModalDetails,
   },
   computed: {
     ...mapState(["chartData"]),
@@ -187,6 +205,7 @@ export default {
       rawData: {},
       totalFilterAmout: 0,
       filterOrganize: [],
+      isOpen: false,
     };
   },
   watch: {
@@ -200,10 +219,18 @@ export default {
     this.selectKey(keywords()[0]);
   },
   methods: {
+    ...mapActions({
+      updateIsModalDetails: "updateIsModalDetails",
+      updateSubTitleModal: "updateSubTitleModal",
+      updateSelectYearOrganize: "updateSelectYearOrganize",
+    }),
     convertMillion,
     colorFilter,
     strategyList,
     keywords,
+    handleModal() {
+      this.isOpen = !this.isOpen;
+    },
     maxBudgets() {
       return this.roundBudget(
         Math.max(...this.chartData.years.map(o => o.amount)).toString(),
@@ -282,6 +309,11 @@ export default {
       const groupOrganize = Object.keys(_.groupBy(response.items, "nameOrganization"));
       this.filterOrganize = [`${groupOrganize.length} หน่วยงาน`, ...groupOrganize];
       this.selectFilter = this.filterOrganize[0];
+      this.updateSelectYearOrganize({ label: "2561-2566", value: "" });
+      this.updateIsModalDetails(response);
+      this.updateSubTitleModal(
+        `ที่มีคำว่า “${this.selectedKey.Word}” ในชื่อ ซึ่งของบโดย “${this.filterOrganize.length} หน่วยงาน”`,
+      );
     },
   },
   watch: {
