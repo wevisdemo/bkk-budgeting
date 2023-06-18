@@ -31,3 +31,15 @@ export const filterByOrganize = (label: string, filterYears: any) => {
     return (filterYears = orderByStrategy(filterYears, "nameOrganization", "asc"));
   }
 };
+
+export const filterByKey = (label: string, filterKey: any) => {
+  if (label === "งบมากไปน้อย") {
+    return (filterKey = orderByStrategy(filterKey, "amount", "desc"));
+  }
+  if (label === "จำนวนที่พบ") {
+    return (filterKey = orderByStrategy(filterKey, "total", "desc"));
+  }
+  if (label === "ตัวอักษร") {
+    return (filterKey = orderByStrategy(filterKey, "Word", "asc"));
+  }
+};

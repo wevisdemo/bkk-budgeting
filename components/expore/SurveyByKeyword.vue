@@ -14,14 +14,34 @@
           class="border-b border-b-black w-full wv-b5 mb-3"
           placeholder="พิมพ์คีย์เวิร์ด"
         />
-        <div class="flex justify-between wv-b7 mb-[10px]">
-          <div>เรียงตาม</div>
-          <p class="opacity-50">จำนวนที่พบ</p>
+        <div class="flex flex-col justify-between wv-b7 mb-[10px]">
+          <div class="flex items-center">
+            เรียงตาม
+            <el-select
+              v-model="selectSort"
+              placeholder="Select"
+              class="sortInput"
+              size="mini"
+            >
+              <el-option
+                v-for="item in sortList"
+                :key="item"
+                :label="item"
+                :value="item"
+              >
+              </el-option>
+            </el-select>
+          </div>
+          <div class="flex mt-3">
+            <p class="flex-1"></p>
+            <p class="opacity-50 flex-1 text-center ml-2">จำนวนที่พบ</p>
+            <p class="opacity-50 flex-1 text-end">งบ (ล้านบาท)</p>
+          </div>
         </div>
         <div
           v-for="(item, index) in filterKeyword.slice(0, 50)"
           :key="index"
-          class="flex justify-between py-[2.5px] px-[10px] rounded-[5px] cursor-pointer"
+          class="flex justify-between py-[2.5px] text-right px-[10px] rounded-[5px] cursor-pointer"
           :class="
             selectedKey.Word === item.Word
               ? 'text-white bg-black '
@@ -29,7 +49,7 @@
           "
           @click="() => selectKey(item)"
         >
-          <div class="flex items-center">
+          <div class="flex items-center w-[100px]">
             <div
               class="w-[10px] h-[10px] rounded-full border border-wv-gray-2 mr-[5px]"
             >
@@ -40,14 +60,17 @@
                 class="w-full"
               />
             </div>
-            <p class="wv-b5 font-bold">{{ item.Word }}</p>
+            <p class="wv-b6 font-bold">{{ item.Word }}</p>
           </div>
-          <p class="wv-b7 opacity-50">{{ item.total }}</p>
-          <p class="wv-b7 opacity-50">{{ convertMillion(item.amount) }}</p>
+          <p class="wv-b7 opacity-50 flex-1 text-center">{{ item.total }}</p>
+          <p class="wv-b7 opacity-50 flex-1">{{ convertMillion(item.amount) }}</p>
         </div>
       </div>
       <div class="ml-5 flex-1">
-        <div class="px-5 pt-5 pb-10 borderKey h-fit" v-if="chartData.years && selectedKey.Word">
+        <div
+          class="px-5 pt-5 pb-10 borderKey h-fit"
+          v-if="chartData.years && selectedKey.Word"
+        >
           <div class="flex justify-between">
             <div>
               <p class="wv-h8 font-bold">{{ selectedKey.Word }}</p>
@@ -228,6 +251,7 @@ import ToggleUnit from "../budget/charts/ToggleUnit.vue";
 import { keywords } from "~/data/budgets/keywords";
 import ModalDetails from "~/components/budget/charts/ModalDetails.vue";
 import { navData } from "~/components/expore/navData";
+import { filterByKey } from "~/components/budget/charts/filterBy";
 
 export default {
   components: {
@@ -245,15 +269,13 @@ export default {
       itemsChart: [],
       isMillion: true,
       selectFilter: "",
+      selectSort: "งบมากไปน้อย",
       rawData: {},
       totalFilterAmout: 0,
       filterOrganize: [],
       isOpen: false,
+      sortList: ["งบมากไปน้อย", "จำนวนที่พบ", "ตัวอักษร"],
     };
-  },
-  mounted() {
-    console.log("mountd");
-    // this.selectKey(keywords()[0]);
   },
   methods: {
     ...mapActions({
@@ -265,6 +287,7 @@ export default {
     colorFilter,
     strategyList,
     keywords,
+    filterByKey,
     navData,
     handleModal() {
       this.isOpen = !this.isOpen;
@@ -381,11 +404,14 @@ export default {
             amount: _.sumBy(item.items, "amount"),
           };
         });
-        this.filterKeyword = formatFilter;
+        this.filterKeyword = this.filterByKey(this.selectSort, formatFilter);
       },
     },
     selectFilter() {
       if (this.selectFilter !== this.filterOrganize[0]) this.maxSelectedFilter();
+    },
+    selectSort(label) {
+      this.filterKeyword = this.filterByKey(label, this.filterKeyword);
     },
   },
 };
@@ -399,5 +425,14 @@ export default {
 }
 .el-select-dropdown__item.selected {
   @apply text-black;
+}
+.sortInput > .el-input > .el-input__inner {
+  margin-left: 8px;
+  width: 120px;
+  // height: 22px;
+  border: none;
+  font-size: 14px;
+  border-bottom: 1px solid #737373;
+  border-radius: 0%;
 }
 </style>

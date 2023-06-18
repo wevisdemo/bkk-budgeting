@@ -3,7 +3,7 @@
     <div class="absolute -top-[1px] right-0">
       <img src="~/assets/icons/paper-corner.svg" />
     </div>
-    <div class="grid sm:grid-cols-[auto_1fr] gap-4">
+    <div >
       <slot />
     </div>
   </div>

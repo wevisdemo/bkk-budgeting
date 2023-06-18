@@ -15,7 +15,7 @@
       <div class="flex justify-center sm:justify-end">
         <NuxtLink
           :to="{ path: 'explore', query: { select: 'KeyWordBudget' } }"
-          class="inline-block py-1 px-2 rounded border-wv-gray-1 border text-wv-gray-1 h-min"
+          class="inline-block py-1 px-2 rounded border-wv-gray-1 hover:bg-gray-500 hover:text-white border text-wv-gray-1 h-min"
         >
           ค้นหางบด้วยคีย์เวิร์ด
         </NuxtLink>

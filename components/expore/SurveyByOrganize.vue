@@ -97,7 +97,7 @@
             <div
               v-for="strategy in strategyList()"
               :key="strategy"
-              class="h-[10px]"
+              class="h-[10px] "
               :style="{ width: drawChart(item, strategy) }"
               :class="colorFilter(strategy)"
             ></div>
