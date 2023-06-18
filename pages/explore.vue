@@ -50,8 +50,6 @@ export default {
   },
   mounted() {
     this.fetchdata();
-    if (!this.$route.select)
-      this.$router.push({ path: "explore", query: { select: "YearlyBudget" } });
     this.topic = this.$route.select || "YearlyBudget";
   },
   methods: {

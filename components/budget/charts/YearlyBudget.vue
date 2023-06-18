@@ -13,7 +13,7 @@
       </div>
     </div>
     <div class="w-full flex flex-col justify-between gap-4">
-      <div class="hidden sm:block">(Chart)</div>
+      <div class="hidden sm:block">()</div>
       <div class="flex justify-center sm:justify-end">
         <NuxtLink
           :to="{ path: 'explore', query: { select: 'YearlyBudget' } }"
@@ -31,13 +31,19 @@ import Vue from "vue";
 import VizChart from "~/components/budget/charts/VizChartContainer.vue";
 import StrategyLegend from "~/components/budget/StrategyLegend.vue";
 
-interface YearlyBudgetData {}
+import { ChartData } from "~/models/chart-data";
+
+interface YearlyBudgetData {
+  chartData: ChartData;
+}
 
 export default Vue.extend({
   name: "YearlyBudget",
   components: { VizChart, StrategyLegend },
   data(): YearlyBudgetData {
-    return {};
+    return {
+      chartData: { amount: 0, years: [] },
+    };
   },
 });
 </script>

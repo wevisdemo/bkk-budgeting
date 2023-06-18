@@ -14,7 +14,11 @@ const config: NuxtConfig = {
     link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.png" }],
   },
 
-  css: ["@wevisdemo/ui/styles/typography.css", "@wevisdemo/ui/styles/components.css"],
+  css: [
+    "@wevisdemo/ui/styles/typography.css",
+    "@wevisdemo/ui/styles/components.css",
+    "element-ui/lib/theme-chalk/index.css",
+  ],
 
   plugins: [
     "~/plugins/clickOutside.client.ts",
@@ -72,6 +76,13 @@ const config: NuxtConfig = {
           md: 1024,
           lg: Infinity,
         },
+      },
+    ],
+    [
+      "nuxt-element-ui",
+      {
+        components: ["Select", "Option"],
+        locale: "fr",
       },
     ],
   ],
