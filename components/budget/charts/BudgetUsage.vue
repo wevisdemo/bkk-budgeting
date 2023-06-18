@@ -71,7 +71,6 @@ export default Vue.extend({
       "งบมากไปน้อย",
       this.$store.getters["data/getChartDataGroupByOrganizations"](),
     ).slice(0, 5);
-    console.log(this.chartOrganize);
   },
   methods: {
     convertMillion,
