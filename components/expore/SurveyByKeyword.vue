@@ -45,130 +45,171 @@
           <p class="wv-b7 opacity-50">{{ item.Count }}</p>
         </div>
       </div>
-      <div class="ml-5 px-5 pt-5 pb-10 borderKey flex-1 h-fit" v-if="chartData.years">
-        <div class="flex justify-between">
-          <div>
-            <p class="wv-h8 font-bold">{{ selectedKey.Word }}</p>
-            <p class="wv-b5">
-              พบใน
-              <span class="font-bold">{{
-                rawData?.total?.toLocaleString("en-US", {})
-              }}</span>
-              รายการ ใช้งบรวม
-              <span class="font-bold">{{ convertMillion(totalFilterAmout) }}</span>
-              ล้านบาท ({{ ((totalFilterAmout / chartData.amount) * 100).toFixed() }}%)
-            </p>
-          </div>
-          <ModalDetails
-            :handle-modal="() => handleModal()"
-            :is-open="isOpen"
-            page="keyword"
-          >
-            <div
-              class="bg-black text-white w-fit wv-b6 px-[10px] py-[6px] rounded-[5px] cursor-pointer"
-              @click="handleModal"
-            >
-              ดูรายการใช้งบ
+      <div class="ml-5 flex-1">
+        <div class="px-5 pt-5 pb-10 borderKey h-fit" v-if="chartData.years">
+          <div class="flex justify-between">
+            <div>
+              <p class="wv-h8 font-bold">{{ selectedKey.Word }}</p>
+              <p class="wv-b5">
+                พบใน
+                <span class="font-bold">{{
+                  rawData?.total?.toLocaleString("en-US", {})
+                }}</span>
+                รายการ ใช้งบรวม
+                <span class="font-bold">{{ convertMillion(totalFilterAmout) }}</span>
+                ล้านบาท ({{ ((totalFilterAmout / chartData.amount) * 100).toFixed() }}%)
+              </p>
             </div>
-          </ModalDetails>
-        </div>
-        <!-- dropdown÷ -->
-        <div class="flex items-center my-3 wv-b5">
-          โดย
-          <el-select v-model="selectFilter" placeholder="Select" class="ml-2">
-            <el-option
-              v-for="item in filterOrganize"
-              :key="item"
-              :label="item"
-              :value="item"
-            >
-            </el-option>
-          </el-select>
-        </div>
-        <!--  -->
-        <ToggleUnit :toggle="() => toggle()" :isMillion="isMillion" />
-        <div class="h-[500px] mt-10">
-          <div class="flex h-full items-end relative">
-            <div
-              v-for="(item, key) in itemsChart.years"
-              :key="key"
-              v-if="itemsChart"
-              class="flex-1 ml-[25px] flex flex-col-reverse items-center relative z-10 h-full"
+            <ModalDetails
+              :handle-modal="() => handleModal()"
+              :is-open="isOpen"
+              page="keyword"
             >
               <div
-                class="absolute bottom-0 wv-b5 translate-y-[120%] left-[50%] translate-x-[-50%] z-20"
+                class="bg-black text-white w-fit wv-b6 px-[10px] py-[6px] rounded-[5px] cursor-pointer"
+                @click="handleModal"
               >
-                `{{ key }}
+                ดูรายการใช้งบ
               </div>
-
-              <div
-                v-if="item.organize[selectFilter] && selectFilter !== filterOrganize[0]"
-                class="relative z-20 w-full"
-                v-for="strategy in strategyList()"
-                :key="strategy"
-                :class="colorFilter(strategy)"
-                :style="{
-                  height: calHeight(
-                    displayOrganizeValue(item.organize[selectFilter], strategy),
-                    item.amount,
-                  ),
-                }"
-              ></div>
-              <div
-                v-if="selectFilter === filterOrganize[0] && item.all[strategy]"
-                class="relative z-20 w-full"
-                v-for="strategy in strategyList()"
-                :key="strategy"
-                :class="colorFilter(strategy)"
-                :style="{
-                  height: calHeight(item.all[strategy], item.amount),
-                }"
-              ></div>
-              <!--  number -->
-              <div
-                class="z-[20] wv-b7 font-bold"
-                v-if="isMillion && selectFilter === filterOrganize[0]"
+            </ModalDetails>
+          </div>
+          <!-- dropdown÷ -->
+          <div class="flex items-center my-3 wv-b5">
+            โดย
+            <el-select v-model="selectFilter" placeholder="Select" class="ml-2">
+              <el-option
+                v-for="item in filterOrganize"
+                :key="item"
+                :label="item"
+                :value="item"
               >
-                {{ convertMillion(item.amount) }}
-              </div>
+              </el-option>
+            </el-select>
+          </div>
+          <!--  -->
+          <ToggleUnit :toggle="() => toggle()" :isMillion="isMillion" />
+          <div class="h-[500px] mt-10 relative pl-[35px]">
+            <div class="absolute inset-0 flex flex-col-reverse mt-[0.5px]">
               <div
-                class="z-[20] wv-b7 font-bold"
-                v-if="isMillion && selectFilter !== filterOrganize[0]"
-              >
-                {{ convertMillion(displayAmoutOrganize(item.organize[selectFilter])) }}
-              </div>
-              <div
-                class="z-[20] wv-b7 font-bold absolute top-0 translate-y-[-100%]"
-                v-if="!isMillion && selectFilter === filterOrganize[0]"
-              >
-                {{ `100%` }}
-              </div>
-              <div
-                class="z-[20] wv-b7 font-bold"
-                v-if="!isMillion && selectFilter !== filterOrganize[0]"
-              >
-                {{
-                  (
-                    (displayAmoutOrganize(item.organize[selectFilter]) / item.amount) *
-                    100
-                  ).toFixed(2)
-                }}%
-              </div>
-
-              <!--  -->
-              <div
-                class="flex absolute bottom-0 w-full h-full items-end"
-                v-if="!(selectFilter !== filterOrganize[0] && isMillion)"
+                v-for="item in formatYAxis()"
+                :key="item.id"
+                class="flex-1 relative border-t-[0.5px] border-t-wv-gray-3"
               >
                 <div
-                  :key="key"
-                  class="bg-wv-gray-4 flex-1 ]"
+                  class="translate-y-[-50%] absolute top-0 bg-white text-wv-gray-1 wv-b7"
+                >
+                  {{ item.toLocaleString("en-US", {}) }}
+                </div>
+              </div>
+            </div>
+            <div class="flex h-full items-end relative">
+              <div
+                v-for="(item, key) in itemsChart.years"
+                :key="key"
+                v-if="itemsChart"
+                class="flex-1 ml-[25px] flex flex-col-reverse items-center relative z-10 h-full"
+              >
+                <div
+                  class="absolute bottom-0 wv-b5 translate-y-[120%] left-[50%] translate-x-[-50%] z-20"
+                >
+                  `{{ key }}
+                </div>
+
+                <div
+                  v-if="
+                    item.organize[selectFilter] && selectFilter !== filterOrganize[0]
+                  "
+                  class="relative z-20 w-full"
+                  v-for="strategy in strategyList()"
+                  :key="strategy"
+                  :class="colorFilter(strategy)"
                   :style="{
-                    height: isMillion
-                      ? calHeight(displayMaxAmout(key), item.amount)
-                      : '100%',
+                    height: calHeight(
+                      displayOrganizeValue(item.organize[selectFilter], strategy),
+                      item.amount,
+                    ),
                   }"
                 ></div>
+                <div
+                  v-if="selectFilter === filterOrganize[0] && item.all[strategy]"
+                  class="relative z-20 w-full"
+                  v-for="strategy in strategyList()"
+                  :key="strategy"
+                  :class="colorFilter(strategy)"
+                  :style="{
+                    height: calHeight(item.all[strategy], item.amount),
+                  }"
+                ></div>
+                <!--  number -->
+                <div
+                  class="z-[20] wv-b7 font-bold"
+                  v-if="isMillion && selectFilter === filterOrganize[0]"
+                >
+                  {{ convertMillion(item.amount) }}
+                </div>
+                <div
+                  class="z-[20] wv-b7 font-bold"
+                  v-if="isMillion && selectFilter !== filterOrganize[0]"
+                >
+                  {{
+                    convertMillion(displayAmoutOrganize(item.organize[selectFilter]))
+                  }}
+                </div>
+                <div
+                  class="z-[20] wv-b7 font-bold absolute top-0 translate-y-[-100%]"
+                  v-if="!isMillion && selectFilter === filterOrganize[0]"
+                >
+                  {{ `100%` }}
+                </div>
+                <div
+                  class="z-[20] wv-b7 font-bold"
+                  v-if="!isMillion && selectFilter !== filterOrganize[0]"
+                >
+                  {{
+                    (
+                      (displayAmoutOrganize(item.organize[selectFilter]) /
+                        item.amount) *
+                      100
+                    ).toFixed(2)
+                  }}%
+                </div>
+
+                <!--  -->
+                <div
+                  class="flex absolute bottom-0 w-full h-full items-end"
+                  v-if="!(selectFilter !== filterOrganize[0] && isMillion)"
+                >
+                  <div
+                    :key="key"
+                    class="bg-wv-gray-4 flex-1 ]"
+                    :style="{
+                      height: isMillion
+                        ? calHeight(displayMaxAmout(key), item.amount)
+                        : '100%',
+                    }"
+                  ></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="lg:max-w-[400px] text-center lg:text-left mt-5">
+          <p class="wv-b5 text-wv-gray-1">
+            <b>ยุทธศาสตร์ 7 ด้าน</b> เป็นแผนพัฒนาที่กรุงเทพฯ <br />วางไว้
+            เพื่อจะก้าวไปสู่การเป็น “มหานครแห่งเอเชีย” <br />ภายใน 20 ปี (2561-2580)
+          </p>
+          <div class="mt-5 flex flex-wrap lg:block text-start">
+            <div
+              v-for="(item, key) in navData()"
+              :key="key"
+              class="flex items-center space-x-2 py-[5px] w-[50%] lg:w-full"
+            >
+              <div
+                class="min-w-[10px] min-h-[10px] rounded-[2px]"
+                :class="colorFilter(item.name)"
+              />
+              <div class="flex wv-b5 text-wv-gray-1">
+                {{ key + 1 }}. {{ item.name }}
               </div>
             </div>
           </div>
@@ -185,6 +226,7 @@ import { convertMillion, colorFilter, strategyList } from "../budget/utils";
 import ToggleUnit from "../budget/charts/ToggleUnit.vue";
 import { keywords } from "~/data/budgets/keywords";
 import ModalDetails from "~/components/budget/charts/ModalDetails.vue";
+import { navData } from "~/components/expore/navData";
 
 export default {
   components: {
@@ -222,14 +264,26 @@ export default {
     ...mapActions({
       updateIsModalDetails: "updateIsModalDetails",
       updateSubTitleModal: "updateSubTitleModal",
-      updateSelectYearOrganize: "updateSelectYearOrganize",
+      updateSelectKeywordStrategy: "updateSelectKeywordStrategy",
     }),
     convertMillion,
     colorFilter,
     strategyList,
     keywords,
+    navData,
     handleModal() {
       this.isOpen = !this.isOpen;
+    },
+    formatYAxis() {
+      const max =
+        this.selectFilter === this.filterOrganize[0]
+          ? this.maxBudgets()
+          : this.maxSelectedFilter();
+      const result = [...Array(5)].map(
+        (_, index) => ((parseInt(max) / 5) * (index + 1)) / 1000000,
+      );
+      const percent = [...Array(5)].map((_, index) => (100 / 5) * (index + 1));
+      return this.isMillion ? [...result] : [...percent];
     },
     maxBudgets() {
       return this.roundBudget(
@@ -238,7 +292,7 @@ export default {
     },
     roundBudget(items) {
       const startNumber = Number(items?.slice(0, 1)) + 1;
-      const digits = items.length - 1;
+      const digits = items?.length - 1;
       const zero = "0";
       return startNumber + zero.repeat(digits);
     },
@@ -309,7 +363,7 @@ export default {
       const groupOrganize = Object.keys(_.groupBy(response.items, "nameOrganization"));
       this.filterOrganize = [`${groupOrganize.length} หน่วยงาน`, ...groupOrganize];
       this.selectFilter = this.filterOrganize[0];
-      this.updateSelectYearOrganize({ label: "2561-2566", value: "" });
+      this.updateSelectKeywordStrategy({ label: "2561-2566", value: "" });
       this.updateIsModalDetails(response);
       this.updateSubTitleModal(
         `ที่มีคำว่า “${this.selectedKey.Word}” ในชื่อ ซึ่งของบโดย “${this.filterOrganize.length} หน่วยงาน”`,

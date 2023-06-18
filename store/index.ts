@@ -18,6 +18,7 @@ export interface State {
   subTitleModal: string;
   selectYearOrganize: object;
   selectYearStrategy: object;
+  selectKeywordStrategy: object;
 }
 
 export const state = (): State => ({
@@ -36,6 +37,7 @@ export const state = (): State => ({
   },
   selectYearOrganize: { label: "2561-2566", value: "" },
   selectYearStrategy: { label: "2561-2566", value: "" },
+  selectKeywordStrategy: { label: "2561-2566", value: "" },
 });
 
 export type RootState = ReturnType<typeof state>;
@@ -61,6 +63,8 @@ export const mutations: MutationTree<RootState> = {
     (state.selectYearOrganize = selectYearOrganize),
   setSelectYearStrategy: (state, selectYearStrategy) =>
     (state.selectYearStrategy = selectYearStrategy),
+  setSelectKeywordStrategy: (state, selectKeywordStrategy) =>
+    (state.selectKeywordStrategy = selectKeywordStrategy),
 };
 
 export const actions: ActionTree<RootState, RootState> = {
@@ -89,6 +93,9 @@ export const actions: ActionTree<RootState, RootState> = {
   },
   updateSelectYearStrategy({ commit }, payload) {
     commit("setSelectYearStrategy", payload);
+  },
+  updateSelectKeywordStrategy({ commit }, payload) {
+    commit("setSelectKeywordStrategy", payload);
   },
 
   async nuxtServerInit({ dispatch }) {

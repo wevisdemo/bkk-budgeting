@@ -25,6 +25,9 @@
               >
                 <span v-if="page === 'organize'"> {{ selectYearOrganize.label }}</span>
                 <span v-if="page === 'strategy'"> {{ selectYearStrategy.label }}</span>
+                <span v-if="page === 'keyword'">
+                  {{ selectKeywordStrategy.label }}</span
+                >
               </DropDownYearList>
               <span>มี </span>
               <span class="font-bold">{{ filterYears?.total }}</span>
@@ -133,6 +136,7 @@ export default {
       "subTitleModal",
       "selectYearOrganize",
       "selectYearStrategy",
+      "selectKeywordStrategy",
     ]),
   },
   methods: {
@@ -142,6 +146,7 @@ export default {
       updateIsModalDetails: "updateIsModalDetails",
       updateSelectYearOrganize: "updateSelectYearOrganize",
       updateSelectYearStrategy: "updateSelectYearStrategy",
+      updateSelectKeywordStrategy: "updateSelectKeywordStrategy",
     }),
 
     fetchByYear(year) {
@@ -171,6 +176,7 @@ export default {
       if (year?.value) {
         if (this.page === "organize") this.updateSelectYearOrganize(year);
         if (this.page === "strategy") this.updateSelectYearStrategy(year);
+        if (this.page === "keyword") this.updateSelectKeywordStrategy(year);
         const itemsList = this.isModalDetails?.items?.filter(
           str => str.budgetYear === year.value,
         );
@@ -183,6 +189,8 @@ export default {
           this.updateSelectYearOrganize({ label: "2561-2566", value: "" });
         if (this.page === "strategy")
           this.updateSelectYearStrategy({ label: "2561-2566", value: "" });
+        if (this.page === "keyword")
+          this.updateSelectKeywordStrategy({ label: "2561-2566", value: "" });
         this.filterYears = this.isModalDetails;
       }
     },
