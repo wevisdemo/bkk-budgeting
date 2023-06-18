@@ -41,7 +41,6 @@ export default Vue.extend({
     keywords,
     drawChart() {
       // set the dimensions and margins of the graph
-
       const getWidth = d3
         .select("#wordCloundWrapper")
         .node()
@@ -105,7 +104,6 @@ export default Vue.extend({
             return d.text;
           });
       }
-      console.log(d3.select("#wordCloundWrapper"));
     },
   },
   mounted() {

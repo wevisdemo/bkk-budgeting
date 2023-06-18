@@ -45,12 +45,12 @@ export default {
         { name: "รายหน่วยงาน", value: "OrganizeBudget" },
         { name: "ค้นด้วยคีย์เวิร์ด", value: "KeyWordBudget" },
       ],
-      topic: { name: "รายปี", value: "YearlyBudget" },
+      topic: {},
     };
   },
   mounted() {
     this.fetchdata();
-    this.topic = this.$route.select || "YearlyBudget";
+    this.topic = this.$route.query.select;
   },
   methods: {
     ...mapActions({
