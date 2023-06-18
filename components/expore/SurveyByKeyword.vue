@@ -42,11 +42,12 @@
             </div>
             <p class="wv-b5 font-bold">{{ item.Word }}</p>
           </div>
-          <p class="wv-b7 opacity-50">{{ item.Count }}</p>
+          <p class="wv-b7 opacity-50">{{ item.total }}</p>
+          <p class="wv-b7 opacity-50">{{ convertMillion(item.amount) }}</p>
         </div>
       </div>
       <div class="ml-5 flex-1">
-        <div class="px-5 pt-5 pb-10 borderKey h-fit" v-if="chartData.years">
+        <div class="px-5 pt-5 pb-10 borderKey h-fit" v-if="chartData.years && selectedKey.Word">
           <div class="flex justify-between">
             <div>
               <p class="wv-h8 font-bold">{{ selectedKey.Word }}</p>
@@ -238,7 +239,7 @@ export default {
   },
   data() {
     return {
-      data: "โครงการ",
+      data: "",
       filterKeyword: "",
       selectedKey: {},
       itemsChart: [],
@@ -250,16 +251,9 @@ export default {
       isOpen: false,
     };
   },
-  watch: {
-    data(newValue) {
-      const result = keywords().filter(d => d.Word.toString().includes(newValue));
-      this.filterKeyword = result;
-      //format data for filter keyword
-    },
-  },
   mounted() {
-    this.filterKeyword = keywords();
-    this.selectKey(keywords()[0]);
+    console.log("mountd");
+    // this.selectKey(keywords()[0]);
   },
   methods: {
     ...mapActions({
@@ -377,7 +371,17 @@ export default {
       deep: false,
       handler(newValue) {
         const result = keywords().filter(d => d.Word.toString().includes(newValue));
-        this.filterKeyword = result;
+        const formatFilter = result.map(r => {
+          const item = this.$store.getters["data/getBudgetItems"]({
+            keyword: r.Word,
+          });
+          return {
+            total: item.total,
+            Word: r.Word,
+            amount: _.sumBy(item.items, "amount"),
+          };
+        });
+        this.filterKeyword = formatFilter;
       },
     },
     selectFilter() {
