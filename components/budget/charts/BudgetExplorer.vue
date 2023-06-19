@@ -1,6 +1,6 @@
 <template>
   <VizChart>
-    <div class="flex flex-col lg:flex-row ">
+    <div class="flex flex-col lg:flex-row">
       <div id="KeyWordBudget" class="max-w-[400px] flex flex-col gap-4 justify-between">
         <p class="wv-b3 flex-grow text-center sm:text-left">
           หากไม่รู้ว่าจะเริ่มสำรวจการใช้งบจากตรงไหน ลองค้นหาด้วย
@@ -18,7 +18,7 @@
             class="flex items-center py-1 px-2 rounded border-wv-gray-1 hover:bg-gray-500 hover:text-white border text-wv-gray-1 h-min"
           >
             ค้นหางบด้วยคีย์เวิร์ด
-            <i class="el-icon-right ml-1"/>
+            <i class="el-icon-right ml-1" />
           </NuxtLink>
         </div>
       </div>
@@ -31,7 +31,7 @@ import Vue from "vue";
 import VizChart from "~/components/budget/charts/VizChartContainer.vue";
 import * as d3 from "d3";
 import * as cloud from "d3-cloud";
-import { keywords } from "~/data/budgets/keywords";
+import { mainKeyWord } from "~/data/budgets/mainKeyword";
 
 export default Vue.extend({
   name: "KeyWordBudget",
@@ -40,7 +40,7 @@ export default Vue.extend({
     return {};
   },
   methods: {
-    keywords,
+    mainKeyWord,
     drawChart() {
       const getWidth = d3
         .select("#wordCloundWrapper")
@@ -56,7 +56,7 @@ export default Vue.extend({
       var layout = cloud()
         .size([width, height])
         .words(
-          keywords()
+          mainKeyWord()
             .slice(0, 50)
             .map(function (d) {
               return { text: d.Word, size: d.Count };
@@ -67,7 +67,7 @@ export default Vue.extend({
           return ~~(Math.random() * 2);
         })
         .fontSize(function (d) {
-          return d.size / 7;
+          return d.size / 5;
         })
         .on("end", draw);
       layout.start();
