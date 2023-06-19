@@ -1,5 +1,5 @@
 <template>
-  <BoxContainer>
+  <div class="max-w-7xl px-3 md:px-6 py-6 m-auto">
     <div
       id="budgetplans"
       class="flex flex-col gap-16 relative -mx-14 sm:mx-4 scroll-mt-8"
@@ -35,12 +35,12 @@
         เพราะเกี่ยวข้องกับการให้บริการประชาชนและประชาชนมีส่วนร่วมได้มากที่สุด
       </p>
     </div>
-    <div class="grid gap-8">
+    <div class="flex flex-col space-y-[20px]">
       <YearlyBudgetVue />
       <BudgetUsage />
       <BudgetExplorer />
     </div>
-  </BoxContainer>
+  </div>
 </template>
 
 <script lang="ts">

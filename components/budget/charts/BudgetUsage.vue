@@ -1,15 +1,18 @@
 <template>
   <VizChart>
-    <div class="flex">
+    <div class="flex flex-col lg:flex-row">
       <div
         id="OrganizeBudget"
         class="max-w-[400px] flex flex-col gap-4 justify-between"
       >
         <p class="wv-b3 flex-grow text-center sm:text-left">
-          5 อันดับหน่วยงานที่ได้รับงบปีล่าสุด (25xx) สูงที่สุด จาก xx หน่วยงาน
+          <span class=" font-bold">5 อันดับหน่วยงาน</span>ที่ได้รับงบปีล่าสุด (2556) สูงที่สุด จาก
+          {{ rawData.length }} หน่วยงาน
         </p>
-        <StrategyLegend variant="budget-usage" />
-        <div></div>
+       
+        <div class=" hidden lg:block">
+          <StrategyLegend variant="budget-usage" />
+        </div>
       </div>
       <div class="w-full flex flex-col justify-between gap-4">
         <div>
@@ -37,12 +40,16 @@
             </div>
           </div>
         </div>
+        <div class=" lg:hidden block mt-5">
+          <StrategyLegend variant="budget-usage" />
+        </div>
         <div class="flex justify-center sm:justify-end">
           <NuxtLink
             :to="{ path: 'explore', query: { select: 'OrganizeBudget' } }"
-            class="inline-block py-1 px-2 rounded border-wv-gray-1 hover:bg-gray-500 hover:text-white border text-wv-gray-1 h-min"
+            class=" flex items-center py-1 px-2 rounded border-wv-gray-1 hover:bg-gray-500 hover:text-white border text-wv-gray-1 h-min"
           >
             สำรวจหน่วยงานที่เหลือ
+            <i class="el-icon-right ml-1"/>
           </NuxtLink>
         </div>
       </div>
@@ -63,14 +70,16 @@ export default Vue.extend({
   data() {
     return {
       chartOrganize: [],
+      rawData: [],
     };
   },
 
   mounted() {
-    this.chartOrganize = filterByOrganize(
+    this.rawData = filterByOrganize(
       "งบมากไปน้อย",
       this.$store.getters["data/getChartDataGroupByOrganizations"](),
-    ).slice(0, 5);
+    );
+    this.chartOrganize = this.rawData.slice(0, 5);
   },
   methods: {
     convertMillion,

@@ -17,33 +17,17 @@
         <p class="wv-b6 wv-bold">แผนยุทธศาสตร์ 7 ด้าน</p>
       </div>
     </div>
-    <div class="flex flex-row sm:flex-col gap-4">
-      <div>
+    <div class="flex flex-wrap lg:block text-start">
+      <div
+        v-for="(item, key) in navData()"
+        :key="key"
+        class="flex items-center space-x-2 pb-[5px] w-[50%] lg:w-full"
+      >
         <div
-          v-for="({ strategy, strategy_en }, strategyIndex) in strategies_top"
-          :key="strategyIndex"
-          class="flex gap-1 sm:items-center"
-          :class="variant === typeYearlyBudget ? `pl-4` : ``"
-        >
-          <div
-            class="w-3 h-3 rounded aspect-square mt-1 sm:mt-0"
-            :class="`bg-wv-${strategy_en}`"
-          />
-          <p>{{ strategy }}</p>
-        </div>
-      </div>
-      <div>
-        <div
-          v-for="({ strategy, strategy_en }, strategyIndex) in strategies_bottom"
-          :key="strategyIndex"
-          class="flex gap-1 sm:items-center"
-        >
-          <div
-            class="w-3 h-3 rounded aspect-square mt-1 sm:mt-0"
-            :class="`bg-wv-${strategy_en}`"
-          />
-          <p>{{ strategy }}</p>
-        </div>
+          class="min-w-[10px] min-h-[10px] rounded-[2px]"
+          :class="colorFilter(item.name)"
+        />
+        <div class="flex wv-b7 md:wv-b5 text-wv-gray-1">{{ item.name }}</div>
       </div>
     </div>
   </div>
@@ -53,6 +37,8 @@
 import { PropType, defineComponent } from "vue";
 import { planData } from "~/data/plan-data";
 import type { Plan } from "~/data/plan-data";
+import { navData } from "../expore/navData";
+import { colorFilter } from "./utils";
 
 type VariantTypes = "yearly-budget" | "budget-usage";
 
@@ -78,6 +64,10 @@ export default defineComponent({
       typeYearlyBudget: "yearly-budget",
       typeBudgetUsage: "budget-usage",
     };
+  },
+  methods: {
+    colorFilter,
+    navData,
   },
 });
 </script>

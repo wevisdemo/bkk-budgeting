@@ -83,7 +83,7 @@ const config = {
     [
       "nuxt-element-ui",
       {
-        components: ["Select", "Option", "Pagination"],
+        components: ["Select", "Option", "Pagination","Icon"],
         locale: "fr",
       },
     ],

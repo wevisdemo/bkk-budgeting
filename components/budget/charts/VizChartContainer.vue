@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white px-4 py-6 sm:p-10 relative">
+  <div class="bg-white px-4 py-6 sm:p-10 relative mx-auto w-full">
     <div class="absolute -top-[1px] right-0">
       <img src="~/assets/icons/paper-corner.svg" />
     </div>

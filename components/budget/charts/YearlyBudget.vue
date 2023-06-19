@@ -1,6 +1,6 @@
 <template>
   <VizChart>
-    <div class="flex">
+    <div class="flex flex-col lg:flex-row">
       <div id="YearlyBudget" class="max-w-[400px] flex flex-col gap-4 justify-between">
         <p class="wv-b3 flex-grow text-center sm:text-left">
           <span class="font-bold">งบยุทธศาสตร์</span>ส่วนใหญ่ถูกใช้กับ<span
@@ -9,16 +9,16 @@
           >
         </p>
 
-        <div>
+        <div class=" hidden lg:block">
           <StrategyLegend variant="yearly-budget" />
         </div>
       </div>
       <div class="flex-1">
-        <div class="flex h-[580px] w-full justify-between">
+        <div class="flex h-[280px] md:h-[480px] lg:h-[580px] w-full justify-between">
           <div
             v-for="(item, key) in chartResponse.years"
             :key="key"
-            class="w-full relative flex items-end ml-[15px]"
+            class="w-full flex-1 relative flex items-end ml-[5px] md:ml-[15px]"
           >
             <div
               class="border-gray-300 border-[2px] border-dashed rounded-[5px] absolute w-full flex-1"
@@ -52,7 +52,7 @@
               >
                 <p
                   v-if="strategy === 'การพัฒนาสิ่งแวดล้อมยั่งยืน'"
-                  class="absolute text-white wv-b6 font-bold top-[50%] translate-y-[-50%] left-[50%] translate-x-[-50%]"
+                  class="absolute text-white wv-b7 md:wv-b6 font-bold top-[50%] translate-y-[-50%] left-[50%] translate-x-[-50%]"
                 >
                   {{
                     calHeight(
@@ -68,23 +68,28 @@
                   height: `${calHeight(item.amount)}%`,
                 }"
               ></div>
-              <div class="wv-b5 font-bold mx-auto">
+              <div class=" wv-b7 md:wv-b5 font-bold mx-auto">
                 {{ convertMillion(item.amount) }}
               </div>
             </div>
           </div>
         </div>
+        <div class=" lg:hidden block mt-5">
+          <StrategyLegend variant="yearly-budget" />
+        </div>
         <div class="w-full flex flex-col justify-between gap-4 mt-5">
           <div class="flex justify-center sm:justify-end">
             <NuxtLink
               :to="{ path: 'explore', query: { select: 'YearlyBudget' } }"
-              class="inline-block py-1 px-2 rounded border-wv-gray-1 hover:bg-gray-500 hover:text-white border text-wv-gray-1 h-min"
+              class=" py-1 px-2 flex items-center rounded border-wv-gray-1 hover:bg-gray-500 hover:text-white border text-wv-gray-1 h-min"
             >
               สำรวจงบยุทธศาสตร์รายปีเพิ่มเติม
+              <i class="el-icon-right ml-1"/>
             </NuxtLink>
           </div>
         </div>
       </div>
+      
     </div>
   </VizChart>
 </template>
@@ -113,7 +118,6 @@ export default Vue.extend({
   },
   mounted() {
     this.chartResponse = this.$store.getters["data/getChartData"]();
-    console.log(this.chartResponse);
   },
   methods: {
     convertMillion,
