@@ -3,8 +3,10 @@
     <div class="flex">
       <div id="YearlyBudget" class="max-w-[400px] flex flex-col gap-4 justify-between">
         <p class="wv-b3 flex-grow text-center sm:text-left">
-          งบยุทธศาสตร์ส่วนใหญ่ถูกใช้กับการสร้างเมืองปลอดภัย
-          แต่ยังไม่พบการใช้งบในการสร้างเมืองประชาธิปไตยแบบมีส่วนร่วมเลย
+          <span class="font-bold">งบยุทธศาสตร์</span>ส่วนใหญ่ถูกใช้กับ<span
+            class="text-wv-environment font-bold"
+            >การพัฒนาสิ่งแวดล้อมยั่งยืน</span
+          >
         </p>
 
         <div>
@@ -20,15 +22,23 @@
           >
             <div
               class="border-gray-300 border-[2px] border-dashed rounded-[5px] absolute w-full flex-1"
-              :style="{ height: `${calHeight(item.amount)}%` }"
+              :style="{
+                height: `${calHeight(
+                  totalBudget.filter(i => i.year === item.year)[0].amount,
+                )}%`,
+              }"
             >
               <div
                 class="absolute top-0 translate-y-[-100%] wv-b7 text-gray-300 font-bold left-[50%] translate-x-[-50%]"
               >
-                {{ convertMillion(item.amount) }}
+                {{
+                  convertMillion(
+                    totalBudget.filter(i => i.year === item.year)[0].amount,
+                  )
+                }}
               </div>
             </div>
-            <div class="flex flex-col-reverse w-full h-full justify-items-end">
+            <div class="flex flex-col-reverse w-full h-full relative justify-items-end">
               <div
                 class="relative z-20 w-full"
                 v-for="strategy in strategyList()"
@@ -39,7 +49,28 @@
                     item.strategies.filter(str => str.name === strategy)[0]?.amount,
                   )}%`,
                 }"
+              >
+                <p
+                  v-if="strategy === 'การพัฒนาสิ่งแวดล้อมยั่งยืน'"
+                  class="absolute text-white wv-b6 font-bold top-[50%] translate-y-[-50%] left-[50%] translate-x-[-50%]"
+                >
+                  {{
+                    calHeight(
+                      item.strategies.filter(str => str.name === strategy)[0]?.amount,
+                    ).toFixed(2)
+                  }}%
+                </p>
+              </div>
+                
+              <div
+                class="border-[3px] border-black rounded-[3px] absolute z-20 w-full"
+                :style="{
+                  height: `${calHeight(item.amount)}%`,
+                }"
               ></div>
+              <div class="wv-b5 font-bold mx-auto">
+                {{ convertMillion(item.amount) }}
+              </div>
             </div>
           </div>
         </div>
@@ -70,10 +101,19 @@ export default Vue.extend({
   data() {
     return {
       chartResponse: { amount: 0, years: [] },
+      totalBudget: [
+        { year: 61, amount: 78500000000 },
+        { year: 62, amount: 80000000000 },
+        { year: 63, amount: 83000000000 },
+        { year: 64, amount: 75500000000 },
+        { year: 65, amount: 78979446500 },
+        { year: 66, amount: 79000000000 },
+      ],
     };
   },
   mounted() {
     this.chartResponse = this.$store.getters["data/getChartData"]();
+    console.log(this.chartResponse);
   },
   methods: {
     convertMillion,
@@ -87,7 +127,7 @@ export default Vue.extend({
     },
     calHeight(item) {
       const totalAmount = this.roundBudget(
-        Math.max(...this.chartResponse.years.map(o => o.amount)).toString(),
+        Math.max(...this.totalBudget.map(o => o.amount)).toString(),
       );
       return (item / Number(totalAmount)) * 100;
     },

@@ -6,7 +6,8 @@
       <div
         class="lg:w-[850px] inset-0 lg:h-[600px] px-12 py-8 bg-white absolute z-50 lg:top-[50%] lg:translate-y-[-50%] lg:translate-x-[-50%] lg:left-[50%]"
       >
-        <div class="absolute top-0 right-0 m-5 lg:m-0">
+        <ModalProject v-if="isProject" :isProject="isProject" />
+        <div class="absolute z-50 top-0 right-0 m-5 lg:m-0">
           <img
             src="~/assets/images/cancel.svg"
             class="lg:translate-y-[-50%] lg:translate-x-[50%] cursor-pointer"
@@ -60,6 +61,7 @@
               <div
                 v-for="(item, id) in paginate(currentPage)"
                 :key="id"
+                @click="() => handleSelected(item)"
                 class="flex justify-between hover:bg-wv-gray-4 items-center border-b border-b-wv-gray-4 cursor-pointer py-[15px] flex-1"
               >
                 <div class="flex-1 pr-5">{{ item.outputProjectName }}</div>
@@ -75,13 +77,14 @@
               </div>
             </div>
           </div>
-          <b-pagination
-            v-model="currentPage"
-            :total-rows="filterYears?.total"
-            :per-page="perPage"
-            first-number
-            last-number
-          ></b-pagination>
+          <el-pagination
+            class="mx-auto"
+            :pager-count="perPage"
+            layout="prev, pager, next"
+            :total="filterYears?.total"
+            @current-change="handleCurrentChange"
+          >
+          </el-pagination>
         </div>
       </div>
     </div>
@@ -91,16 +94,12 @@
 <script>
 import { mapState, mapActions } from "vuex";
 import _ from "lodash";
-import { BPagination } from "bootstrap-vue";
 import { convertMillion } from "../utils";
 import { filterBy } from "./filterBy";
 import DropDownYearList from "./DropDownYearList.vue";
+import ModalProject from "./ModalProject.vue";
 
 export default {
-  components: {
-    "b-pagination": BPagination,
-    DropDownYearList,
-  },
   props: {
     handleModal: {
       type: Function,
@@ -112,6 +111,10 @@ export default {
     page: {
       type: String,
     },
+  },
+  components: {
+    DropDownYearList,
+    ModalProject,
   },
   data() {
     return {
@@ -127,6 +130,7 @@ export default {
       isFilterModal: false,
       filterYears: [],
       defaultByFilter: [],
+      isProject: false,
     };
   },
 
@@ -148,6 +152,13 @@ export default {
       updateSelectYearStrategy: "updateSelectYearStrategy",
       updateSelectKeywordStrategy: "updateSelectKeywordStrategy",
     }),
+    handleCurrentChange(val) {
+      this.currentPage = val;
+    },
+    handleSelected(item) {
+      this.isProject = item;
+      console.log(item);
+    },
 
     fetchByYear(year) {
       const response = this.$store.getters["data/getBudgetItems"]({ budgetYear: year });
@@ -202,6 +213,9 @@ export default {
     isModalDetails(newValue) {
       this.filterYears = filterBy(this.selectedFilter, newValue);
     },
+    isOpen(newValue) {
+      if (newValue === false) this.isProject = false;
+    },
   },
   mounted() {
     this.filterYears = filterBy(this.selectedFilter, this.isModalDetails);
@@ -211,16 +225,15 @@ export default {
 </script>
 
 <style lang="scss">
-ul.b-pagination {
+ul.el-pager {
   font-weight: 700;
   font-size: 14px;
   font-family: "IBM Plex Sans Thai";
-  @apply flex justify-center;
   li {
-    @apply py-[5px] px-[10px] rounded-[5px];
+    @apply rounded-[5px];
   }
   li.active {
-    @apply bg-wv-gray-3;
+    @apply bg-wv-gray-3 text-black;
   }
 }
 </style>

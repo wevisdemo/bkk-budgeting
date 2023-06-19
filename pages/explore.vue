@@ -1,7 +1,9 @@
 <template>
   <div class="container mx-auto min-h-[90vh] px-2 lg:px-8">
     <div id="nav" class="flex justify-between my-5">
-      <NuxtLink :to="{ path: '/', hash: `#${topic}` }">สรุปภาพรวม</NuxtLink>
+      <NuxtLink :to="{ path: '/', hash: `#${topic}` }">
+        <p class="text-wv-green">สรุปภาพรวม</p>
+      </NuxtLink>
       <div class="wv-b7 text-wv-gray-1">
         *เว็บไซต์นี้แสดงเฉพาะงบที่ใช้ตามยุทธศาสตร์ ซึ่งไม่ใช่งบทั้งหมดของกรุงเทพฯ
       </div>
@@ -50,7 +52,7 @@ export default {
   },
   mounted() {
     this.fetchdata();
-    this.topic = this.$route.query.select;
+    this.topic = this.$route.query.select || "YearlyBudget";
   },
   methods: {
     ...mapActions({

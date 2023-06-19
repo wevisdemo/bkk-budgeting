@@ -40,26 +40,17 @@ export default Vue.extend({
   methods: {
     keywords,
     drawChart() {
-      // set the dimensions and margins of the graph
       const getWidth = d3
         .select("#wordCloundWrapper")
         .node()
         .getBoundingClientRect().width;
-      var margin = { top: 10, right: 10, bottom: 10, left: 10 },
-        width = getWidth - margin.left - margin.right,
-        height = 450 - margin.top - margin.bottom;
-
-      // append the svg object to the body of the page
+      const width = getWidth;
+      const height = 450;
       var svg = d3
         .select("#wordCloundWrapper")
         .append("svg")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
-        .append("g")
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-      // Constructs a new cloud layout instance. It run an algorithm to find the position of words that suits your requirements
-      // Wordcloud features that are different from one word to the other must be here
+        .attr("width", width)
+        .attr("height", height);
       var layout = cloud()
         .size([width, height])
         .words(
@@ -69,18 +60,15 @@ export default Vue.extend({
               return { text: d.Word, size: d.Count };
             }),
         )
-        .padding(5) //space between words
+        .padding(5)
         .rotate(function () {
-          return ~~(Math.random() * 2) * 90;
+          return ~~(Math.random() * 2);
         })
         .fontSize(function (d) {
-          return d.size / 10;
-        }) // font size of words
+          return d.size / 7;
+        })
         .on("end", draw);
       layout.start();
-
-      // This function takes the output of 'layout' above and draw the words
-      // Wordcloud features that are THE SAME from one word to the other can be here
       function draw(words) {
         svg
           .append("g")

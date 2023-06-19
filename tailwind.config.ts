@@ -17,6 +17,7 @@ export default <Partial<Config>>{
         "wv-gray-1": "#737373",
         "wv-gray-3": "#DDDDDD",
         "wv-gray-5": "#858585",
+        "wv-environment": "#BACB37",
       },
       backgroundColor: {
         "wv-cream": "#E8E4D8",

@@ -1,11 +1,10 @@
-import type { NuxtConfig } from "@nuxt/types";
 import { createMetadata } from "./utils/metadata";
 import { generateOgImageRoutes } from "./utils/ogimages";
 
-const BASE_PATH = process.env.BASE_PATH || "";
+const BASE_PATH = "/bkk-budgeting";
 const { title, meta } = createMetadata();
 
-const config: NuxtConfig = {
+const config = {
   target: "static",
 
   head: {
@@ -58,9 +57,12 @@ const config: NuxtConfig = {
   },
 
   build: {
+    extend(config) {
+      config.resolve.alias["node-fetch-native"] = require.resolve("node-fetch");
+    },
     quiet: false,
     transpile: ["@wevisdemo/ui/vue2", "axios"],
-    standalone: false,
+    standalone: true,
   },
 
   modules: [
@@ -81,7 +83,7 @@ const config: NuxtConfig = {
     [
       "nuxt-element-ui",
       {
-        components: ["Select", "Option"],
+        components: ["Select", "Option", "Pagination"],
         locale: "fr",
       },
     ],
