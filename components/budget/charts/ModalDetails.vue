@@ -4,13 +4,17 @@
     <div v-if="isOpen" class="fixed inset-0 z-[50]">
       <div class="fixed inset-0 bg-wv-gray-4 bg-opacity-70 z-40" @click="handleModal" />
       <div
-        class="lg:w-[850px] inset-0 lg:h-[600px] px-12 py-8 bg-white absolute z-50 lg:top-[50%] lg:translate-y-[-50%] lg:translate-x-[-50%] lg:left-[50%]"
+        class="lg:w-[850px] overflow-auto inset-0 lg:h-[600px] px-3 md:px-12 py-8 bg-white absolute z-50 lg:top-[50%] lg:translate-y-[-50%] lg:translate-x-[-50%] lg:left-[50%]"
       >
-        <ModalProject v-if="isProject" :isProject="isProject" />
-        <div class="absolute z-50 top-0 right-0 m-5 lg:m-0">
+        <ModalProject
+          v-if="isProject"
+          :isProject="isProject"
+          :handleProject="handleProject"
+        />
+        <div class="fixed w-[25px] md:w-[50px] z-50 top-0 right-0 m-5">
           <img
             src="~/assets/images/cancel.svg"
-            class="lg:translate-y-[-50%] lg:translate-x-[50%] cursor-pointer"
+            class="cursor-pointer"
             @click="handleModal"
           />
         </div>
@@ -32,7 +36,10 @@
               </DropDownYearList>
               <span>มี </span>
               <span class="font-bold">{{ filterYears?.total }}</span>
-              <span>รายการ ({{ sumAllBudget() }} ล้านบาท)</span>
+              <span class="hidden md:block">รายการ ({{ sumAllBudget() }} ล้านบาท)</span>
+            </div>
+            <div class="md:hidden mx-auto text-center mt-3">
+              รายการ ({{ sumAllBudget() }} ล้านบาท)
             </div>
             <p class="wv-b6 text-center my-2">{{ subTitleModal }}</p>
             <div
@@ -158,6 +165,9 @@ export default {
     handleSelected(item) {
       this.isProject = item;
       console.log(item);
+    },
+    handleProject() {
+      this.isProject = false;
     },
 
     fetchByYear(year) {

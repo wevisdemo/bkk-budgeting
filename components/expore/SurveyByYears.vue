@@ -9,13 +9,17 @@
         <b>ยุทธศาสตร์ 7 ด้าน</b> เป็นแผนพัฒนาที่กรุงเทพฯ <br />วางไว้
         เพื่อจะก้าวไปสู่การเป็น “มหานครแห่งเอเชีย” <br />ภายใน 20 ปี (2561-2580)
       </p>
-      <div
-        v-if="$mq === 'md'"
-        class="p-[10px] my-[10px] text-left flex justify-between wv-b5 border-black border max-w-[300px] mx-auto rounded-[5px]"
-        @click="mobileStrategy = true"
-      >
-        {{ chartSelected || "ทุกแผนยุทธศาสตร์" }}
-        <img src="~/assets/images/open-modal.svg" />
+      <div v-if="$mq === 'md'" class="flex items-center w-max mx-auto">
+        <div
+          class="p-[10px] my-[10px] text-left flex justify-between wv-b5 border-black border w-[300px] mx-auto rounded-[5px]"
+          @click="mobileStrategy = true"
+        >
+          {{ chartSelected || "ทุกแผนยุทธศาสตร์" }}
+          <img src="~/assets/images/open-modal.svg" />
+        </div>
+        <div class="ml-3" v-if="chartSelected" @click="reloadStrategy">
+          <img src="~/assets/images/reload.svg" />
+        </div>
       </div>
       <div
         v-if="($mq === 'md' && mobileStrategy) || $mq === 'lg'"
@@ -99,6 +103,7 @@ import { mapActions, mapState } from "vuex";
 import HorizontalBarChartVue from "../budget/charts/HorizontalBarChart.vue";
 import { borderFilter, colorFilter } from "~/components/budget/utils";
 import { navData } from "~/components/expore/navData";
+import { handleRemoveSelected } from "~/components/budget/utils";
 
 export default {
   components: {
@@ -116,8 +121,11 @@ export default {
   },
   methods: {
     navData,
+    handleRemoveSelected,
     ...mapActions({
       updateStrategy: "updateStrategy",
+      updateChartSelected: "updateChartSelected",
+      updateSubTitleModal: "updateSubTitleModal",
     }),
     selectHandle(isSlect, strategy) {
       if (isSlect)
@@ -137,6 +145,13 @@ export default {
         return `${colorFilter(name)} font-bold`;
       }
       return "";
+    },
+    reloadStrategy() {
+      this.updateChartSelected();
+      handleRemoveSelected(".wrapper-sub-strategy", "z-[20]");
+      handleRemoveSelected(".wrapper-strategy", "grayScale");
+      handleRemoveSelected(".wrapper-strategy", "hidden");
+      this.updateSubTitleModal("ตามแผนยุทธศาสตร์ 7 ด้าน");
     },
   },
 };

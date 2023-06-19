@@ -2,10 +2,14 @@
   <div class="container mx-auto min-h-[90vh] px-2 lg:px-8">
     <div id="nav" class="flex justify-between my-5">
       <NuxtLink :to="{ path: '/', hash: `#${topic}` }">
-        <p class="text-wv-green">สรุปภาพรวม</p>
+        <div class="text-wv-green flex items-center">
+          <i class="el-icon-back mr-1" />
+          สรุปภาพรวม
+        </div>
       </NuxtLink>
       <div class="wv-b7 text-wv-gray-1">
-        *เว็บไซต์นี้แสดงเฉพาะงบที่ใช้ตามยุทธศาสตร์ ซึ่งไม่ใช่งบทั้งหมดของกรุงเทพฯ
+        *เว็บไซต์นี้แสดงเฉพาะงบที่ใช้ตามยุทธศาสตร์<br class="md:hidden" />
+        ซึ่งไม่ใช่งบทั้งหมดของกรุงเทพฯ
       </div>
     </div>
     <div

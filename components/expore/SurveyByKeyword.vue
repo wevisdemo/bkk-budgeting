@@ -5,65 +5,96 @@
       คียเวิร์ดเหล่านี้เป็นการค้นหาและตัดคำเบื้องต้นโดยคอมพิวเตอร์
       โดยรวบรวมจากทุกข้อมูลที่มีคำนั้นปรากฎ โปรดตรวจสอบบริบทของคำก่อนการใช้งาน
     </p>
-
-    <div class="flex">
-      <div class="w-[325px] h-fit border-2 border-black rounded-[5px] p-[22px]">
-        <input
-          v-model="data"
-          type="text"
-          class="border-b border-b-black w-full wv-b5 mb-3"
-          placeholder="พิมพ์คีย์เวิร์ด"
+    <div
+      v-if="$mq === 'md'"
+      @click="handdleModalMobile"
+      class="py-[10px] my-[10px] text-left flex justify-between wv-b5 border-black border w-[300px] mx-auto relative rounded-[5px] pl-8"
+    >
+      <img
+        src="~/assets/images/searchIcon.svg"
+        class="absolute top-[50%] left-0 translate-y-[-50%] ml-2"
+      />
+      {{ selectedKey.Word || "พิมพ์คีย์เวิร์ด" }}
+    </div>
+    <div class="flex flex-col lg:flex-row">
+      <div
+        v-if="($mq === 'md' && mobileKeyword) || $mq === 'lg'"
+        class="lg:w-[325px] lg:h-fit border-2 border-black rounded-[5px] p-[22px] fixed h-screen lg:relative inset-0 bg-white z-[99]"
+      >
+        <img
+          @click="handdleModalMobile"
+          src="~/assets/images/cancel.svg"
+          class="absolute top-0 right-0 m-5 w-[30px] h-[30px]"
+          v-if="$mq === 'md'"
         />
-        <div class="flex flex-col justify-between wv-b7 mb-[10px]">
-          <div class="flex items-center">
-            เรียงตาม
-            <el-select
-              v-model="selectSort"
-              placeholder="Select"
-              class="sortInput"
-              size="mini"
-            >
-              <el-option
-                v-for="item in sortList"
-                :key="item"
-                :label="item"
-                :value="item"
-              >
-              </el-option>
-            </el-select>
-          </div>
-          <div class="flex mt-3">
-            <p class="flex-1"></p>
-            <p class="opacity-50 flex-1 text-center ml-2">จำนวนที่พบ</p>
-            <p class="opacity-50 flex-1 text-end">งบ (ล้านบาท)</p>
-          </div>
-        </div>
-        <div
-          v-for="(item, index) in filterKeyword.slice(0, 50)"
-          :key="index"
-          class="flex justify-between py-[2.5px] text-right px-[10px] rounded-[5px] cursor-pointer"
-          :class="
-            selectedKey.Word === item.Word
-              ? 'text-white bg-black '
-              : 'hover:bg-wv-gray-4'
-          "
-          @click="() => selectKey(item)"
-        >
-          <div class="flex items-center w-[100px]">
-            <div
-              class="w-[10px] h-[10px] rounded-full border border-wv-gray-2 mr-[5px]"
-            >
+        <div class="md:px-16 lg:px-0 lg:py-0 md:py-16 mx-auto mt-[40px] md:mt-0">
+          <div>
+            <div class="relative">
               <img
-                v-if="selectedKey.Word === item.Word"
-                src="~/assets/icons/selected.svg"
-                alt="selected"
-                class="w-full"
+                src="~/assets/images/searchIcon.svg"
+                class="absolute top-0 left-0 ml-2"
+              />
+              <input
+                v-model="data"
+                type="text"
+                class="border-b border-b-black w-full wv-b5 mb-3 pl-8"
+                placeholder="พิมพ์คีย์เวิร์ด"
               />
             </div>
-            <p class="wv-b6 font-bold">{{ item.Word }}</p>
+            <div class="flex flex-col justify-between wv-b7 mb-[10px]">
+              <div class="flex items-center">
+                เรียงตาม
+                <el-select
+                  v-model="selectSort"
+                  placeholder="Select"
+                  class="sortInput"
+                  size="mini"
+                >
+                  <el-option
+                    v-for="item in sortList"
+                    :key="item"
+                    :label="item"
+                    :value="item"
+                  >
+                  </el-option>
+                </el-select>
+              </div>
+              <div class="flex mt-3">
+                <p class="w-[100px]"></p>
+                <p class="opacity-50 flex-1 text-center ml-2">จำนวนที่พบ</p>
+                <p class="opacity-50 flex-1 text-end">งบ (ล้านบาท)</p>
+              </div>
+            </div>
           </div>
-          <p class="wv-b7 opacity-50 flex-1 text-center">{{ item.total }}</p>
-          <p class="wv-b7 opacity-50 flex-1">{{ convertMillion(item.amount) }}</p>
+          <div class="h-[70vh] md:h-[80vh] lg:h-full overflow-auto">
+            <div
+              v-for="(item, index) in filterKeyword.slice(0, 50)"
+              :key="index"
+              class="flex justify-between py-[2.5px] text-right px-[10px] rounded-[5px] cursor-pointer"
+              :class="
+                selectedKey.Word === item.Word
+                  ? 'text-white bg-black '
+                  : 'hover:bg-wv-gray-4'
+              "
+              @click="() => selectKey(item)"
+            >
+              <div class="flex items-center w-[100px]">
+                <div
+                  class="w-[10px] h-[10px] rounded-full border border-wv-gray-2 mr-[5px]"
+                >
+                  <img
+                    v-if="selectedKey.Word === item.Word"
+                    src="~/assets/icons/selected.svg"
+                    alt="selected"
+                    class="w-full"
+                  />
+                </div>
+                <p class="wv-b6 font-bold">{{ item.Word }}</p>
+              </div>
+              <p class="wv-b7 opacity-50 flex-1 text-center">{{ item.total }}</p>
+              <p class="wv-b7 opacity-50 flex-1">{{ convertMillion(item.amount) }}</p>
+            </div>
+          </div>
         </div>
       </div>
       <div class="ml-5 flex-1">
@@ -275,6 +306,7 @@ export default {
       filterOrganize: [],
       isOpen: false,
       sortList: ["งบมากไปน้อย", "จำนวนที่พบ", "ตัวอักษร"],
+      mobileKeyword: false,
     };
   },
   methods: {
@@ -289,6 +321,9 @@ export default {
     keywords,
     filterByKey,
     navData,
+    handdleModalMobile() {
+      this.mobileKeyword = !this.mobileKeyword;
+    },
     handleModal() {
       this.isOpen = !this.isOpen;
     },

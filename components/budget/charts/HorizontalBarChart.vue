@@ -71,9 +71,15 @@
               class="absolute top-0 translate-y-[-100%] left-[50%] translate-x-[-50%] z-40"
             >
               {{
-                convertMillion(
-                  d.strategies.filter(d => d.name === strategy.name)[0]?.amount,
-                )
+                isMillion
+                  ? convertMillion(
+                      d.strategies.filter(d => d.name === strategy.name)[0]?.amount,
+                    )
+                  : `${(
+                      (d.strategies.filter(d => d.name === strategy.name)[0]?.amount /
+                        d.amount) *
+                      100
+                    ).toFixed()}%`
               }}
             </p>
           </div>
@@ -97,12 +103,19 @@
                 v-if="chartSelected === subStrategy.name"
                 class="absolute top-0 t wv-b7 translate-y-[-100%] left-[50%] translate-x-[-50%] font-bold pointer-events-none"
               >
-                {{ convertMillion(subStrategy.amount) }}
+                {{
+                  isMillion
+                    ? convertMillion(subStrategy.amount)
+                    : `${((subStrategy.amount / d.amount) * 100).toFixed(0)}%`
+                }}
               </div>
             </div>
           </div>
         </div>
-        <div v-if="!chartSelected" class="relative wv-b7 font-bold text-center">
+        <div
+          v-if="!chartSelected && isMillion"
+          class="relative wv-b7 font-bold text-center"
+        >
           {{ convertMillion(d.amount) }}
         </div>
       </div>
