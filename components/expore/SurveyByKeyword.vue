@@ -19,7 +19,7 @@
     <div class="flex flex-col lg:flex-row">
       <div
         v-if="($mq === 'md' && mobileKeyword) || $mq === 'lg'"
-        class="lg:w-[325px] lg:h-fit border-2 border-black rounded-[5px] p-[22px] fixed h-screen lg:relative inset-0 bg-white z-[99]"
+        class="lg:w-[325px] lg:h-fit border-2 border-black rounded-[5px] p-[22px] fixed h-screen lg:relative inset-0 bg-white z-[20]"
       >
         <img
           @click="handdleModalMobile"
