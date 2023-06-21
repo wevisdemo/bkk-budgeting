@@ -1,8 +1,18 @@
 <template>
   <div
     id="byYears"
-    class="mt-7 md:w-[80%] mx-auto lg:w-full flex lg:space-x-[35px] min-h-screen flex-col lg:flex-row justify-center"
+    class="mt-7 md:w-[80%] mx-auto lg:w-full flex lg:space-x-[35px] min-h-screen flex-col lg:flex-row justify-center relative"
   >
+    <div class="fixed inset-0 pointer-events-none">
+      <div
+        id="scrollTopTop"
+        @click="scrollToTop"
+        class="absolute flex items-center cursor-pointer bottom-0 left-[50%] translate-x-[-50%] bg-white text-wv-gray-1 py-[8px] px-[12px] rounded-[5px]"
+      >
+        <img src="~/assets/images/scrollTop.svg" class="mr-2" />
+        กลับไปด้านบน
+      </div>
+    </div>
     <ModalDetails
       :handle-modal="() => handleModal()"
       :is-open="isOpen"
@@ -29,7 +39,7 @@
     </div>
     <div class="lg:max-w-[685px] mt-3 flex-1 flex flex-col justify-between">
       <div class="flex items-center">
-        <p class="wv-h8 font-bold mr-2">หน่วยงานที่ได้รับงบในปี</p>
+        <p class="wv-h8 font-bold mr-2" id="topic-pointer">หน่วยงานที่ได้รับงบในปี</p>
         <DropDownYearList
           :handle-selected-year="() => handleSelectedYear()"
           :is-open-year-selected="isOpenYearSelected"
@@ -63,6 +73,7 @@
       <div
         v-for="(item, key) in barChartData"
         :key="key"
+        :id="`card-${key + 1}`"
         class="borderOrganize my-[5px] flex hover:border-black hover:border-[2px] border-[2px] border-transparent cursor-pointer"
         @click="() => selectOrganize(item.nameOrganization)"
       >
@@ -97,12 +108,20 @@
             <div
               v-for="strategy in strategyList()"
               :key="strategy"
-              class="h-[10px] "
+              class="h-[10px]"
               :style="{ width: drawChart(item, strategy) }"
               :class="colorFilter(strategy)"
             ></div>
           </div>
         </div>
+      </div>
+      <div
+        @click="scrollToTop"
+        class="flex items-center my-5 cursor-pointer bottom-0 bg-white text-wv-gray-1 py-[8px] px-[12px] rounded-[5px]"
+        id="scrollTopBottom"
+      >
+        <img src="~/assets/images/scrollTop.svg" class="mr-2" />
+        กลับไปด้านบน
       </div>
     </div>
   </div>
@@ -149,6 +168,10 @@ export default {
     strategyList,
     filterByOrganize,
     getChartDataGroupByOrganizations,
+    scrollToTop() {
+      document.body.scrollTop = 0;
+      document.documentElement.scrollTop = 0;
+    },
     handleModal() {
       this.isOpen = !this.isOpen;
     },
@@ -216,11 +239,36 @@ export default {
       }
       this.fetchByOrganizeYear(year.value);
     },
+    handleScroll() {
+      const pointerTop = document
+        .querySelector("#topic-pointer")
+        .getBoundingClientRect().top;
+      const bottombutton = document.querySelector("#scrollTopBottom");
+      if (
+        bottombutton.getBoundingClientRect().top > window.innerHeight &&
+        pointerTop < 0
+      ) {
+        document.querySelector("#scrollTopTop").style.opacity = "1";
+        document.querySelector("#scrollTopBottom").style.opacity = "0";
+      } else {
+        document.querySelector("#scrollTopTop").style.opacity = "0";
+        document.querySelector("#scrollTopBottom").style.opacity = "1";
+      }
+    },
+  },
+  mounted() {
+    document.querySelector("#scrollTopTop").style.opacity = "0";
+    document.querySelector("#scrollTopBottom").style.opacity = "0";
+  },
+  created() {
+    window.addEventListener("scroll", this.handleScroll);
+  },
+  unmounted() {
+    window.removeEventListener("scroll", this.handleScroll);
   },
   computed: {
     ...mapState(["organizeData", "isModalDetails", "chartData", "selectYearOrganize"]),
   },
-
   watch: {
     organizeData: {
       immediate: true,
@@ -235,6 +283,9 @@ export default {
 </script>
 
 <style lang="scss">
+html {
+  scroll-behavior: smooth;
+}
 .borderOrganize {
   background: #ffffff;
   padding: 10px;
