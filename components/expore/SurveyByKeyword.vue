@@ -1,5 +1,5 @@
 <template>
-  <div class="mb-5">
+  <div class="relative">
     <p class="wv-b7 text-wv-gray-1 text-center my-[30px]">
       <span class="font-bold">หมายเหตุ</span> :
       คียเวิร์ดเหล่านี้เป็นการค้นหาและตัดคำเบื้องต้นโดยคอมพิวเตอร์
@@ -271,6 +271,7 @@
         </div>
       </div>
     </div>
+    <ShareLabel />
   </div>
 </template>
 
@@ -283,11 +284,13 @@ import { keywords } from "~/data/budgets/keywords";
 import ModalDetails from "~/components/budget/charts/ModalDetails.vue";
 import { navData } from "~/components/expore/navData";
 import { filterByKey } from "~/components/budget/charts/filterBy";
+import ShareLabel from "../budget/ShareLabel.vue";
 
 export default {
   components: {
     ToggleUnit,
     ModalDetails,
+    ShareLabel,
   },
   computed: {
     ...mapState(["chartData"]),

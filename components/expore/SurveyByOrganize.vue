@@ -123,6 +123,7 @@
         <img src="~/assets/images/scrollTop.svg" class="mr-2" />
         กลับไปด้านบน
       </div>
+      <ShareLabel />
     </div>
   </div>
 </template>
@@ -136,9 +137,10 @@ import { getChartDataGroupByOrganizations } from "~/data/get-chart-data";
 import ModalDetails from "~/components/budget/charts/ModalDetails.vue";
 import ToggleUnit from "~/components/budget/charts/ToggleUnit.vue";
 import DropDownYearList from "~/components/budget/charts/DropDownYearList.vue";
+import ShareLabel from "../budget/ShareLabel.vue";
 
 export default {
-  components: { ModalDetails, ToggleUnit, DropDownYearList },
+  components: { ModalDetails, ToggleUnit, DropDownYearList, ShareLabel },
   data() {
     return {
       barChartData: [],

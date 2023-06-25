@@ -94,7 +94,10 @@
         </div>
       </div>
     </div>
-    <HorizontalBarChartVue class="mb-6" :pointer="pointer" />
+    <div class="flex-1">
+      <HorizontalBarChartVue class="mb-6" :pointer="pointer" />
+      <ShareLabel />
+    </div>
   </div>
 </template>
 
@@ -104,10 +107,12 @@ import HorizontalBarChartVue from "../budget/charts/HorizontalBarChart.vue";
 import { borderFilter, colorFilter } from "~/components/budget/utils";
 import { navData } from "~/components/expore/navData";
 import { handleRemoveSelected } from "~/components/budget/utils";
+import ShareLabel from "~/components/budget/ShareLabel.vue";
 
 export default {
   components: {
     HorizontalBarChartVue,
+    ShareLabel,
   },
   data() {
     return {
