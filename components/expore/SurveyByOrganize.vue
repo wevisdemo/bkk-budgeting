@@ -40,32 +40,39 @@
     <div class="lg:max-w-[685px] mt-3 flex-1 flex flex-col justify-between">
       <div class="flex items-center">
         <p class="wv-h8 font-bold mr-2" id="topic-pointer">หน่วยงานที่ได้รับงบในปี</p>
-        <DropDownYearList
-          :handle-selected-year="() => handleSelectedYear()"
-          :is-open-year-selected="isOpenYearSelected"
-          :is-selected-year="year => isSelectedYear(year)"
-          >{{ selectYearOrganize.label }}</DropDownYearList
+        <el-select
+          v-model="selectFilterYear"
+          placeholder="Select"
+          class="ml-2 w-[150px] wv-b4 font-bold"
         >
+          <el-option
+            v-for="(item, index) in yearList"
+            :key="index"
+            :label="item.label"
+            :value="item.value"
+          >
+          </el-option>
+        </el-select>
       </div>
       <div class="flex justify-between mt-5">
-        <div class="text-wv-gray-1 wv-b6 flex space-x-2 justify-center cursor-pointer">
+        <div
+          class="text-wv-gray-1 wv-b6 flex space-x-2 justify-center cursor-pointer mb-4"
+        >
           <p class="">เรียงตาม</p>
-          <div class="underline pb-2 relative" @click="handleFilter">
-            <p class="font-bold">{{ selectedFilter }}</p>
-            <div
-              v-if="isFilterModal"
-              class="absolute top-[100%] bg-white w-[150px] left-0 border border-wv-gray-3 py-[5px]"
+          <el-select
+            v-model="selectedFilter"
+            placeholder="Select"
+            class="sortInput"
+            size="mini"
+          >
+            <el-option
+              v-for="(item, key) in filterList"
+              :key="key"
+              :label="item.label"
+              :value="item.label"
             >
-              <div
-                v-for="item in filterList"
-                :key="item.id"
-                class="hover:bg-wv-gray-3 cursor-pointer px-[10px]"
-                @click="() => selectFilter(item.label)"
-              >
-                {{ item.label }}
-              </div>
-            </div>
-          </div>
+            </el-option>
+          </el-select>
         </div>
         <ToggleUnit :toggle="() => toggle()" :is-million="isMillion" />
       </div>
@@ -156,6 +163,16 @@ export default {
       ],
       selectedFilter: "งบมากไปน้อย",
       isFilterModal: false,
+      selectFilterYear: "2561-2566",
+      yearList: [
+        { label: "2561-2566", value: "" },
+        { label: "2561", value: 61 },
+        { label: "2562", value: 62 },
+        { label: "2563", value: 63 },
+        { label: "2564", value: 64 },
+        { label: "2565", value: 65 },
+        { label: "2566", value: 66 },
+      ],
     };
   },
   methods: {
@@ -225,21 +242,18 @@ export default {
       this.isOpenYearSelected = !this.isOpenYearSelected;
     },
     isSelectedYear(year) {
-      if (year?.value) {
+      if (year) {
         this.updateSelectYearOrganize(year);
         this.filterYears = {
-          items: this.isModalDetails?.items?.filter(
-            str => str.budgetYear === year.value,
-          ),
-          total: this.isModalDetails?.items?.filter(
-            str => str.budgetYear === year.value,
-          ).length,
+          items: this.isModalDetails?.items?.filter(str => str.budgetYear === year),
+          total: this.isModalDetails?.items?.filter(str => str.budgetYear === year)
+            .length,
         };
       } else {
         this.updateSelectYearOrganize({ label: "2561-2566", value: "" });
         this.filterYears = this.isModalDetails;
       }
-      this.fetchByOrganizeYear(year.value);
+      this.fetchByOrganizeYear(year);
     },
     handleScroll() {
       const pointerTop = document
@@ -279,6 +293,12 @@ export default {
         this.barChartData = orderByStrategy(newValue, "amount", "desc");
         this.maxValue = this.barChartData[0];
       },
+    },
+    selectFilterYear(newValue) {
+      this.isSelectedYear(newValue);
+    },
+    selectedFilter(newValue) {
+      this.selectFilter(newValue);
     },
   },
 };

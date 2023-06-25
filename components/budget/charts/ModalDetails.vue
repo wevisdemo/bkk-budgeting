@@ -23,17 +23,19 @@
             <!-- ------- header -->
             <div class="wv-b5 flex space-x-2 items-center justify-center">
               <p>ปีงบประมาณ</p>
-              <DropDownYearList
-                :handle-selected-year="() => handleSelectedYear()"
-                :is-open-year-selected="isOpenYearSelected"
-                :is-selected-year="year => isSelectedYear(year)"
+              <el-select
+                v-model="selectFilter"
+                placeholder="Select"
+                class="ml-2 w-[150px] wv-b4 font-bold"
               >
-                <span v-if="page === 'organize'"> {{ selectYearOrganize.label }}</span>
-                <span v-if="page === 'strategy'"> {{ selectYearStrategy.label }}</span>
-                <span v-if="page === 'keyword'">
-                  {{ selectKeywordStrategy.label }}</span
+                <el-option
+                  v-for="(item, index) in yearList"
+                  :key="index"
+                  :label="item.label"
+                  :value="item.value"
                 >
-              </DropDownYearList>
+                </el-option>
+              </el-select>
               <span>มี </span>
               <span class="font-bold">{{ filterYears?.total }}</span>
               <span class="hidden md:block">รายการ ({{ sumAllBudget() }} ล้านบาท)</span>
@@ -46,22 +48,20 @@
               class="text-wv-gray-1 wv-b6 flex space-x-2 justify-center cursor-pointer"
             >
               <p class="">เรียงตาม</p>
-              <div class="underline pb-2 relative" @click="handleFilter">
-                <p class="font-bold">{{ selectedFilter }}</p>
-                <div
-                  v-if="isFilterModal"
-                  class="absolute top-[100%] bg-white w-[150px] left-0 border border-wv-gray-3 py-[5px]"
+              <el-select
+                v-model="selectedFilter"
+                placeholder="Select"
+                class="sortInput"
+                size="mini"
+              >
+                <el-option
+                  v-for="(item, key) in filterList"
+                  :key="key"
+                  :label="item.label"
+                  :value="item.label"
                 >
-                  <div
-                    v-for="item in filterList"
-                    :key="item.id"
-                    class="hover:bg-wv-gray-3 cursor-pointer px-[10px]"
-                    @click="() => selectFilter(item.label)"
-                  >
-                    {{ item.label }}
-                  </div>
-                </div>
-              </div>
+                </el-option>
+              </el-select>
             </div>
             <!-- ------- header -->
             <div class="flex flex-col">
@@ -138,6 +138,16 @@ export default {
       filterYears: [],
       defaultByFilter: [],
       isProject: false,
+      selectFilter: "2561-2566",
+      yearList: [
+        { label: "2561-2566", value: "" },
+        { label: "2561", value: 61 },
+        { label: "2562", value: 62 },
+        { label: "2563", value: 63 },
+        { label: "2564", value: 64 },
+        { label: "2565", value: 65 },
+        { label: "2566", value: 66 },
+      ],
     };
   },
 
@@ -164,12 +174,10 @@ export default {
     },
     handleSelected(item) {
       this.isProject = item;
-      console.log(item);
     },
     handleProject() {
       this.isProject = false;
     },
-
     fetchByYear(year) {
       const response = this.$store.getters["data/getBudgetItems"]({ budgetYear: year });
       this.updateIsModalDetails(response);
@@ -180,26 +188,18 @@ export default {
         pageNumber * this.perPage,
       );
     },
-    handleSelectedYear() {
-      this.isOpenYearSelected = !this.isOpenYearSelected;
-      this.isFilterModal = false;
-    },
-    handleFilter() {
-      this.isFilterModal = !this.isFilterModal;
-      this.isOpenYearSelected = false;
-    },
-    selectFilter(label) {
+    selectSort(label) {
       this.selectedFilter = label;
       const resultFilter = filterBy(label, this.filterYears);
       this.filterYears = resultFilter;
     },
     isSelectedYear(year) {
-      if (year?.value) {
+      if (year) {
         if (this.page === "organize") this.updateSelectYearOrganize(year);
         if (this.page === "strategy") this.updateSelectYearStrategy(year);
         if (this.page === "keyword") this.updateSelectKeywordStrategy(year);
         const itemsList = this.isModalDetails?.items?.filter(
-          str => str.budgetYear === year.value,
+          str => str.budgetYear === year,
         );
         this.filterYears = filterBy(this.selectedFilter, {
           items: itemsList,
@@ -226,10 +226,20 @@ export default {
     isOpen(newValue) {
       if (newValue === false) this.isProject = false;
     },
+    selectFilter(newValue) {
+      this.isSelectedYear(newValue);
+    },
+    selectedFilter(newValue) {
+      this.selectSort(newValue);
+    },
   },
   mounted() {
     this.filterYears = filterBy(this.selectedFilter, this.isModalDetails);
     if (this.subTitleModal === "ตามแผนยุทธศาสตร์ 7 ด้าน") this.fetchByYear();
+    if (this.page === "organize") this.selectFilter = this.selectYearOrganize.label;
+    if (this.page === "strategy") this.selectFilter = this.selectYearStrategy.label;
+    if (this.page === "keyword") this.selectFilter = this.selectKeywordStrategy.label;
+    this.isSelectedYear();
   },
 };
 </script>

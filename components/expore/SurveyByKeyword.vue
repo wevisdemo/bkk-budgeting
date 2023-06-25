@@ -472,5 +472,7 @@ export default {
   font-size: 14px;
   border-bottom: 1px solid #737373;
   border-radius: 0%;
+  font-weight: bold;
+  padding: 0%;
 }
 </style>
