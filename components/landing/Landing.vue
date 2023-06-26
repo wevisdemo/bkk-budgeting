@@ -92,15 +92,15 @@ export default Vue.extend({
       budgetExplore: [
         {
           title: "รายปี",
-          pageLink: "problemPlanning",
+          pageLink: "explore",
         },
         {
           title: "รายหน่วยงาน",
-          pageLink: "problemPlanning",
+          pageLink: "explore?select=OrganizeBudget",
         },
         {
           title: "ค้นด้วยคีย์เวิร์ด",
-          pageLink: "problemPlanning",
+          pageLink: "explore?select=KeyWordBudget",
         },
       ],
     };
