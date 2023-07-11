@@ -293,7 +293,8 @@ export default {
       } else if (!filterStrategy[0] && filterSubStrategy && newValue) {
         this.handleSubStrategy(newValue);
       } else {
-        this.updateIsModalDetails("");
+        this.updateIsModalDetails(this.$store.getters["data/getBudgetItems"]());
+        this.updateSubTitleModal(`ตามแผนยุทธศาสตร์ 7 ด้าน`);
         this.updateChartSelected();
         handleRemoveSelected(".wrapper-strategy", "grayScale");
         handleRemoveSelected(".wrapper-strategy", "hidden");
