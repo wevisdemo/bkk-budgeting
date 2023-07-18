@@ -6,7 +6,7 @@
   >
     <div class="flex justify-between items-center mb-6">
       <p class="wv-b4 font-bold">
-        ใช้งบรวม {{ convertMillion(chartData.amount) }} ล้านบาท
+        ใช้งบรวม {{ convertMillion(summaryAnount) || 0 }} ล้านบาท
       </p>
       <ModalDetails
         :handle-modal="() => handleModal()"
@@ -40,7 +40,7 @@
       <div
         v-for="(d, index) in chartData.years"
         :key="index"
-        class="flex flex-col-reverse flex-1 pl-[5px] lg:pl-[25px] relative"
+        class="flex flex-col-reverse flex-1 pl-[5px] lg:pl-[25px] relative w-full"
       >
         <div
           class="wv-b5 text-center mt-2 absolute pl-[5px] lg:pl-[25px] bottom-[-5px] translate-y-[100%] left-[50%] translate-x-[-51%]"
@@ -53,6 +53,10 @@
           :id="strategy.name"
           :key="i"
           class="relative"
+          :style="`height: ${heightChart(
+            d.strategies.filter(d => d.name === strategy.name)[0]?.amount,
+            d.amount,
+          )}`"
           @mouseenter="e => mouseEnter(e)"
           @mouseleave="mouseLeave"
         >
@@ -74,44 +78,66 @@
                 isMillion
                   ? convertMillion(
                       d.strategies.filter(d => d.name === strategy.name)[0]?.amount,
-                    )
+                    ) || 0
                   : `${(
                       (d.strategies.filter(d => d.name === strategy.name)[0]?.amount /
                         d.amount) *
-                      100
+                        100 || 0
                     ).toFixed()}%`
               }}
             </p>
           </div>
 
           <div
-            v-for="(subStrategy, key) in d.strategies.filter(
-              d => d.name === strategy.name,
-            )[0]?.substrategies"
-            :key="key"
+            v-for="subStrategy in strategy.substrategies"
+            v-if="pickSubStrategy(d.strategies, strategy.name, subStrategy)"
+            :key="subStrategy"
+            :id="
+              'subStrategy-' +
+              pickSubStrategy(d.strategies, strategy.name, subStrategy)?.name
+            "
+            :style="`height: ${
+              (pickSubStrategy(d.strategies, strategy.name, subStrategy)?.amount /
+                d.strategies.filter(d => d.name === strategy.name)[0]?.amount) *
+              100
+            }%`"
+            :class="colorFilter(strategy.name)"
+            class="borderSubStrategy cursor-pointer w-full wrapper-sub-strategy relative h-full"
+            @click="
+              () =>
+                handleSubStrategy(
+                  pickSubStrategy(d.strategies, strategy.name, subStrategy)?.name,
+                )
+            "
+            @mouseenter="e => mouseEnter(e, 'isSubStrategy')"
+            @mouseleave="e => mouseLeave(e, 'isSubStrategy')"
           >
             <div
-              :id="'subStrategy-' + subStrategy.name"
-              :class="colorFilter(strategy.name)"
-              class="borderSubStrategy cursor-pointer wrapper-sub-strategy relative"
-              :style="`height: ${heightChart(subStrategy.amount, d.amount)}px`"
-              @click="() => handleSubStrategy(subStrategy.name)"
-              @mouseenter="e => mouseEnter(e, 'isSubStrategy')"
-              @mouseleave="e => mouseLeave(e, 'isSubStrategy')"
+              v-if="
+                chartSelected ===
+                  pickSubStrategy(d.strategies, strategy.name, subStrategy)?.name &&
+                pickSubStrategy(d.strategies, strategy.name, subStrategy)
+              "
+              class="absolute top-0 t wv-b7 translate-y-[-100%] left-[50%] translate-x-[-50%] font-bold pointer-events-none"
             >
-              <div
-                v-if="chartSelected === subStrategy.name"
-                class="absolute top-0 t wv-b7 translate-y-[-100%] left-[50%] translate-x-[-50%] font-bold pointer-events-none"
-              >
-                {{
-                  isMillion
-                    ? convertMillion(subStrategy.amount)
-                    : `${((subStrategy.amount / d.amount) * 100).toFixed(0)}%`
-                }}
-              </div>
+              {{
+                isMillion
+                  ? convertMillion(
+                      pickSubStrategy(d.strategies, strategy.name, subStrategy)?.amount,
+                    )
+                  : `${
+                      (
+                        (pickSubStrategy(d.strategies, strategy.name, subStrategy)
+                          ?.amount /
+                          d.amount) *
+                        100
+                      ).toFixed(0) + "%"
+                    }`
+              }}
             </div>
           </div>
         </div>
+
         <div
           v-if="!chartSelected && isMillion"
           class="relative wv-b7 font-bold text-center"
@@ -148,6 +174,7 @@ export default {
       prevSelected: "",
       isOpen: false,
       isMillion: true,
+      summaryAnount: 0,
     };
   },
   computed: {
@@ -188,9 +215,7 @@ export default {
     heightChart(amount, strategyAmount) {
       const divide = this.isMillion ? this.roundBudget : strategyAmount;
       const percent = Number(amount / divide) * 100;
-      const mqHeight = this.$mq === "lg" ? 500 : 250;
-      const height = Number((percent * mqHeight) / 100);
-      return height;
+      return percent + "%";
     },
     mouseEnter(e, isSubStrategy) {
       const elemId = e.target.id;
@@ -210,17 +235,14 @@ export default {
       handleRemoveSelected(".wrapper-sub-strategy", "grayScale");
       handleAddSelected(".wrapper-strategy", "grayScale");
       handleRemoveSelected(".wrapper-strategy", "hidden");
-      handleRemoveSelected("#strategy-" + strategy, "grayScale");
       if (strategy !== "ไม่พบข้อมูล") {
         handleAddSelected("#strategy-" + strategy, "hidden");
-      }
-
-      if (this.prevSelected === this.currentSelected) {
-        this.updateChartSelected();
-        handleRemoveSelected(".wrapper-strategy", "grayScale");
+        const data = this.$store.getters["data/getBudgetItems"]({ strategy }).items;
+        this.summaryAnount = _.sumBy(data, "amount");
       } else {
-        this.updateChartSelected(strategy);
+        this.summaryAnount = this.chartData.amount;
       }
+      this.updateChartSelected(strategy);
       this.fetchByStrategy(strategy);
       strategy === "ไม่พบข้อมูล"
         ? this.updateSubTitleModal(`"${strategy}"`)
@@ -238,7 +260,12 @@ export default {
         handleRemoveSelected(".wrapper-strategy", "hidden");
         this.updateSubTitleModal("ตามแผนยุทธศาสตร์ 7 ด้าน");
         this.currentSelected = "";
+        this.summaryAnount = this.chartData.amount;
       } else {
+        const data = this.$store.getters["data/getBudgetItems"]({
+          substrategy: strategy,
+        }).items;
+        this.summaryAnount = _.sumBy(data, "amount");
         handleRemoveSelected(".wrapper-sub-strategy", "z-[20]");
         handleAddSelected(`[id='subStrategy-${strategy}']`, "z-[20]");
         this.fetchBySubStrategy(strategy);
@@ -281,6 +308,11 @@ export default {
         this.filterYears = this.isModalDetails;
       }
     },
+    pickSubStrategy(data, stra, sub) {
+      return data
+        .filter(d => d.name === stra)[0]
+        ?.substrategies.filter(s => s.name === sub)[0];
+    },
   },
   watch: {
     strategyChoice(newValue) {
@@ -298,8 +330,12 @@ export default {
         this.updateChartSelected();
         handleRemoveSelected(".wrapper-strategy", "grayScale");
         handleRemoveSelected(".wrapper-strategy", "hidden");
+        this.summaryAnount = this.chartData.amount;
       }
     },
+  },
+  mounted() {
+    this.summaryAnount = this.chartData.amount;
   },
 };
 </script>

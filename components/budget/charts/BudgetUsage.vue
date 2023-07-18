@@ -6,11 +6,12 @@
         class="max-w-[400px] flex flex-col gap-4 justify-between"
       >
         <p class="wv-b3 flex-grow text-center sm:text-left">
-          <span class=" font-bold">5 อันดับหน่วยงาน</span>ที่ได้รับงบปีล่าสุด (2556) สูงที่สุด จาก
-          {{ rawData.length }} หน่วยงาน
+          <span class="font-bold">5 อันดับหน่วยงาน</span>ที่ได้รับงบปีล่าสุด (25{{
+            currentYear
+          }}) สูงที่สุด จาก {{ rawData.length }} หน่วยงาน
         </p>
-       
-        <div class=" hidden lg:block">
+
+        <div class="hidden lg:block">
           <StrategyLegend variant="budget-usage" />
         </div>
       </div>
@@ -40,16 +41,16 @@
             </div>
           </div>
         </div>
-        <div class=" lg:hidden block mt-5">
+        <div class="lg:hidden block mt-5">
           <StrategyLegend variant="budget-usage" />
         </div>
         <div class="flex justify-center sm:justify-end">
           <NuxtLink
             :to="{ path: 'explore', query: { select: 'OrganizeBudget' } }"
-            class=" flex items-center py-1 px-2 rounded border-wv-gray-1 hover:bg-gray-500 hover:text-white border text-wv-gray-1 h-min"
+            class="flex items-center py-1 px-2 rounded border-wv-gray-1 hover:bg-gray-500 hover:text-white border text-wv-gray-1 h-min"
           >
             สำรวจหน่วยงานที่เหลือ
-            <i class="el-icon-right ml-1"/>
+            <i class="el-icon-right ml-1" />
           </NuxtLink>
         </div>
       </div>
@@ -71,6 +72,7 @@ export default Vue.extend({
     return {
       chartOrganize: [],
       rawData: [],
+      currentYear: [],
     };
   },
 
@@ -79,7 +81,9 @@ export default Vue.extend({
       "งบมากไปน้อย",
       this.$store.getters["data/getChartDataGroupByOrganizations"](),
     );
+    const chartData = this.$store.getters["data/getChartData"]();
     this.chartOrganize = this.rawData.slice(0, 5);
+    this.currentYear = chartData.years[chartData.years.length - 1].year;
   },
   methods: {
     convertMillion,

@@ -9,7 +9,7 @@ interface SelectedVoteDropdownProps {
 export interface State {
   chartData: any;
   organizeData: any;
-  currentImage: number;
+  currentImage: number | null;
   strategyChoice: string;
   chartSelected: string;
   isCookieSet: boolean;
@@ -24,7 +24,7 @@ export interface State {
 export const state = (): State => ({
   chartData: [],
   organizeData: [],
-  currentImage: 0,
+  currentImage: null,
   strategyChoice: "",
   chartSelected: "",
   isCookieSet: false,

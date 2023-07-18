@@ -9,7 +9,7 @@
           >
         </p>
 
-        <div class=" hidden lg:block">
+        <div class="hidden lg:block">
           <StrategyLegend variant="yearly-budget" />
         </div>
       </div>
@@ -37,6 +37,8 @@
                   )
                 }}
               </div>
+              <div class=" absolute bottom-[-30px] left-[50%] wv-b5 translate-x-[-50%]">
+                ’{{ item.year }}</div>
             </div>
             <div class="flex flex-col-reverse w-full h-full relative justify-items-end">
               <div
@@ -61,35 +63,33 @@
                   }}%
                 </p>
               </div>
-                
               <div
                 class="border-[3px] border-black rounded-[3px] absolute z-20 w-full"
                 :style="{
                   height: `${calHeight(item.amount)}%`,
                 }"
               ></div>
-              <div class=" wv-b7 md:wv-b5 font-bold mx-auto">
+              <div class="wv-b7 md:wv-b5 font-bold mx-auto">
                 {{ convertMillion(item.amount) }}
               </div>
             </div>
           </div>
         </div>
-        <div class=" lg:hidden block mt-5">
+        <div class="lg:hidden block mt-5">
           <StrategyLegend variant="yearly-budget" />
         </div>
-        <div class="w-full flex flex-col justify-between gap-4 mt-5">
+        <div class="w-full flex flex-col justify-between gap-4 mt-12">
           <div class="flex justify-center sm:justify-end">
             <NuxtLink
               :to="{ path: 'explore', query: { select: 'YearlyBudget' } }"
-              class=" py-1 px-2 flex items-center rounded border-wv-gray-1 hover:bg-gray-500 hover:text-white border text-wv-gray-1 h-min"
+              class="py-1 px-2 flex items-center rounded border-wv-gray-1 hover:bg-gray-500 hover:text-white border text-wv-gray-1 h-min"
             >
               สำรวจงบยุทธศาสตร์รายปีเพิ่มเติม
-              <i class="el-icon-right ml-1"/>
+              <i class="el-icon-right ml-1" />
             </NuxtLink>
           </div>
         </div>
       </div>
-      
     </div>
   </VizChart>
 </template>
@@ -118,6 +118,7 @@ export default Vue.extend({
   },
   mounted() {
     this.chartResponse = this.$store.getters["data/getChartData"]();
+    console.log( this.chartResponse," this.chartResponse")
   },
   methods: {
     convertMillion,

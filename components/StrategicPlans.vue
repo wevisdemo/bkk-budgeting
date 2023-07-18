@@ -68,7 +68,7 @@
     <div class="bg-white flex flex-col items-center justify-center p-4 w-full">
       <div class="text-center pb-4">
         <p class="wv-b6">ยุทธศาสตร์ด้าน</p>
-        <p class="wv-h8 wv-bold">การสร้างเมืองปลอดภัย</p>
+        <p class="wv-h8 wv-bold">{{ plans[selectedStrategy].strategy }}</p>
         <p class="hidden sm:block wv-b6">
           ประกอบด้วย {{ allStrategies[selectedStrategy].length }} มิติย่อย
         </p>
