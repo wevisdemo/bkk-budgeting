@@ -24,7 +24,7 @@
     </div>
     <ToggleUnit :toggle="() => toggle()" :is-million="isMillion" />
     <div
-      class="flex pl-[35px] md:pl-[50px] lg:pl-[25px] flex-1 mx-auto w-full lg:h-[500px] lg:min-h-[500px] lg:max-h-[500px] h-[250px] relative mt-5"
+      class="flex pl-[35px] md:pl-[50px] lg:pl-[25px] flex-1 mx-auto w-full md:h-[500px] md:min-h-[500px] md:max-h-[500px] min-h-[250px] h-[250px] relative mt-5"
     >
       <div class="absolute inset-0 flex flex-col-reverse mt-[0.5px]">
         <div
@@ -77,8 +77,9 @@
               {{
                 isMillion
                   ? convertMillion(
-                      d.strategies.filter(d => d.name === strategy.name)[0]?.amount,
-                    ) || 0
+                      d.strategies.filter(d => d.name === strategy.name)[0]?.amount ||
+                        0,
+                    )
                   : `${(
                       (d.strategies.filter(d => d.name === strategy.name)[0]?.amount /
                         d.amount) *

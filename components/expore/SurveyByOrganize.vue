@@ -3,11 +3,11 @@
     id="byYears"
     class="mt-7 md:w-[80%] mx-auto lg:w-full flex lg:space-x-[35px] min-h-screen flex-col lg:flex-row justify-center relative"
   >
-    <div class="fixed inset-0 pointer-events-none">
+    <div class="fixed w-full bottom-0 ">
       <div
         id="scrollTopTop"
         @click="scrollToTop"
-        class="absolute flex items-center cursor-pointer bottom-0 left-[50%] translate-x-[-50%] bg-white text-wv-gray-1 py-[8px] px-[12px] rounded-[5px]"
+        class="absolute flex items-center cursor-pointer bottom-0 left-[50%] translate-x-[-50%] bg-white text-wv-gray-1 py-[8px] px-[12px] z-30 rounded-[5px]"
       >
         <img src="~/assets/images/scrollTop.svg" class="mr-2" />
         กลับไปด้านบน
@@ -256,19 +256,20 @@ export default {
       this.fetchByOrganizeYear(year);
     },
     handleScroll() {
-      const pointerTop = document
-        .querySelector("#topic-pointer")
-        .getBoundingClientRect().top;
-      const bottombutton = document.querySelector("#scrollTopBottom");
-      if (
-        bottombutton.getBoundingClientRect().top > window.innerHeight &&
-        pointerTop < 0
-      ) {
-        document.querySelector("#scrollTopTop").style.opacity = "1";
-        document.querySelector("#scrollTopBottom").style.opacity = "0";
-      } else {
-        document.querySelector("#scrollTopTop").style.opacity = "0";
-        document.querySelector("#scrollTopBottom").style.opacity = "1";
+      const elem = document.querySelector("#topic-pointer");
+      if (elem) {
+        const pointerTop = elem.getBoundingClientRect().top;
+        const bottombutton = document.querySelector("#scrollTopBottom");
+        if (
+          bottombutton.getBoundingClientRect().top > window.innerHeight &&
+          pointerTop < 0
+        ) {
+          document.querySelector("#scrollTopTop").style.opacity = "1";
+          document.querySelector("#scrollTopBottom").style.opacity = "0";
+        } else {
+          document.querySelector("#scrollTopTop").style.opacity = "0";
+          document.querySelector("#scrollTopBottom").style.opacity = "1";
+        }
       }
     },
   },

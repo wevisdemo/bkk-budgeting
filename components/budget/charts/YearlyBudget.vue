@@ -118,7 +118,6 @@ export default Vue.extend({
   },
   mounted() {
     this.chartResponse = this.$store.getters["data/getChartData"]();
-    console.log( this.chartResponse," this.chartResponse")
   },
   methods: {
     convertMillion,

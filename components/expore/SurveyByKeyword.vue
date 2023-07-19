@@ -19,14 +19,16 @@
     <div class="flex flex-col lg:flex-row">
       <div
         v-if="($mq === 'md' && mobileKeyword) || $mq === 'lg'"
-        class="lg:w-[325px] lg:h-fit border-2 border-black rounded-[5px] p-[22px] fixed h-screen lg:relative inset-0 bg-white z-[20]"
+        class="lg:w-[400px] lg:h-fit border-2 border-black rounded-[5px] p-[22px] fixed h-screen lg:relative inset-0 bg-white z-[20]"
       >
-        <img
+        <div
+          class="absolute top-0 right-0 m-5"
           @click="handdleModalMobile"
-          src="~/assets/images/cancel.svg"
-          class="absolute top-0 right-0 m-5 w-[30px] h-[30px]"
           v-if="$mq === 'md'"
-        />
+        >
+          <div class="wv-b5 border-black rounded-[5px] border py-[5px] px-[10px]">ตกลง</div>
+        </div>
+
         <div class="md:px-16 lg:px-0 lg:py-0 md:py-16 mx-auto mt-[40px] md:mt-0">
           <div>
             <div class="relative">
@@ -97,9 +99,9 @@
           </div>
         </div>
       </div>
-      <div class="ml-5 flex-1">
+      <div class="md:ml-5 flex-1">
         <div
-          class="px-5 pt-5 pb-10 borderKey h-fit"
+          class="px-5 pt-5 pb-10 borderKey h-fit max-w-[685px] mx-auto"
           v-if="chartData.years && selectedKey.Word"
         >
           <div class="flex justify-between">
@@ -157,12 +159,12 @@
                 </div>
               </div>
             </div>
-            <div class="flex h-full items-end relative">
+            <div class="flex space-x-[5px] h-full items-end relative">
               <div
                 v-for="(item, key) in itemsChart.years"
                 :key="key"
                 v-if="itemsChart"
-                class="flex-1 ml-[25px] flex flex-col-reverse items-center relative z-10 h-full"
+                class="flex-1 md:ml-[25px] flex flex-col-reverse items-center relative z-10 h-full"
               >
                 <div
                   class="absolute bottom-0 wv-b5 translate-y-[120%] left-[50%] translate-x-[-50%] z-20"
@@ -210,12 +212,12 @@
                     convertMillion(displayAmoutOrganize(item.organize[selectFilter]))
                   }}
                 </div>
-                <div
+                <!-- <div
                   class="z-[20] wv-b7 font-bold absolute top-0 translate-y-[-100%]"
                   v-if="!isMillion && selectFilter === filterOrganize[0]"
                 >
                   {{ `100%` }}
-                </div>
+                </div> -->
                 <div
                   class="z-[20] wv-b7 font-bold"
                   v-if="!isMillion && selectFilter !== filterOrganize[0]"
@@ -240,7 +242,7 @@
                     :style="{
                       height: isMillion
                         ? calHeight(displayMaxAmout(key), item.amount)
-                        : '100%',
+                        : '100%x',
                     }"
                   ></div>
                 </div>
@@ -248,7 +250,7 @@
             </div>
           </div>
         </div>
-        <div class="lg:max-w-[400px] text-center lg:text-left mt-5">
+        <div class="lg:max-w-[685px] text-center lg:text-left mt-5 mx-auto">
           <p class="wv-b5 text-wv-gray-1">
             <b>ยุทธศาสตร์ 7 ด้าน</b> เป็นแผนพัฒนาที่กรุงเทพฯ <br />วางไว้
             เพื่อจะก้าวไปสู่การเป็น “มหานครแห่งเอเชีย” <br />ภายใน 20 ปี (2561-2580)
@@ -451,6 +453,9 @@ export default {
     selectSort(label) {
       this.filterKeyword = this.filterByKey(label, this.filterKeyword);
     },
+  },
+  mounted() {
+    this.selectKey(this.filterKeyword[0]);
   },
 };
 </script>

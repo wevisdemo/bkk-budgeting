@@ -69,10 +69,14 @@
                 v-for="(item, id) in paginate(currentPage)"
                 :key="id"
                 @click="() => handleSelected(item)"
-                class="flex justify-between hover:bg-wv-gray-4 items-center border-b border-b-wv-gray-4 cursor-pointer py-[15px] flex-1"
+                class="flex justify-between hover:bg-wv-gray-4 border-b border-b-wv-gray-4 cursor-pointer py-[15px] flex-1"
               >
-                <div class="flex-1 pr-5">{{ item.outputProjectName }}</div>
-                <div class="w-[128px]">
+                <div
+                  class="w-[15px] h-[15px] rounded-[2px] mr-3"
+                  :class="colorFilter(item.strategy)"
+                />
+                <div class="flex-1 pr-5 font-bold">{{ item.outputProjectName }}</div>
+                <div class="w-[128px] opacity-50">
                   {{
                     (item.amount / 1000000).toLocaleString("en-US", {
                       maximumFractionDigits: 2,
@@ -105,6 +109,7 @@ import { convertMillion } from "../utils";
 import { filterBy } from "./filterBy";
 import DropDownYearList from "./DropDownYearList.vue";
 import ModalProject from "./ModalProject.vue";
+import { colorFilter } from "../utils";
 
 export default {
   props: {
@@ -163,6 +168,7 @@ export default {
   methods: {
     convertMillion,
     filterBy,
+    colorFilter,
     ...mapActions({
       updateIsModalDetails: "updateIsModalDetails",
       updateSelectYearOrganize: "updateSelectYearOrganize",

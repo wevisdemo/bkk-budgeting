@@ -26,8 +26,17 @@
         id="explantion"
         class="lg:mt-6 fixed lg:relative inset-0 bg-white p-10 z-50 lg:p-0"
       >
+        <div
+          v-if="$mq === 'md' && chartSelected"
+          class="absolute top-0 right-0 m-5"
+          @click="mobileStrategy = false"
+        >
+          <div class="wv-b5 border-black rounded-[5px] border py-[5px] px-[10px]">
+            ยืนยัน
+          </div>
+        </div>
         <img
-          v-if="$mq === 'md'"
+          v-if="$mq === 'md' && !chartSelected"
           src="~/assets/images/close-black.svg"
           class="absolute top-0 right-0 m-5"
           @click="mobileStrategy = false"

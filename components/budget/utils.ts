@@ -43,12 +43,11 @@ export const handleRemoveSelected = (selector: string, className: string) => {
 
 export const convertMillion = (num: number) => {
   const numFormat = num / 1000000;
-  return numFormat > 1
-    ? numFormat.toLocaleString("en-US", {
+  return numFormat.toLocaleString("en-US", {
         maximumFractionDigits: 2,
         minimumFractionDigits: 2,
-      })
-    : "";
+      })||''
+    
 };
 
 export const strategyList = () => [
