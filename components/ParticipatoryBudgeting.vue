@@ -10,13 +10,46 @@
           <div
             v-for="(info, infoIndex) in information"
             :key="infoIndex"
-            class="flex gap-2 p-4 border-t border-wv-green cursor-pointer justify-between"
-            @click.stop="setActiveQuestion(infoIndex)"
+            class="flex gap-2 p-4 border-t border-wv-green justify-between"
           >
-            <div class="flex flex-col gap-8">
-              <div class="flex flex-col gap-2">
+            <div class="flex flex-col flex-1">
+              <div
+                class="flex w-full flex-col cursor-pointer relative"
+                @click.stop="setActiveQuestion(infoIndex)"
+              >
                 <p class="wv-h8 wv-kondolar">{{ info.title }}</p>
                 <p class="wv-b4 opacity-60">{{ info.subtitle }}</p>
+                <div class="absolute right-0">
+                  <div v-if="infoIndex !== openedPanel">
+                    <svg
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <rect y="11" width="24" height="2" fill="#4CC45D" />
+                      <rect
+                        x="13"
+                        width="24"
+                        height="2"
+                        transform="rotate(90 13 0)"
+                        fill="#4CC45D"
+                      />
+                    </svg>
+                  </div>
+                  <div v-else>
+                    <svg
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <rect y="11" width="24" height="2" fill="#4CC45D" />
+                    </svg>
+                  </div>
+                </div>
               </div>
               <div v-show="infoIndex === openedPanel">
                 <div v-show="info.content_text" class="flex flex-col gap-4">
@@ -43,49 +76,21 @@
                     <p class="wv-b3 wv-bold text-wv-green">{{ item.title }}</p>
                     <video
                       :id="`video-${videoIndex}`"
+                      controls
                       width="100%"
                       height="auto"
                       class="m-auto"
                       style="max-width: 400px"
-                      @click.stop="toggleVideo(videoIndex)"
+                      :poster="`videos/${item.poster}.png`"
                     >
                       <source
-                        :src="require(`~/assets/videos/${item.video}.mp4`)"
+                        :src="`videos/${item.video}.mp4`"
                         type="video/mp4"
                       />
                     </video>
                   </div>
                 </div>
               </div>
-            </div>
-            <div v-if="infoIndex !== openedPanel">
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <rect y="11" width="24" height="2" fill="#4CC45D" />
-                <rect
-                  x="13"
-                  width="24"
-                  height="2"
-                  transform="rotate(90 13 0)"
-                  fill="#4CC45D"
-                />
-              </svg>
-            </div>
-            <div v-else>
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <rect y="11" width="24" height="2" fill="#4CC45D" />
-              </svg>
             </div>
           </div>
         </div>
@@ -107,6 +112,7 @@ interface ContentText {
 interface ContentVideo {
   title: string;
   video: string;
+  poster:string
 }
 
 interface QAndAnswer {
@@ -172,15 +178,18 @@ export default Vue.extend({
               title:
                 "กรุงเทพมหานครมองเรื่องการมีส่วนร่วมโดยเฉพาะงบประมาณแบบมีส่วนร่วม อย่างไร??",
               video: "p1",
+              poster:"video_1"
             },
             {
               title: "ตอนนี้กรุงเทพมหานคร กำลังดำเนินการอะไรอยู่??",
               video: "p2",
+              poster:"video_2"
             },
             {
               title:
                 "ประเทศไทย หากจะไปสู่งบประมาณ แบบมีส่วนร่วมได้ ควรเริ่มที่จุดไหน??",
               video: "p3",
+              poster:"video_3"
             },
           ],
         },
