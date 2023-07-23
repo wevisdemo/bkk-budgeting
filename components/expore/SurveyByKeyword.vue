@@ -26,7 +26,9 @@
           @click="handdleModalMobile"
           v-if="$mq === 'md'"
         >
-          <div class="wv-b5 border-black rounded-[5px] border py-[5px] px-[10px]">ตกลง</div>
+          <div class="wv-b5 border-black rounded-[5px] border py-[5px] px-[10px]">
+            ตกลง
+          </div>
         </div>
 
         <div class="md:px-16 lg:px-0 lg:py-0 md:py-16 mx-auto mt-[40px] md:mt-0">
@@ -106,7 +108,7 @@
         >
           <div class="flex justify-between">
             <div>
-              <p class="wv-h8 font-bold">{{ selectedKey.Word }}</p>
+              <p class="wv-h8 font-bold wv-kondolar">{{ selectedKey.Word }}</p>
               <p class="wv-b5">
                 พบใน
                 <span class="font-bold">{{
@@ -123,9 +125,10 @@
               page="keyword"
             >
               <div
-                class="bg-black text-white w-fit wv-b6 px-[10px] py-[6px] rounded-[5px] cursor-pointer"
+                class="bg-black flex text-white w-fit wv-b6 px-[10px] py-[6px] rounded-[5px] cursor-pointer"
                 @click="handleModal"
               >
+                <img src="~/assets/icons/seemore.svg" class="mr-2" />
                 ดูรายการใช้งบ
               </div>
             </ModalDetails>

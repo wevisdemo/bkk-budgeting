@@ -13,7 +13,7 @@
           class="max-w-[600px]"
         />
         <div class="absolute max-w-lg p-16 sm:p-8">
-          <h4 class="wv-h4 wv-bold">
+          <h4 class="wv-h4 wv-bold wv-kondolar">
             เพื่อพัฒนาสู่ยุทธศาสตร์ 7 ด้าน มาดูกันว่ากรุงเทพฯ ใช้งบประมาณอย่างไร?
           </h4>
         </div>

@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen wv-kondolar wv-b5">
+  <div class="min-h-screen wv-kondolar wv-b5 wv-ibmplex">
     <WvCookieConsent
       policy-url="https://punchup.world"
       :cookie-options="cookieOptions"

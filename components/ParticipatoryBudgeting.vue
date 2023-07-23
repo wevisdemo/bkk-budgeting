@@ -15,7 +15,7 @@
           >
             <div class="flex flex-col gap-8">
               <div class="flex flex-col gap-2">
-                <p class="wv-h8">{{ info.title }}</p>
+                <p class="wv-h8 wv-kondolar">{{ info.title }}</p>
                 <p class="wv-b4 opacity-60">{{ info.subtitle }}</p>
               </div>
               <div v-show="infoIndex === openedPanel">

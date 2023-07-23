@@ -39,7 +39,7 @@
     </div>
     <div class="lg:max-w-[685px] mt-3 flex-1 flex flex-col justify-between">
       <div class="flex items-center">
-        <p class="wv-h8 font-bold mr-2" id="topic-pointer">หน่วยงานที่ได้รับงบในปี</p>
+        <p class="wv-h8 font-bold mr-2 wv-kondolar" id="topic-pointer">หน่วยงานที่ได้รับงบในปี</p>
         <el-select
           v-model="selectFilterYear"
           placeholder="Select"

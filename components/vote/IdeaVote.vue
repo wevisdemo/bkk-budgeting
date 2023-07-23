@@ -2,7 +2,7 @@
   <BoxContainer>
     <div id="vote-result">
       <div class="text-center">
-        <h5 class="wv-h5 wv-bold">ไอเดียโดนใจของผู้ที่ใช้แพลตฟอร์มนี้</h5>
+        <h5 class="wv-h5 wv-bold wv-kondolar">ไอเดียโดนใจของผู้ที่ใช้แพลตฟอร์มนี้</h5>
         <div class="flex justify-center items-center my-3">
           <p class="wv-b5">ที่อยู่ใน</p>
           <div class="ml-2">

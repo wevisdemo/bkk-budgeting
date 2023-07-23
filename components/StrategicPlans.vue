@@ -5,7 +5,7 @@
         <p class="wv-b3">
           เป็นเพียงส่วนหนึ่งของอีกหลายประเด็นที่กรุงเทพฯ วางแผนเพื่อแก้ไข ภายใต้
         </p>
-        <p class="wv-h8 font-extrabold">แผนยุทธศาสตร์ 7 ด้าน</p>
+        <p class="wv-h8 wv-kondolar font-extrabold">แผนยุทธศาสตร์ 7 ด้าน</p>
       </div>
     </div>
     <div
@@ -68,7 +68,7 @@
     <div class="bg-white flex flex-col items-center justify-center p-4 w-full">
       <div class="text-center pb-4">
         <p class="wv-b6">ยุทธศาสตร์ด้าน</p>
-        <p class="wv-h8 wv-bold">{{ plans[selectedStrategy].strategy }}</p>
+        <p class="wv-h8 wv-bold wv-kondolar">{{ plans[selectedStrategy].strategy }}</p>
         <p class="hidden sm:block wv-b6">
           ประกอบด้วย {{ allStrategies[selectedStrategy].length }} มิติย่อย
         </p>
@@ -114,15 +114,37 @@
         <div
           v-for="(strategy, strategyIndex) in allStrategies[selectedStrategy]"
           :key="strategyIndex"
-          class="flex w-full bg-white py-2 gap-2"
+          class="flex flex-col w-full bg-white py-2 gap-2"
+          @click="selectHandle(strategy.sub_strategy)"
         >
-          <div
-            class="text-white w-5 h-5 rounded-full flex justify-center wv-b6"
-            :class="`bg-wv-${plans[selectedStrategy].strategy_en}`"
-          >
-            <span>{{ strategyIndex + 1 }}</span>
+          <div class="flex relative">
+            <img
+              v-if="selected != strategy.sub_strategy"
+              src="~/assets/icons/expand.svg"
+              class="absolute right-0 cursor-pointer"
+            />
+            <img
+              v-else
+              src="~/assets/icons/un-expand.svg"
+              class="absolute right-0 cursor-pointer"
+            />
+            <div
+              class="text-white  min-w-[15px] w-[15px] h-[15px] rounded-full flex justify-center wv-b6"
+              :class="`bg-wv-${plans[selectedStrategy].strategy_en}`"
+            >
+              {{ strategyIndex + 1 }}
+            </div>
+            <p class="wv-b5 ml-3 wv-bold mr-4">{{ strategy.sub_strategy }}</p>
           </div>
-          <p class="wv-b5 wv-bold">{{ strategy.sub_strategy }}</p>
+          <ul class="ml-3" v-if="selected === strategy.sub_strategy">
+            <li
+              v-for="(item, itemIndex) in strategy.sub_srategy_def"
+              :key="itemIndex"
+              class="wv-b5 text-black list-disc list-inside"
+            >
+              {{ item }}
+            </li>
+          </ul>
         </div>
       </div>
     </div>
@@ -138,6 +160,7 @@ interface StrategeicPlansData {
   onHoverImg: number | null;
   selectedStrategy: number;
   strategicIcon: string;
+  selected: string;
 }
 
 export default Vue.extend({
@@ -148,7 +171,13 @@ export default Vue.extend({
       onHoverImg: null,
       selectedStrategy: 0,
       strategicIcon: "",
+      selected: "",
     };
+  },
+  methods: {
+    selectHandle(index: string) {
+      this.selected = index;
+    },
   },
   computed: {
     plans() {
@@ -160,6 +189,7 @@ export default Vue.extend({
       });
     },
     currentHoveredImage() {
+      this.selected = "";
       return this.$store.state.currentImage;
     },
   },

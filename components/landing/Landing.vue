@@ -6,7 +6,7 @@
       <div
         class="flex flex-col gap-3 sm:w-min z-10 sm:pt-30 sm:pb-20 text-center sm:text-left"
       >
-        <h1 class="wv-h2 font-extrabold">
+        <h1 class="wv-h2  wv-kondolar font-extrabold">
           <div>Bangkok</div>
           <div>Budgeting</div>
         </h1>

@@ -2,7 +2,7 @@
   <div class="bg-white">
     <BoxContainer class="sm:py-20">
       <div class="flex flex-col items-center gap-6 text-center m-auto">
-        <h5 class="wv-h5 wv-bold">
+        <h5 class="wv-h5 wv-bold wv-kondolar" >
           ร่วมส่งต่อโครงการที่อยากให้เกิดขึ้นในพื้นที่ของคุณ
         </h5>
         <div class="grid grid-cols-2 gap-2">
