@@ -20,7 +20,7 @@
       </div>
     </div>
     <div
-      class="flex flex-col sm:flex-row items-center sm:items-start gap-4 max-w-xl m-auto text-center sm:text-left mb-10"
+      class="flex mt-[60px] flex-col sm:flex-row items-center sm:items-start gap-4 max-w-xl m-auto text-center sm:text-left mb-10"
     >
       <img
         src="~/assets/illustrations/budgetfolder.svg"

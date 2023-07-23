@@ -4,7 +4,7 @@
       <div v-if="variant === typeYearlyBudget">
         <div class="flex gap-1 sm:items-center">
           <img src="~/assets/icons/box-dashed.svg" class="w-3 h-3" />
-          <p class="wv-b6 wv-bold">งบทั้งหมดในแต่ละปี</p>
+          <p class="wv-b6 text-wv-gray-1">งบทั้งหมดในแต่ละปี</p>
         </div>
         <div class="flex gap-1 sm:items-center">
           <div

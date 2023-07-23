@@ -86,7 +86,6 @@ export default Vue.extend({
             return d.size;
           })
           .attr("text-anchor", "middle")
-          .style("font-family", "Impact")
           .attr("transform", function (d) {
             return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
           })

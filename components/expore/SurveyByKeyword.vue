@@ -255,8 +255,9 @@
         </div>
         <div class="lg:max-w-[685px] text-center lg:text-left mt-5 mx-auto">
           <p class="wv-b5 text-wv-gray-1">
-            <b>ยุทธศาสตร์ 7 ด้าน</b> เป็นแผนพัฒนาที่กรุงเทพฯ <br />วางไว้
-            เพื่อจะก้าวไปสู่การเป็น “มหานครแห่งเอเชีย” <br />ภายใน 20 ปี (2561-2580)
+            <b>ยุทธศาสตร์ 7 ด้าน</b> เป็นแผนพัฒนาที่กรุงเทพฯ
+            <br class="lg:hidden" />วางไว้ เพื่อจะก้าวไปสู่การเป็น “มหานครแห่งเอเชีย”
+            <br class="lg:hidden" />ภายใน 20 ปี (2561-2580)
           </p>
           <div class="mt-5 flex flex-wrap lg:block text-start">
             <div
