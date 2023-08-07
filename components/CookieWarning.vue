@@ -1,6 +1,6 @@
 <template>
   <div
-    class="fixed w-full h-full left-0 right-0 top-0 bottom-0 flex justify-center items-center z-[9999]"
+    class="fixed w-full h-full left-0 right-0 top-0 bottom-0 flex justify-center pointer-events-none items-center z-[9999]"
   >
     <div
       class="py-6 px-8 rounded-lg bg-black max-w-lg text-white flex flex-col gap-2 justify-center items-center warning-modal"

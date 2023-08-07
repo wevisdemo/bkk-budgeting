@@ -91,6 +91,7 @@ export default Vue.extend({
         // eslint-disable-next-line no-console
         console.log("create user success");
       }
+      this.$cookies.set("isVoted", "true");
     },
   },
 });

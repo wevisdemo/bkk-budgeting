@@ -1,112 +1,14 @@
 <template>
   <BoxContainer>
     <div id="projectsDevelopment" class="mb-2 scroll-mt-8">
-      <h5 class="wv-h5 wv-bold text-center wv-kondolar">เลือก 3 โครงการที่อยากพัฒนา</h5>
+      <h5 class="wv-h5 wv-bold text-center wv-kondolar">
+        ก่อนอื่น.. เลือก 3 หมวดที่คุณสนใจที่สุด
+      </h5>
     </div>
-    <div class="flex items-center gap-0 xs:gap-4 sm:gap-6 md:gap-10 m-auto">
-      <img
-        src="~/assets/icons/coins-vertical-left.svg"
-        class="h-full hidden sm:block"
-      />
-      <div class="grid gap-4 pb-4 sm:pb-0">
-        <div
-          v-for="(project, index) in projectsList"
-          :key="index"
-          class="flex justify-center gap-10"
-        >
-          <div
-            class="py-2 px-2 rounded cursor-pointer flex-grow transition-colors max-w-[600px]"
-            :class="[
-              formData.projects.includes(project)
-                ? `bg-wv-${project.type}`
-                : formData.projects.length === 3
-                ? `opacity-50 bg-white`
-                : `bg-white`,
-              `border-2 hover:border-wv-${project.type}`,
-            ]"
-            @click="() => selectProjects(project)"
-          >
-            <p class="wv-b3 wv-bold">{{ project.name }}</p>
-            <p class="wv-b6">({{ project.desc }})</p>
-          </div>
-        </div>
-      </div>
-      <img
-        src="~/assets/icons/coins-vertical-right.svg"
-        class="h-full hidden sm:block"
-      />
-    </div>
-    <div class="flex justify-center py-4">
-      <button
-        v-if="!isVoted"
-        class="border border-black rounded p-3 wv-bold"
-        :class="formData.projects.length === 0 ? `opacity-20` : ``"
-        :disabled="formData.projects.length === 0"
-        @click.stop="openDialog"
-      >
-        ส่งความคิดเห็น
-      </button>
-    </div>
-    <div class="flex justify-center sm:hidden -mx-10 sm:-mx-0">
-      <img src="~/assets/icons/coins-horizontal.svg" class="w-full" />
-    </div>
-    <FormDialog v-if="dialogOpen">
-      <form @submit.prevent="e => handleSubmit(e)">
-        <div v-click-outside="closeDialog" class="py-6 px-8 bg-black max-w-lg">
-          <button class="text-white" @click.stop="closeDialog">
-            <img src="~/assets/icons/close.svg" />
-          </button>
-          <div class="text-center">
-            <div class="text-white">
-              <div class="mb-2">
-                <p class="wv-b3 wv-bold">
-                  ขอสอบถามสั้นๆเกี่ยวกับคุณ <br />
-                  ก่อนเข้าไปร่วมแสดงความคิดเห็น
-                </p>
-              </div>
-              <div class="grid gap-2 mb-2">
-                <p class="wv-b6 font-thin">
-                  คำตอบของคุณจะใช้เพื่อการประมวลผลข้อมูลบนแพลตฟอร์มนี้และรวบรวมเพื่อ
-                  ยื่นต่อผู้ว่าราชการจังหวัดกรุงเทพมหานครและหน่วยงานที่เกี่ยวข้องต่อไป
-                </p>
-                <p class="wv-b6 font-thin">
-                  คุณใช้ชีวิตอยู่ในเขตไหนของกรุงเทพฯ (เรียน/ทำงาน/พักอาศัย)
-                </p>
-              </div>
-            </div>
-            <DistrictDropdown :type="1" @change="district => setDistrict(district)" />
-            <div class="pt-6">
-              <button
-                v-if="formData.district"
-                class="bg-white text-black px-2 py-1 rounded-sm"
-                :class="formData.district.id === null ? `opacity-30` : ``"
-                type="submit"
-                :disabled="formData.district.id === null"
-              >
-                ยืนยัน
-              </button>
-            </div>
-          </div>
-        </div>
-      </form>
-    </FormDialog>
-    <div
-      v-if="isShowLoading"
-      class="fixed top-0 left-0 right-0 bottom-0 w-full h-full bg-white z-[9999]"
-    >
-      <div
-        class="flex flex-col gap-6 m-auto text-center h-full w-full justify-center items-center"
-      >
-        <h5 class="wv-h5 wv-bold">เรากำลังส่งข้อมูลของคุณ...</h5>
-        <div class="lottie-img">
-          <Lottie :options="defaultOptions" />
-        </div>
-        <p class="wv-b3">
-          ข้อมูลนี้จะรวบรวมยื่นต่อผู้ว่าราชการจังหวัดกรุงเทพมหานคร
-          <br />และหน่วยงานที่เกี่ยวข้องต่อไป
-        </p>
-      </div>
-    </div>
+    <Topic :setStepSurvey="setStepSurvey" v-if="stepSurvey === 1" />
+    <Projects :setStepSurvey="setStepSurvey" v-if="stepSurvey === 2" />
+    <Review v-if="stepSurvey === 3" />
+
     <Transition name="slide-fade">
       <CookieWarning v-if="showCookieWarning" />
     </Transition>
@@ -116,193 +18,53 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 
-import Lottie from "vue-lottie/src/lottie.vue";
-import FormDialog from "~/components/dialog/FormDialog.vue";
 import BoxContainer from "~/components/BoxContainer.vue";
-import DistrictDropdown from "~/components/DistrictDropdown.vue";
 import CookieWarning from "~/components/CookieWarning.vue";
 
-import type { District } from "~/components/DistrictDropdown.vue";
-import type { Project } from "~/components/ProjectDropdown.vue";
-
-import projectAnimation from "~/assets/lottie/project-loading.json";
-import projectsData from "~/data/projects.json";
-
-interface FormDataProps {
-  district: District;
-  projects: Project[];
-}
-
-interface LottieOptions {
-  animationData: any;
-  loop: boolean;
-  autoplay: boolean;
-}
-
-interface NocoTableRowType {
-  userId: string;
-  projectId: number;
-  vote: string;
-  dimension: string;
-  district: string;
-}
+import Topic from "~/components/survey/Topic.vue";
+import Projects from "~/components/survey/Projects.vue";
+import Review from "~/components/survey/Review.vue";
 
 interface ProjectDevelopmentData {
-  defaultOptions: LottieOptions;
-  dialogOpen: boolean;
-  projectsList: Project[];
-  formData: FormDataProps;
-  isShowLoading: boolean;
   isVoted: boolean;
-  loadingTime: number;
   showCookieWarning: any;
+  stepSurvey: number;
 }
 
 export default defineComponent({
   name: "ProjectDevelopment",
-  components: { FormDialog, BoxContainer, Lottie, DistrictDropdown, CookieWarning },
+  components: { BoxContainer, CookieWarning, Topic, Projects, Review },
   data(): ProjectDevelopmentData {
     return {
-      defaultOptions: {
-        animationData: projectAnimation,
-        loop: true,
-        autoplay: true,
-      },
-      isShowLoading: false,
-      dialogOpen: false,
-      formData: {
-        district: {} as District,
-        projects: [],
-      },
-      projectsList: projectsData as Project[],
       isVoted: false,
-      loadingTime: 2000,
       showCookieWarning: false,
+      stepSurvey: 0,
     };
   },
+
   mounted() {
     const cookieVoted: string = this.$cookies.get("isVoted");
-    const isCookieVoted = cookieVoted === "true";
-    if (!isCookieVoted || isCookieVoted === undefined) {
-      this.isVoted = false;
+    console.log(cookieVoted);
+
+    if (cookieVoted === "true") {
+      this.stepSurvey = 3;
     } else {
-      this.isVoted = true;
+      this.stepSurvey = 1;
     }
   },
   methods: {
-    async findTableViewRow(table: string, view: string, cookieId: string) {
-      const data: NocoTableRowType = await this.$nocoDb.dbViewRow.findOne(
-        "v1",
-        "bangkok-budgeting",
-        table,
-        view,
-        { where: `(userId,eq,${cookieId})` },
-      );
-      return data;
-    },
-    async postTableRow(table: string, data: NocoTableRowType[]) {
-      await this.$nocoDb.dbTableRow.bulkCreate("v1", "bangkok-budgeting", table, data);
-    },
-    openDialog() {
-      this.dialogOpen = true;
-    },
-    closeDialog() {
-      this.dialogOpen = false;
-    },
-    selectProjects(project: Project) {
-      if (this.$store.state.isCookieSet) {
-        const max: number = 3;
-        const maxLimit = this.formData.projects.length < max;
-        const isIncluded = this.formData.projects.includes(project);
-        if (!isIncluded) {
-          if (maxLimit) this.formData.projects.push(project);
-        } else {
-          const filtered = this.formData.projects.filter(el => el !== project);
-          this.formData.projects = filtered;
-        }
-      } else {
+    setStepSurvey(direction: string) {
+      const cookieVoted: string = this.$cookies.get("isVoted");
+      if (cookieVoted === "false" || !cookieVoted) {
         this.showCookieWarning = true;
         setTimeout(() => {
           this.showCookieWarning = false;
         }, 2000);
+      } else {
+        if (direction === "next") this.stepSurvey++;
+        if (direction === "prev") this.stepSurvey--;
       }
     },
-    async handleSubmit(e: Event) {
-      e.preventDefault();
-      this.dialogOpen = false;
-      this.isShowLoading = true;
-      await this.sendData();
-      this.isShowLoading = false;
-    },
-    setDistrict(district: District) {
-      this.formData.district = district;
-    },
-    showLoading() {
-      return new Promise(resolve => {
-        setTimeout(() => {
-          resolve((this.isShowLoading = true));
-        }, this.loadingTime);
-      });
-    },
-    async sendData() {
-      const array = [] as any;
-      const arrayForNoco = [] as NocoTableRowType[];
-      const arrayNoco = [] as NocoTableRowType[];
-
-      this.formData.projects.forEach(project => {
-        array.push({
-          projectId: project.id,
-          userId: this.$cookies.get("uuid"),
-        });
-        arrayForNoco.push({
-          userId: this.$cookies.get("uuid"),
-          projectId: project.id,
-          vote: project.name,
-          dimension: project.dimension,
-          district: `เขต${this.formData.district.th_name}`,
-        });
-      });
-
-      try {
-        // find row from db that matches cookie uuid
-        // find if the current user is a returning user??
-        const cookieId = this.$cookies.get("uuid");
-        const rowData: NocoTableRowType = await this.findTableViewRow(
-          "poll-data",
-          "BkkBudgetCsv",
-          cookieId,
-        );
-
-        if (rowData.userId === cookieId) {
-          arrayNoco.push(rowData);
-        } else {
-          // eslint-disable-next-line no-console
-          console.error(`User not found: ${cookieId}`);
-        }
-      } catch (e) {
-        // eslint-disable-next-line no-console
-        console.error(e);
-        return;
-      }
-
-      try {
-        await this.showLoading();
-        await this.postTableRow("poll-data", arrayForNoco);
-
-        this.isVoted = true;
-        this.$cookies.set("isVoted", "true");
-
-        setTimeout(() => {
-          const element = document.getElementById("vote-result");
-          if (element) element.scrollIntoView();
-        }, 5000);
-      } catch (e) {
-        // eslint-disable-next-line no-console
-        console.error(e);
-      }
-    },
-    // todo: update vote project count
-    // updateVoteProjectCount(data: any, selectedProjects: Project[]) {},
   },
 });
 </script>

@@ -268,7 +268,7 @@ export default Vue.extend({
         const result = await this.$nocoDb.dbTableRow.csvExport(
           "v1",
           "bangkok-budgeting",
-          "poll-data",
+          "Survey",
           "csv",
         );
 

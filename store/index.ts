@@ -19,6 +19,7 @@ export interface State {
   selectYearOrganize: object;
   selectYearStrategy: object;
   selectKeywordStrategy: object;
+  selectedSurvey: any;
 }
 
 export const state = (): State => ({
@@ -38,6 +39,7 @@ export const state = (): State => ({
   selectYearOrganize: { label: "2561-2566", value: "" },
   selectYearStrategy: { label: "2561-2566", value: "" },
   selectKeywordStrategy: { label: "2561-2566", value: "" },
+  selectedSurvey: [],
 });
 
 export type RootState = ReturnType<typeof state>;
@@ -47,6 +49,7 @@ export const getters: GetterTree<RootState, RootState> = {
 };
 
 export const mutations: MutationTree<RootState> = {
+  setSurvey: (state, payload) => (state.selectedSurvey = payload),
   setCookieState: (state, payload) => (state.isCookieSet = payload),
   setCurrentImage: (state, newImage: number) => (state.currentImage = newImage),
   setSelectedVoteDropdown: (state, vote: SelectedVoteDropdownProps) =>
