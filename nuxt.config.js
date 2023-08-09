@@ -12,6 +12,7 @@ const config = {
     meta,
     link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.png" }],
   },
+  publicRuntimeConfig: {},
 
   css: [
     "@wevisdemo/ui/styles/typography.css",
@@ -83,7 +84,7 @@ const config = {
     [
       "nuxt-element-ui",
       {
-        components: ["Select", "Option", "Pagination","Icon"],
+        components: ["Select", "Option", "Pagination", "Icon"],
         locale: "fr",
       },
     ],
@@ -96,11 +97,7 @@ const config = {
       base: BASE_PATH,
       images: `${BASE_PATH}/images`,
     },
-    ncAuthApiSecret: process.env.NC_AUTH_API_SECRET,
-  },
-
-  privateRuntimeConfig: {
-    ncAuthApiSecret: process.env.NC_AUTH_API_SECRET,
+    nocoToken: process.env.NOCO_TOKEN,
   },
 
   router: {

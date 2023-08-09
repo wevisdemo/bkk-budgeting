@@ -52,9 +52,7 @@ jobs:
         run: yarn generate
         env:
           BASE_PATH: "/bkk-budgeting"
-          NC_AUTH_API_SECRET: ${{ secrets.NC_AUTH_API_SECRET }}
-      - name: Show env
-        run: echo ${{ secrets.NC_AUTH_API_SECRET }}
+          NOCO_TOKEN: ${{ secrets.NOCO_TOKEN }}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
