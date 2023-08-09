@@ -1,6 +1,6 @@
 <template>
   <div>
-    <!-- <div class="grid justify-center gap-2" style="height: 630px; overflow: auto">
+    <div class="grid justify-center gap-2" style="height: 630px; overflow: auto">
       <div
         v-for="(item, i) in districts"
         :id="'district-' + i"
@@ -33,7 +33,7 @@
     </div>
     <div class="mt-4">
       <div id="result" class="grid justify-center gap-2" />
-    </div> -->
+    </div>
   </div>
 </template>
 
