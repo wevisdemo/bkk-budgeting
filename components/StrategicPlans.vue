@@ -1,6 +1,6 @@
 <template>
   <BoxContainer>
-    <div class="hidden sm:block h-full pb-6">
+    <div class="hidden sm:block h-full pb-6 pt-5" id="strategic-plan">
       <div class="text-center flex flex-col justify-center h-full z-0">
         <p class="wv-b3">
           เป็นเพียงส่วนหนึ่งของอีกหลายประเด็นที่กรุงเทพฯ วางแผนเพื่อแก้ไข ภายใต้

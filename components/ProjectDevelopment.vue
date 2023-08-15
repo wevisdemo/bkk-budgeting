@@ -1,10 +1,5 @@
 <template>
   <BoxContainer>
-    <div id="projectsDevelopment" class="mb-2 scroll-mt-8">
-      <h5 class="wv-h5 wv-bold text-center wv-kondolar">
-        ก่อนอื่น.. เลือก 3 หมวดที่คุณสนใจที่สุด
-      </h5>
-    </div>
     <Topic :setStepSurvey="setStepSurvey" v-if="stepSurvey === 1" />
     <Projects :setStepSurvey="setStepSurvey" v-if="stepSurvey === 2" />
     <Review v-if="stepSurvey === 3" />
@@ -43,7 +38,7 @@ export default defineComponent({
   },
 
   mounted() {
-    const cookieVoted: string = this.$cookies.get("isVoted");
+    const cookieVoted: string = this.$cookies.get("voted");
 
     if (cookieVoted === "true") {
       this.stepSurvey = 3;

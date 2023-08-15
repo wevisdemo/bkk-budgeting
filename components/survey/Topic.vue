@@ -2,6 +2,11 @@
   <div
     class="min-h-screen md:max-w-[600px] md:w-[600px] mx-auto flex flex-col font-bold w-full"
   >
+    <div id="projectsDevelopment" class="mb-2 scroll-mt-8">
+      <h5 class="wv-h5 wv-bold text-center wv-kondolar">
+        ก่อนอื่น.. เลือก 3 หมวดที่คุณสนใจที่สุด
+      </h5>
+    </div>
     <div class="grid grid-cols-2 gap-2 md:gap-4">
       <button
         v-for="item in surveyData()"

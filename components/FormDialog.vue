@@ -111,10 +111,12 @@ export default {
     async senduser() {
       const cookieId = this.$cookies.get("uuid");
       try {
-        await this.postTableRow("User-data", [{
-          userId: cookieId,
-          district: `เขต${this.formData.district.th_name}`,
-        }]);
+        await this.postTableRow("User-data", [
+          {
+            userId: cookieId,
+            district: `เขต${this.formData.district.th_name}`,
+          },
+        ]);
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e);
@@ -134,13 +136,12 @@ export default {
 
       try {
         await this.postTableRow("Survey", arrayForNoco).then(() => {
-          this.isVoted = true;
           setTimeout(() => {
             this.isShowLoading = false;
             this.setStepSurvey("next");
             // this.closeDialog();
           }, 2000);
-          this.$cookies.set("isVoted", "true");
+          this.$cookies.set("voted", "true");
         });
       } catch (e) {
         // eslint-disable-next-line no-console

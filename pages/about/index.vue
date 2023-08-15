@@ -156,7 +156,12 @@
               stroke-linejoin="round"
             />
           </svg>
-          <span class="wv-h5 wv-bold">ดาวน์โหลดข้อมูล</span>
+          <a
+            class="wv-h5 wv-bold"
+            href="https://docs.google.com/spreadsheets/d/1MNFtkwO7b84JI1WCkgFYKwgTGhKx4SYEl9143bWNMBk/edit?usp=sharing "
+            target="_blank"
+            >ดาวน์โหลดข้อมูล</a
+          >
         </WvButton>
       </div>
       <div class="text-center mt-4">

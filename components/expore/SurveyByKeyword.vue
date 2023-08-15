@@ -245,7 +245,7 @@
                     :style="{
                       height: isMillion
                         ? calHeight(displayMaxAmout(key), item.amount)
-                        : '100%x',
+                        : '100%',
                     }"
                   ></div>
                 </div>

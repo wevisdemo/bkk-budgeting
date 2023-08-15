@@ -15,11 +15,12 @@
     <p class="text-center">เลือกได้ 1 ข้อ</p>
     <div class="flex flex-col gap-2 md:gap-5 max-w-[800px] mx-auto">
       <div class="flex flex-wrap gap-2 md:gap-3 lg:gap-5 justify-center">
-        <div
+        <a
           v-for="(item, index) in planData"
           :key="index"
           class="flex sm:flex-col bg-white rounded-md basis-full sm:basis-28 md:basis-40 flex-shrink-0 gap-2 sm:text-center items-center py-3 px-2 sm:py-5 sm:px-4 cursor-pointer hover:bg-gray-100"
           :class="index === currentHoveredImage ? 'border-inset' : ''"
+          href="#strategic-plan"
           @click="() => setCurrentImage(index)"
         >
           <img
@@ -28,7 +29,7 @@
             :alt="item.issue"
           />
           <p class="wv-b4 wv-bold">{{ item.issue }}</p>
-        </div>
+        </a>
       </div>
     </div>
   </BoxContainer>

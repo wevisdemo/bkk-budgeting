@@ -1,6 +1,6 @@
 <template>
   <BoxContainer>
-    <div id="vote-result">
+    <div id="vote-result" class="pt-5">
       <div class="text-center">
         <h5 class="wv-h5 wv-bold wv-kondolar">10 โครงการที่ถูกโหวตมากที่สุด</h5>
         <div class="flex justify-center items-center my-3">

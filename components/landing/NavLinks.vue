@@ -2,10 +2,10 @@
   <div class="flex sm:flex-none flex-col gap-2 p-3">
     <p class="wv-b5 wv-bold">{{ title }}</p>
     <div class="divide-y divide-black divide-opacity-25">
-      <NuxtLink
+      <a
         v-for="(item, index) in links"
         :key="index"
-        :to="item.anchorLink || item.pageLink"
+        :href="item.anchorLink || item.pageLink"
         class="py-1 px-1 flex hover:bg-black hover:rounded-[5px] hover:fill-white hover:text-white items-center justify-between gap-2"
       >
         <p class="wv-b5">{{ item.title }}</p>
@@ -39,7 +39,7 @@
             />
           </svg>
         </div>
-      </NuxtLink>
+      </a>
     </div>
   </div>
 </template>
