@@ -23,6 +23,7 @@
     <button
       @click="() => nextPage()"
       :class="[selected.length === 3 ? `opacity-100` : `opacity-20`]"
+      :disabled="selected.length != 3"
       class="mx-auto mt-5 border-black border rounded-[5px] flex items-center justify-center h-[40px] w-[40px]"
     >
       <i class="el-icon-right text-2xl" />

@@ -14,7 +14,7 @@
           >
             <div class="flex flex-col flex-1">
               <div
-                class="flex w-full flex-col cursor-pointer relative"
+                class="flex w-full flex-col cursor-pointer relative pr-7"
                 @click.stop="setActiveQuestion(infoIndex)"
               >
                 <p class="wv-h8 wv-kondolar">{{ info.title }}</p>
@@ -67,7 +67,7 @@
                     </ul>
                   </div>
                 </div>
-                <div v-show="info.content_video" class="grid grid-cols-3 gap-4">
+                <div v-show="info.content_video" class="grid md:grid-cols-3 gap-4">
                   <div
                     v-for="(item, videoIndex) in info.content_video"
                     :key="videoIndex"
@@ -83,10 +83,7 @@
                       style="max-width: 400px"
                       :poster="`videos/${item.poster}.png`"
                     >
-                      <source
-                        :src="`videos/${item.video}.mp4`"
-                        type="video/mp4"
-                      />
+                      <source :src="`videos/${item.video}.mp4`" type="video/mp4" />
                     </video>
                   </div>
                 </div>
@@ -112,7 +109,7 @@ interface ContentText {
 interface ContentVideo {
   title: string;
   video: string;
-  poster:string
+  poster: string;
 }
 
 interface QAndAnswer {
@@ -178,18 +175,18 @@ export default Vue.extend({
               title:
                 "กรุงเทพมหานครมองเรื่องการมีส่วนร่วมโดยเฉพาะงบประมาณแบบมีส่วนร่วม อย่างไร??",
               video: "p1",
-              poster:"video_1"
+              poster: "video_1",
             },
             {
               title: "ตอนนี้กรุงเทพมหานคร กำลังดำเนินการอะไรอยู่??",
               video: "p2",
-              poster:"video_2"
+              poster: "video_2",
             },
             {
               title:
                 "ประเทศไทย หากจะไปสู่งบประมาณ แบบมีส่วนร่วมได้ ควรเริ่มที่จุดไหน??",
               video: "p3",
-              poster:"video_3"
+              poster: "video_3",
             },
           ],
         },

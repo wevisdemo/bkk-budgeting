@@ -44,13 +44,13 @@ export default defineComponent({
 
   mounted() {
     const cookieVoted: string = this.$cookies.get("isVoted");
-    console.log(cookieVoted);
 
     if (cookieVoted === "true") {
       this.stepSurvey = 3;
     } else {
       this.stepSurvey = 1;
     }
+    console.log(this.stepSurvey, "step");
   },
   methods: {
     setStepSurvey(direction: string) {

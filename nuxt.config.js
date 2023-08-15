@@ -12,7 +12,6 @@ const config = {
     meta,
     link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.png" }],
   },
-  publicRuntimeConfig: {},
 
   css: [
     "@wevisdemo/ui/styles/typography.css",

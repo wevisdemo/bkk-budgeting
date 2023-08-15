@@ -3,6 +3,7 @@ import { StrategyTypes } from "~/models/strategies";
 export interface Strategy {
   sub_strategy: string;
   sample?: string;
+  select_ploblem?: string;
   side_details: string;
   sub_srategy_def: string[];
 }
@@ -15,6 +16,7 @@ export interface Plan {
   img: string;
   icon: string;
   strategies: Strategy[];
+  topic_img: number;
 }
 
 export const planData: Plan[] = [
@@ -24,6 +26,7 @@ export const planData: Plan[] = [
     strategy_en: "safe",
     issue: "น้ำท่วม ไฟไหม้บ่อยๆ",
     img: "issue_1",
+    topic_img: 0,
     icon: "default_1",
     strategies: [
       {
@@ -61,6 +64,7 @@ export const planData: Plan[] = [
       {
         sub_strategy: "ปลอดภัยพิบัติ",
         sample: "น้ำท่วม ไฟไหม้บ่อยๆ",
+        select_ploblem: "0",
         side_details: `
           ยังคงมุ่งเน้นการจัดการกับภัยเดิมที่กรุงเทพมหานครเผชิญบ่อย คือ อุทกภัย และเพลิงไหม้ แต่มุ่งเน้นการบริหารจัดการเฉพาะภารกิจหลักของหน่วยงาน
           เปลี่ยนการทำงานแบบแยกส่วนตามประเภทภัย เป็นสร้างกลไกประสานงานระหว่างสำนักกลางและเขต`,
@@ -98,6 +102,7 @@ export const planData: Plan[] = [
     strategy_en: "environment",
     issue: "พื้นที่สีเขียวและสวนสาธารณะน้อย ไม่ปลอดภัย",
     img: "issue_2",
+    topic_img: 1,
     icon: "default_2",
     strategies: [
       {
@@ -113,6 +118,7 @@ export const planData: Plan[] = [
         sub_strategy:
           "พื้นที่สีเขียวเพื่อสุขภาวะที่ดีและมีความยั่งยืนด้านสิ่งแวดล้อมตามมาตรฐานสากล",
         sample: "จำนวนพื้นที่สีเขียวและสวนสาธารณะ",
+        select_ploblem: "1",
         side_details: `
           1. การพัฒนาพื้นที่สีเขียวใหม่ภายใต้ความร่วมมือกับภาคส่วนอื่นๆ
           2. การปรับปรุงพื้นที่สีเขียวที่มีอยู่เดิมให้สามารถรองรับ ในการบริการระบบนิเวศและเป็นแหล่งดูดซับคาร์บอนของเมือง ใช้ประโยชน์นันทนาการ พักผ่อนหย่อนใจ
@@ -150,11 +156,13 @@ export const planData: Plan[] = [
     strategy_en: "equality",
     issue: "การทุจริต คอร์รัปชั่น",
     img: "issue_3",
+    topic_img: 3,
     icon: "default_3",
     strategies: [
       {
         sub_strategy: "ผู้สูงอายุ คนพิการ และผู้ด้อยโอกาสได้รับการดูแลอย่างครบวงจร",
         sample: "สาธารณูปโภคพื้นฐานให้ผู้พิการ",
+        select_ploblem: "2",
         side_details:
           "เก็บข้อมูลให้สูงสุด การพัฒนาอาชีพและสวัสดิการ ออกแบบสูตรอบรมแรงงาน และความเปลี่ยนแปลงทางสังคม ต้องการตามตลาดแรงงาน",
         sub_srategy_def: [
@@ -213,6 +221,7 @@ export const planData: Plan[] = [
     strategy_en: "connectivity",
     issue: "สาธารณูปโภคพื้นฐานไม่รองรับกับผู้พิการ",
     img: "issue_4",
+    topic_img: 6,
     icon: "default_4",
     strategies: [
       {
@@ -232,6 +241,7 @@ export const planData: Plan[] = [
         sub_strategy:
           "กรุงเทพมหานครมีศูนย์ชุมชนย่อย (Sub Center) เป็นระบบตามลำดับความสำคัญ และศักยภาพพื้นที่เป็นโครงข่ายเชื่อมโยงกันอย่างมีระบบ",
         sample: "เมืองแออัด ไม่เป็นระเบียบ",
+        select_ploblem: "3",
         side_details: `
           เป็นยุทธศาสตร์ที่มุ่งเน้นให้เกิดกลไกการพัฒนาพื้นที่ชุมชนย่อยในเขตพื้นที่กรุงเทพมหานครชั้นนอก 
           โดยการสร้างระบบการขนส่งที่สามารถเชื่อมโยงศูนย์ชุมชนย่อยกับเขตพื้นที่ชั้นกลางและชั้นในได้โดยสะดวก 
@@ -279,6 +289,7 @@ export const planData: Plan[] = [
     strategy_en: "democracy",
     issue: "การบริการออนไลน์ประชาชนที่เข้ามาติดต่อยุ่งยาก",
     img: "issue_5",
+    topic_img: 2,
     icon: "default_5",
     strategies: [
       {
@@ -333,6 +344,7 @@ export const planData: Plan[] = [
       {
         sub_strategy: "เมืองสีขาว",
         sample: "การทุจริต คอร์รัปชั่น",
+        select_ploblem: "4",
         side_details: `
           มีจุดมุ่งหมายให้กรุงเทพมหานครมีการเปิดเผยข้อมูลและรายงานผลการดำเนินงานให้ประชาชนทราบ รวมตลอดทั้งมีกลไกให้ประชาชนมีส่วนร่วม 
           และตรวจสอบการทำงานได้ คำนึงถึง (1) กรุงเทพมหานคร มีกลไกการร้องเรียน ตรวจสอบ และแก้ไขเรื่อง การทุจริตทีเข้าถึงง่าย 
@@ -357,6 +369,7 @@ export const planData: Plan[] = [
     strategy_en: "economic",
     issue: "แหล่งท่องเที่ยวเสื่อมโทรม",
     img: "issue_6",
+    topic_img: 5,
     icon: "default_6",
     strategies: [
       {
@@ -375,6 +388,7 @@ export const planData: Plan[] = [
       {
         sub_strategy: "กรุงเทพมหานครเป็นเมืองที่น่าท่องเที่ยวระดับโลก",
         sample: "แหล่งท่องเที่ยวเสื่อมโทรม",
+        select_ploblem: "5",
         side_details: `
           กรุงเทพมหานครเป็นเมืองที่น่าท่องเที่ยวระดับโลก เป็นการควบรวมยุทธศาสตร์ย่อยเดิม 
           ด้านการพัฒนาสู่การเป็นศูนย์กลางการท่องเที่ยวระดับโลก และด้านการพัฒนาสู่การเป็นศูนย์กลางธุรกิจตามฐานนวัตกรรม - 
@@ -408,6 +422,7 @@ export const planData: Plan[] = [
     strategy_en: "management",
     issue: "เมืองแออัด ไม่เป็นระเบียบ",
     img: "issue_7",
+    topic_img: 4,
     icon: "default_7",
     strategies: [
       {
@@ -477,6 +492,7 @@ export const planData: Plan[] = [
       {
         sub_strategy: "เทคโนโลยีสารสนเทศ",
         sample: "การบริการออนไลน์ประชาชนที่เข้ามาติดต่อ",
+        select_ploblem: "6",
         side_details: `
           มุ่งหมายที่จะพัฒนาระบบการให้บริการด้วยระบบสารสนเทศทั้งภายในหน่วยงานและการบริการประชาชนอย่างมีประสิทธิภาพโดยคำนึงถึง (1) 
           การเพิ่มประสิทธิภาพระบบการให้บริการเพื่อขับเคลื่อนภารกิจของกรุงเทพมหานครโดยมีเป้าหมายในการพัฒนาระบบการให้บริการ e-service 

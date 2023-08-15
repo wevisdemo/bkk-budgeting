@@ -2,7 +2,6 @@ import type { Context } from "@nuxt/types";
 import { Api } from "nocodb-sdk";
 
 export default (context: Context, inject: any) => {
-  console.log(context.$config);
 
   const api = new Api({
     baseURL: "https://sheets.wevis.info",

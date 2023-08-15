@@ -15,16 +15,18 @@
         v-for="(item, planIndex) in plans"
         :key="`${item.strategy_en}-problemsIndex`"
         class="sm:h-[260px] flex flex-col justify-between items-center z-30"
-        @mouseover="(onHoverImg = planIndex), (selectedStrategy = planIndex)"
+        @mouseover="(onHoverImg = item.topic_img), (selectedStrategy = item.topic_img)"
       >
         <img
           class="w-20"
           :class="
-            selectedStrategy === planIndex
+            selectedStrategy === item.topic_img
               ? `border border-solid border-black rounded-full`
               : `opacity-50`
           "
-          :src="`${$config.path.images}/persistent-problems/${item.img}.png`"
+          :src="`${$config.path.images}/persistent-problems/issue_${
+            item.topic_img + 1
+          }.png`"
           :alt="item.strategy"
         />
         <div class="flex-1">
@@ -32,7 +34,7 @@
             <div
               class="h-14 border-2"
               :class="[
-                selectedStrategy === planIndex
+                selectedStrategy === item.topic_img
                   ? `border-solid`
                   : `border-dashed opacity-50`,
                 `border-wv-${item.strategy_en}`,
@@ -42,62 +44,78 @@
               class="point-down"
               :class="[
                 `border-t-wv-${item.strategy_en}`,
-                selectedStrategy === planIndex ? 'opacity-100' : 'opacity-80',
+                selectedStrategy === item.topic_img ? 'opacity-100' : 'opacity-80',
               ]"
             />
           </div>
         </div>
         <img
-          v-show="onHoverImg === planIndex"
+          v-show="onHoverImg === item.topic_img"
           :id="planIndex.toString()"
           class="w-20 h-28"
           :src="`${$config.path.images}/strategies/${item.icon}_hover.svg`"
           :alt="item.strategy"
         />
         <img
-          v-show="onHoverImg !== planIndex"
+          v-show="onHoverImg !== item.topic_img"
           :id="planIndex.toString()"
           class="w-20 h-28"
           :src="`${$config.path.images}/strategies/${item.icon}.svg`"
           :alt="item.strategy"
         />
-        <div v-show="selectedStrategy === planIndex" class="point-up" />
+        <div v-show="selectedStrategy === item.topic_img" class="point-up" />
       </div>
     </div>
     <!-- strategy -->
     <div class="bg-white flex flex-col items-center justify-center p-4 w-full">
       <div class="text-center pb-4">
         <p class="wv-b6">ยุทธศาสตร์ด้าน</p>
-        <p class="wv-h8 wv-bold wv-kondolar">{{ plans[selectedStrategy].strategy }}</p>
-        <p class="hidden sm:block wv-b6">
-          ประกอบด้วย {{ allStrategies[selectedStrategy].length }} มิติย่อย
+        <p class="wv-h8 wv-bold wv-kondolar">
+          {{ pointerHover?.strategy }}
         </p>
-        <p class="block sm:hidden">
-          ประกอบด้วย 5 มิติย่อย
-          <span class="text-wv-gray-1">(กด + เพื่ออ่านคำอธิบาย)</span>
-        </p>
+        <div class="wv-b6 flex md:block space-x-2 md:space-x-0">
+          <p v-if="pointerHover">
+            ประกอบด้วย
+            {{ pointerHover?.strategies?.length }}
+            มิติย่อย
+          </p>
+          <span class="text-wv-gray-1 block sm:hidden">(กด + เพื่ออ่านคำอธิบาย)</span>
+        </div>
       </div>
       <!-- desktop -->
       <div class="hidden sm:block">
         <div class="flex divide-x w-full">
           <div
-            v-for="(strategy, strategyIndex) in allStrategies[selectedStrategy]"
+            v-for="(strategy, strategyIndex) in pointerHover?.strategies"
             :key="strategyIndex"
             class="flex flex-col grid-rows-[repeat(2,_min-content)] gap-4 p-4 min-h-[200px] w-full bg-white"
           >
             <div class="flex flex-col items-center justify-center w-full gap-1">
               <div
                 class="text-white w-5 h-5 rounded-full flex justify-center wv-b6"
-                :class="`bg-wv-${plans[selectedStrategy].strategy_en}`"
+                :class="`bg-wv-${pointerHover?.strategy_en}`"
               >
                 <span>{{ strategyIndex + 1 }}</span>
               </div>
               <p class="wv-b5 wv-bold text-center">{{ strategy.sub_strategy }}</p>
             </div>
-            <p v-if="strategy.sample" class="wv-b6 wv-bold text-wv-gray-1">
-              {{ strategy.sample }} <br />
-              อยู่ในมิตินี้
-            </p>
+            <div
+              class="wv-b6 text-wv-gray-1"
+              v-if="strategy.sample && currentHoveredImage === pointerHover?.topic_img"
+            >
+              <div class="flex space-x-[5px]">
+                <img
+                  class="w-[20px] h-[20px]"
+                  :src="
+                    require(`~/assets/images/sample_${pointerHover?.topic_img + 1}.png`)
+                  "
+                />
+                <div class="flex flex-col">
+                  <p class="wv-bold">{{ strategy.sample }}</p>
+                  <p>อยู่ในมิตินี้</p>
+                </div>
+              </div>
+            </div>
             <ul>
               <li
                 v-for="(item, itemIndex) in strategy.sub_srategy_def"
@@ -112,7 +130,7 @@
       </div>
       <div class="flex flex-col sm:hidden w-full divide-y">
         <div
-          v-for="(strategy, strategyIndex) in allStrategies[selectedStrategy]"
+          v-for="(strategy, strategyIndex) in pointerHover?.strategies"
           :key="strategyIndex"
           class="flex flex-col w-full bg-white py-2 gap-2"
           @click="selectHandle(strategy.sub_strategy)"
@@ -129,12 +147,29 @@
               class="absolute right-0 cursor-pointer"
             />
             <div
-              class="text-white  min-w-[15px] w-[15px] h-[15px] rounded-full flex justify-center wv-b6"
-              :class="`bg-wv-${plans[selectedStrategy].strategy_en}`"
+              class="text-white min-w-[15px] w-[15px] h-[15px] rounded-full flex justify-center wv-b6"
+              :class="`bg-wv-${pointerHover?.strategy_en}`"
             >
               {{ strategyIndex + 1 }}
             </div>
             <p class="wv-b5 ml-3 wv-bold mr-4">{{ strategy.sub_strategy }}</p>
+          </div>
+          <div
+            class="wv-b6 ml-5 text-wv-gray-1"
+            v-if="strategy.sample && currentHoveredImage === pointerHover?.topic_img"
+          >
+            <div class="flex space-x-[5px]">
+              <img
+                class="w-[20px] h-[20px]"
+                :src="
+                  require(`~/assets/images/sample_${pointerHover?.topic_img + 1}.png`)
+                "
+              />
+              <div class="flex flex-row space-x-1">
+                <p class="wv-bold">{{ strategy.sample }}</p>
+                <p>อยู่ในมิตินี้</p>
+              </div>
+            </div>
           </div>
           <ul class="ml-3" v-if="selected === strategy.sub_strategy">
             <li
@@ -151,31 +186,25 @@
   </BoxContainer>
 </template>
 
-<script lang="ts">
+<script>
 import Vue from "vue";
 import BoxContainer from "~/components/BoxContainer.vue";
 import { planData } from "~/data/plan-data";
 
-interface StrategeicPlansData {
-  onHoverImg: number | null;
-  selectedStrategy: number;
-  strategicIcon: string;
-  selected: string;
-}
-
 export default Vue.extend({
   name: "StrategicPlans",
   components: { BoxContainer },
-  data(): StrategeicPlansData {
+  data() {
     return {
       onHoverImg: null,
       selectedStrategy: 0,
       strategicIcon: "",
       selected: "",
+      pointerHover: {},
     };
   },
   methods: {
-    selectHandle(index: string) {
+    selectHandle(index) {
       this.selected = index;
     },
   },
@@ -193,10 +222,14 @@ export default Vue.extend({
       return this.$store.state.currentImage;
     },
   },
+  mounted() {
+    this.pointerHover = this.plans.find(p => p.topic_img === this.selectedStrategy);
+  },
   watch: {
     currentHoveredImage(newCount) {
       this.selectedStrategy = newCount;
       this.onHoverImg = newCount;
+      this.pointerHover = this.plans.find(p => p.topic_img === newCount);
     },
   },
 });
