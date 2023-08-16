@@ -114,9 +114,11 @@
                 <span class="font-bold">{{
                   rawData?.total?.toLocaleString("en-US", {})
                 }}</span>
-                รายการ ใช้งบรวม
+                รายการ <br class="lg:hidden" />ใช้งบรวม
                 <span class="font-bold">{{ convertMillion(totalFilterAmout) }}</span>
-                ล้านบาท ({{ ((totalFilterAmout / chartData.amount) * 100).toFixed() }}%)
+                ล้านบาท <br class="md:hidden" />({{
+                  ((totalFilterAmout / chartData.amount) * 100).toFixed()
+                }}% ของงบทั้งหมด)
               </p>
             </div>
             <ModalDetails
