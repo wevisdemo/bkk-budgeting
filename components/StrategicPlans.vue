@@ -92,10 +92,13 @@
           >
             <div class="flex flex-col items-center justify-center w-full gap-1">
               <div
-                class="text-white w-5 h-5 rounded-full flex justify-center wv-b6"
+                class="text-white w-5 h-5 rounded-full wv-b6 relative"
                 :class="`bg-wv-${pointerHover?.strategy_en}`"
               >
-                <span>{{ strategyIndex + 1 }}</span>
+                <span
+                  class="absolute top-[50%] left-[50%] translate-x-[-51%] h-[15px] translate-y-[-50%]"
+                  >{{ strategyIndex + 1 }}</span
+                >
               </div>
               <p class="wv-b5 wv-bold text-center">{{ strategy.sub_strategy }}</p>
             </div>
@@ -147,10 +150,14 @@
               class="absolute right-0 cursor-pointer"
             />
             <div
-              class="text-white min-w-[15px] w-[15px] h-[15px] rounded-full flex justify-center wv-b6"
+              class="text-white min-w-[15px] w-[15px] h-[15px] rounded-full relative wv-b6"
               :class="`bg-wv-${pointerHover?.strategy_en}`"
             >
-              {{ strategyIndex + 1 }}
+              <p
+                class="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[55%]"
+              >
+                {{ strategyIndex + 1 }}
+              </p>
             </div>
             <p class="wv-b5 ml-3 wv-bold mr-4">{{ strategy.sub_strategy }}</p>
           </div>
@@ -229,6 +236,9 @@ export default Vue.extend({
     currentHoveredImage(newCount) {
       this.selectedStrategy = newCount;
       this.onHoverImg = newCount;
+      this.pointerHover = this.plans.find(p => p.topic_img === newCount);
+    },
+    selectedStrategy(newCount) {
       this.pointerHover = this.plans.find(p => p.topic_img === newCount);
     },
   },

@@ -45,7 +45,6 @@ export default defineComponent({
     } else {
       this.stepSurvey = 1;
     }
-    console.log(this.stepSurvey, "step");
   },
   methods: {
     setStepSurvey(direction: string) {
