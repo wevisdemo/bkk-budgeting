@@ -1,67 +1,72 @@
 <template>
   <BoxContainer>
     <div class="max-w-3xl m-auto flex flex-col gap-20">
-      <div class="text-center mt-10 mb-16">
-        <h1 class="wv-h1 wv-bold">เกี่ยวกับโครงการ</h1>
+      <div class="text-center mt-10 mb-12">
+        <h1 class="wv-h4 wv-bold">Bangkok Budgeting</h1>
+        <h1 class="wv-h7 wv-bold">
+          เปิดเผยอย่างโปร่งใส เผื่อใครๆก็มีส่วนร่วมกับงบกรุงเทพฯ ได้
+        </h1>
       </div>
       <!-- about -->
       <div class="grid gap-6">
         <h5 class="wv-h5 wv-bold">เกี่ยวกับโปรเจกต์นี้</h5>
         <div class="grid gap-4">
           <p>
-            ทุกวันนี้...เมืองที่อาศัยและใช้ชีวิตอยู่
-            หลายสิ่งหลายอย่างไม่ได้เป็นไปดั่งใจและวาดฝันไว้
-            ปัญหาหลายอย่างเกิดขึ้นในหลายพื้นที่ เช่น ปัญหาขยะ น้ำเน่าเสีย
-            ทางขึ้น-ลงสำหรับผู้พิการ ผู้สูงอายุ
-            แถมลักษณะปัญหาของแต่ละพื้นที่ยังแตกต่างกันอีก
-            คงจะดีประชาชนในฐานะผู้เสียภาษีทั้งทางตรงและทางอ้อม
-            สามารถมีส่วนในการร่วมออกแบบการใช้งบประมาณเพื่อพัฒนาเมืองของเราเองให้ดีขึ้นและเป็นไปอย่างได้ดั่งที่ต้องการได้
+            ในปัจจุบัน เราต่างใช้ชีวิตอยู่ในเมืองที่รายล้อมไปด้วยหลากหลายปัญหา เช่น
+            ปัญหาขยะ น้ำเน่าเสีย ปัญหาทางเท้า หรือการจราจรติดขัด
+            ปัญหาเหล่านี้ล้วนเป็นหน้าที่ของภาครัฐในการจัดการแก้ไข
+            ผ่านการจัดสรรงบประมาณเพื่อพัฒนาคุณภาพชีวิตของประชาชน “เรา”
+            ในฐานะประชาชนผู้จ่ายภาษี
+            คงจะดีไม่น้อยหากสามารถเข้าไปมีส่วนในการร่วมออกแบบการใช้งบประมาณเพื่อพัฒนาเมืองของเราเองให้ดีขึ้นและเป็นไปอย่างที่ต้องการได้
           </p>
           <p>
-            ในหลายประเทศเริ่มเปิดโอกาสให้ประชาชนมีส่วนร่วมกับงบประมาณได้ในรูปแบบที่เรียกว่า
+            หลายประเทศเริ่มเปิดโอกาสให้ประชาชนมีส่วนร่วมกับงบประมาณได้ในรูปแบบที่เรียกว่า
             “งบประมาณแบบมีส่วนร่วม” (Participatory Budgeting)
-            ซึ่งเป็นเครื่องมือในการมีส่วนร่วมที่ให้ประชาชนในชุมชนสามารถตัดสินเกี่ยวกับการใช้งบประมาณ
+            ซึ่งเป็นเครื่องมือในการมีส่วนร่วมที่ให้ประชาชนในชุมชนสามารถตัดสินเกี่ยวกับการใช้จ่ายงบประมาณเองได้
           </p>
           <p>
-            ทีม Punch Up , องค์กรต่อต้านคอร์รัปชัน (ประเทศ) , Glow Story , Hand Social
-            Enterprise , Good Society Thailand และ Social Integrity Architecture and
-            Mechanism Design Lab จึงตั้งใจพัฒนาแพลตฟอร์มนี้ในรูปแบบเทคโนโลยีภาคประชาชน
-            (Civic Tech) เพื่อเปิดเผยข้อมูลให้ทุกคนในฐานะผู้เสียภาษี ได้เข้าถึง เข้าใจ
-            และเป็นส่วนหนึ่งของการออกแบบงบประมาณของกรุงเทพมหานคร
-            โดยเริ่มจากคำถามที่อาจจะคาใจหลายๆ คนว่า
-            ตอนนี้กรุงเทพมหานครวางแผนในการแก้ปัญหาที่เกิดขึ้นอย่างไร?
-            ใช้งบประมาณเท่าไหร่? และในฐานะประชาชน
-            เราจะมีส่วนร่วมแสดงความคิดเห็นได้อย่างไรบ้าง?
-            โดยเราตั้งใจว่าจะนำการร่วมโหวตและความคิดเห็นนี้รวบรวมยื่นต่อผู้ว่าราชการจังหวัดกรุงเทพมหานครและหน่วยงานที่เกี่ยวข้องต่อไป
+            ทีม <a href="https://punchup.world/" target="_blank">Punch Up</a> &
+            <a href="https://wevis.info/" target="_blank">WeVis</a> ,
+            องค์กรต่อต้านคอร์รัปชัน (ประเทศ) , Glow Story , Hand Social Enterprise ,
+            Good Society Thailand และ Social Integrity Architecture and Mechanism Design
+            Lab จึงตั้งใจพัฒนาแพลตฟอร์มนี้ในรูปแบบเทคโนโลยีภาคประชาชน (Civic Tech)
+            เพื่อเปิดเผยข้อมูลให้ทุกคนในฐานะผู้เสียภาษี ได้เข้าถึง เข้าใจ
+            และเป็นส่วนหนึ่งของการออกแบบงบประมาณของกรุงเทพฯ
+            โดยเริ่มจากคำถามที่อาจจะคาใจหลายๆ คน ว่าตอนนี้กรุงเทพฯ วางแผนแก้ปัญหาต่าง ๆ
+            ที่มีอยู่อย่างไร? ใช้งบประมาณเท่าไหร่?
+            และประชาชนสามารถมีส่วนร่วมในการแสดงความคิดเห็นในเรื่องนี้ได้อย่างไรบ้าง?
+            นอกจากนี้
+            เรายังมีความตั้งใจที่จะนำความคิดเห็นจากการรวบรวมในครั้งนี้ยื่นต่อผู้ว่าราชการจังหวัดกรุงเทพฯ
+            และหน่วยงานที่เกี่ยวข้องเพื่อพัฒนาต่อยอดการใช้จ่ายงบประมาณให้ตรงจุดเพื่อแก้ปัญหาที่มีอยู่ในสังคมต่อไป
           </p>
           <p>
-            โปรเจกต์นี้นับเป็นโปรเจกต์ทดลองสร้างแพลตฟอร์ม “งบประมาณแบบมีส่วนร่วม”
-            ให้กับจังหวัด/เมืองต่างๆ ในประเทศไทย
-            โดยเริ่มจากเมืองหลวงอย่างกรุงเทพมหานครเป็นต้นแบบ แล้วพัฒนาไปสู่เมืองอื่นๆ
-            พร้อมอยากชวนทุกคนมามีส่วนร่วมในการพัฒนาสังคมให้ดีขึ้น
-            เริ่มต้นจากการเป็นส่วนหนึ่งในการออกแบบงบประมาณ
-            ผ่านการตรวจสอบและมีส่วนร่วมในการแสดงความคิดเห็นเสนอโครงการกับงบประมาณในการพัฒนาเมือง
+            โปรเจกต์นี้นับเป็นโปรเจกต์ทดลองสร้างแพลตฟอร์มรูแปบบออนไลน์
+            “งบประมาณแบบมีส่วนร่วม” ให้กับจังหวัด/เมืองต่างๆ ในประเทศไทย
+            โดยเริ่มจากเมืองหลวงอย่างกรุงเทพฯ เป็นต้นแบบ แล้วพัฒนาไปสู่เมืองอื่น ๆ
+            จึงอยากเชิญชวนทุกคนมามีส่วนร่วมในการพัฒนาสังคมให้ดีขึ้น
+            เริ่มต้นจากการรู้ข้อมูลการวางแผน การใช้งบประมาณของกรุงเทพฯ
+            และเป็นส่วนหนึ่งในการออกแบบงบประมาณ
+            ผ่านการแสดงความคิดเห็นเสนอโครงการกับงบประมาณในการพัฒนาเมือง
           </p>
           <p>
-            เราเชื่อว่าอย่างน้อย...จุดเริ่มต้นนี้จะเป็นสิ่งผลักดันให้เกิดงบประมาณแบบมีส่วนร่วมอย่างแท้จริงในประเทศไทยได้!
+            เราเชื่อว่าอย่างน้อย
+            จุดเริ่มต้นนี้ผลักดันให้เกิดงบประมาณแบบมีส่วนร่วมอย่างแท้จริงในประเทศไทยได้
+            !
           </p>
         </div>
       </div>
       <!-- data and restrictions -->
       <div class="grid gap-6">
-        <h5 class="wv-h5 wv-bold">ที่มาของข้อมูล & ข้อจำกัด</h5>
+        <h5 class="wv-h5 wv-bold">ที่มาของข้อมูล</h5>
         <div class="grid gap-4">
           <p>
-            ทางทีมผู้พัฒนา ได้ใช้ข้อมูลจากเว็บไซต์ทางการของกรุงเทพมหานครตามลิงก์ต่างๆ
-            ด้านล่าง อย่างไรก็ตาม
-            เนื่องจากโครงสร้างของข้อมูลไม่ได้จัดทำในรูปแบบเดียวกันอย่างเป็นระบบ
-            ไม่อัพเดท และไม่ครบถ้วน บางข้อมูลอยู่ในรูปแบบ pdf
-            ทำให้ต้องทำการเรียบเรียงและตรวจสอบจากข้อมูลหลายแห่ง อาจส่งผลข้อมูลได้
-            นอกจากนี้งบประมาณที่แสดงในเว็บไซต์ ไม่ใช่งบที่ทำการเบิกจ่ายใช้จริงๆ
-            เพราะข้อมูลไม่ครบถ้วน และสอบถามไปยังหน่วยงานแล้ว
-            ได้รับคำตอบว่าเป็นเรื่องเฉพาะภายในของเจ้าหน้าที่เท่านั้น
-            ซึ่งได้แจ้งเตือนในเว็บ
-            หากทางกรุงเทพมหานครมีการเปิดเผยข้อมูลจะนำมาอัพเดทให้ได้
+            ทางทีมผู้พัฒนา ได้ใช้ข้อมูลจากเว็บไซต์ทางการของกรุงเทพฯ ตามลิงก์ที่แนบไว้
+            แต่จากโครงสร้างของชุดข้อมูลที่ไม่ได้จัดทำในรูปแบบเดียวกันอย่างเป็นระบบ
+            บางชุดข้อมูลเป็นไฟล์นามสกุล pdf
+            ทำให้ทางทีมต้องมีการเรียบเรียงและตรวจสอบจากข้อมูลหลายแห่ง
+            ซึ่งอาจส่งผลต่อความแม่นยำของชุดข้อมูลได้ นอกจากนี้งบประมาณที่แสดงในเว็บไซต์
+            ไม่ใช่งบที่ทำการเบิกจ่ายใช้จริงๆ
+            แต่เป็นข้อมูลตามข้อบัญญัติของแต่ละปีงบประมาณ
           </p>
         </div>
       </div>
@@ -71,7 +76,7 @@
         <div class="grid gap-4">
           <ul class="list-disc list-inside">
             <li v-for="(ref, refIndex) in references" :key="refIndex">
-              {{ ref }}
+              <a :href="ref" target="_blank" class="cursor-pointer">{{ ref }}</a>
             </li>
           </ul>
         </div>
@@ -89,25 +94,28 @@
           <p>
             หากมีข้อสงสัยต้องการสอบถามเพิ่มเติม
             ประสงค์แจ้งเปลี่ยนแปลงหรือเพิ่มเติมข้อมูลเพื่อความถูกต้อง
-            หรือมีข้อเสนอแนะใดๆ สามารถติดต่อได้ที่ team [at] punchup.world
+            หรือมีข้อเสนอแนะใดๆ สามารถติดต่อได้ที่ team@punchup.world
           </p>
         </div>
       </div>
       <!-- volunteers -->
-      <div class="grid gap-6">
+      <div class="">
         <h5 class="wv-h5 wv-bold">อาสาสมัครร่วมพัฒนา</h5>
-        <div class="grid gap-8">
+        <div class="">
           <div
             v-for="({ position, names, text }, volunteerIndex) in volunteers"
             :key="volunteerIndex"
           >
-            <p class="wv-bold mb-2">{{ position }}</p>
-            <template v-for="(name, nameIndex) in names">
-              <span :key="nameIndex"
-                >{{ name }}{{ names?.length === nameIndex + 1 ? "" : "," }}
-              </span>
-            </template>
-            <div v-if="text">{{ text }}</div>
+            <p class="wv-bold mb-2 mt-10">{{ position }}</p>
+            <div class="flex flex-wrap">
+              <template v-for="(name, nameIndex) in names">
+                <span :key="nameIndex" class=""
+                  ><div v-html="name" v-if="name"></div>
+                </span>
+              </template>
+            </div>
+
+            <div v-if="text" v-html="text"></div>
           </div>
         </div>
       </div>
@@ -117,24 +125,26 @@
         <div class="grid gap-4">
           <ul class="list-disc list-inside">
             <li
-              v-for="({ name }, partnerNameIndex) in partners"
+              v-for="({ name, link }, partnerNameIndex) in partners"
               :key="partnerNameIndex"
             >
-              {{ name }}
+              <a :href="link" target="_blank">{{ name }}</a>
             </li>
           </ul>
         </div>
         <div class="flex gap-2">
           <div
-            v-for="({ name, img }, partnerImgIndex) in partners"
+            v-for="({ name, img, link }, partnerImgIndex) in partners"
             :key="partnerImgIndex"
             class=""
           >
-            <img
-              :src="require(`~/assets/images/partners/logo_${img}.png`)"
-              :alt="name"
-              class="w-full h-auto"
-            />
+            <a :href="link" target="_blank">
+              <img
+                :src="require(`~/assets/images/partners/logo_${img}.png`)"
+                :alt="name"
+                class="w-full h-auto"
+              />
+            </a>
           </div>
         </div>
       </div>
@@ -231,37 +241,66 @@ export default Vue.extend({
       volunteers: [
         {
           position: "เขียนโปรแกรม",
-          names: ["พิมพ์ปฏิภาณ อังคเรืองรัตนา", "ธนภัทร จำนงรัตน์", "ณัฐกิตติ์ แซ่ตัน"],
+          names: [
+            "<a href='https://www.linkedin.com/mwlite/in/pimpatipan-angkharuengrattana-560898209' target='_blank'>พิมพ์ปฏิภาณ อังคเรืองรัตนา<a/>,&nbsp;",
+            "<a href='https://github.com/palminister' target='_blank'>ธนภัทร จำนงรัตน์ </a>,&nbsp;",
+            "ณัฐกิตติ์ แซ่ตัน",
+            "<a href='https://github.com/napatswift' target='_blank'>ณภัทร ดลภาวิจิต</a>,&nbsp;",
+            "<a href='https://github.com/mixth' target='_blank'>ณรัฐ สุชาติสุนทร</a>,&nbsp;",
+            "<a href='https://github.com/MEEP00H' target='_blank'>โสภณ จำปาซ่อนกลิ่น</a>",
+          ],
         },
         {
           position: "ออกแบบ",
-          names: ["นัฐพล ไก่แก้ว", "น้ำใส ศุภวงศ์"],
+          names: [
+            "นัฐพล ไก่แก้ว,&nbsp;",
+            "<a href='https://www.instagram.com/namsaisupavong/' target='_blank'>น้ำใส ศุภวงศ์</a>",
+          ],
         },
         {
-          position: "สืบค้นและรวบรวมข้อมู",
-          names: ["ศุภิสรา อิศรานุกูล", "อดิศักดิ์ สายประเสริฐ"],
+          position: "สืบค้นและรวบรวมข้อมูล",
+          names: [
+            "<a href='https://www.linkedin.com/in/suphisara-isaranugul-a943b017b/' target='_blank'>ศุภิสรา อิศรานุกูล</a>,&nbsp;",
+            "<a href='https://www.linkedin.com/in/adisak-saiprasert-23a06910a/?fbclid=IwAR0V0TGb8Kp0ktfUsy26pove7hx4nE_-6Z9KiFdCLjWwM0vBooj8BX5MtLg' target='_blank'>อดิศักดิ์ สายประเสริฐ</a>,&nbsp;",
+            "<a href='https://www.linkedin.com/in/alawee-wamae-113a7a1b3' target='_blank'>อาลาวีย์ วาแม</a>",
+          ],
         },
         {
           position: "บรรณาธิการ",
-          names: ["ธนิสรา เรืองเดช"],
+          names: [
+            "<a href=https://www.linkedin.com/in/thanisara-r/' target='_blank'>ธนิสรา เรืองเดช</a>",
+          ],
         },
         {
           position: "ประสานงานและจัดการอื่นๆ",
-          text: "Punch Up โปรเจกต์ Bangkok Budgeting ยังได้รับการสนับสนุนทุนในการดำเนินงานจาก National Endowment for Democracy (NED) และ Good Society ซึ่งนำมาใช้เป็นต้นทุนในการรวมรวมข้อมูล ออกแบบ พัฒนาเว็บไซต์ ประสานงาน บริหารจัดการ ตลอดจนการจัด Meetup เพื่อดำเนินโครงการ",
+          text: "<a href='https://punchup.world/' target='_blank'>Punch Up</a> และ <a href='https://wevis.info/' target='_blank'>WeVis</a> โปรเจกต์ Bangkok Budgeting ยังได้รับการสนับสนุนทุนในการดำเนินงานจาก <a href='https://www.ned.org/' target='_blank'>National Endowment for Democracy (NED)</a> และ Good Society ซึ่งนำมาใช้เป็นต้นทุนในการรวมรวมข้อมูล ออกแบบ พัฒนาเว็บไซต์ ประสานงาน บริหารจัดการ ตลอดจนการจัด Meetup เพื่อดำเนินโครงการ",
         },
         {
           position: "ขอขอบคุณผู้ให้ข้อมูล",
-          text: "ผศ.ดร.ทวิดา กมลเวชช ที่ปรึกษาการพัฒนาการจัดทำแผนกรุงเทพมหานคร",
+          text: "ผศ.ดร.ทวิดา กมลเวชช ที่ปรึกษาการพัฒนาการจัดทำแผนกรุงเทพฯ",
         },
       ],
       partners: [
-        { name: "Good Society Thailand", img: "good_society" },
-        { name: "Glow Story", img: "glow" },
-        { name: "องค์กรต่อต้านคอร์รัปชัน (ประเทศไทย)", img: "act" },
-        { name: "Hand social enterprise", img: "hand" },
+        {
+          name: "Good Society Thailand",
+          img: "good_society",
+          link: "https://www.facebook.com/goodsocietythailand",
+        },
+        { name: "Glow Story", img: "glow", link: "https://www.glowyourstory.com/" },
+        {
+          name: "องค์กรต่อต้านคอร์รัปชัน (ประเทศไทย)",
+          img: "act",
+          link: "http://www.anticorruption.in.th/2016/th/",
+        },
+        {
+          name: "Hand social enterprise",
+          img: "hand",
+          link: "https://www.facebook.com/HANDenterprise",
+        },
         {
           name: "Social Integrity Architecture and Mechanism Design Lab",
           img: "siam_lab",
+          link: "https://www.facebook.com/siamlab.cu",
         },
       ],
     };

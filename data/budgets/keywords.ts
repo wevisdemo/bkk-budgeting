@@ -32,10 +32,6 @@ export const keywords = () => [
     Count: 247,
   },
   {
-    Word: "จ้าง",
-    Count: 190,
-  },
-  {
     Word: "พื้นที่",
     Count: 187,
   },
@@ -78,10 +74,6 @@ export const keywords = () => [
   {
     Word: "ปลอดภัย",
     Count: 111,
-  },
-  {
-    Word: "กรุงเทพฯ",
-    Count: 110,
   },
   {
     Word: "เหมา",
@@ -216,10 +208,6 @@ export const keywords = () => [
     Count: 61,
   },
   {
-    Word: "หนอง",
-    Count: 61,
-  },
-  {
     Word: "เดิน",
     Count: 60,
   },
@@ -320,10 +308,6 @@ export const keywords = () => [
     Count: 40,
   },
   {
-    Word: "ใต้",
-    Count: 39,
-  },
-  {
     Word: "ชุมชน",
     Count: 39,
   },
@@ -333,10 +317,6 @@ export const keywords = () => [
   },
   {
     Word: "อ่าน",
-    Count: 39,
-  },
-  {
-    Word: "รัก",
     Count: 39,
   },
   {
@@ -372,11 +352,7 @@ export const keywords = () => [
     Count: 36,
   },
   {
-    Word: "สุ่ม",
-    Count: 36,
-  },
-  {
-    Word: "เสี่ยง",
+    Word: "สุ่มเสี่ยง",
     Count: 36,
   },
   {
@@ -386,10 +362,6 @@ export const keywords = () => [
   {
     Word: "แพทยศาสตร์",
     Count: 34,
-  },
-  {
-    Word: "โรง",
-    Count: 33,
   },
   {
     Word: "อากาศ",
@@ -468,15 +440,7 @@ export const keywords = () => [
     Count: 30,
   },
   {
-    Word: "ดิน",
-    Count: 30,
-  },
-  {
     Word: "บูรณาการ",
-    Count: 29,
-  },
-  {
-    Word: "ใช้",
     Count: 29,
   },
   {
@@ -513,10 +477,6 @@ export const keywords = () => [
   },
   {
     Word: "ศูนย์บริการสาธารณสุข",
-    Count: 26,
-  },
-  {
-    Word: "อัด",
     Count: 26,
   },
   {
@@ -568,18 +528,6 @@ export const keywords = () => [
     Count: 24,
   },
   {
-    Word: "โรค",
-    Count: 23,
-  },
-  {
-    Word: "กลาง",
-    Count: 23,
-  },
-  {
-    Word: "ดาด",
-    Count: 23,
-  },
-  {
     Word: "ท้องคลอง",
     Count: 23,
   },
@@ -624,10 +572,6 @@ export const keywords = () => [
     Count: 22,
   },
   {
-    Word: "คน",
-    Count: 22,
-  },
-  {
     Word: "มั่นคง",
     Count: 22,
   },
@@ -637,10 +581,6 @@ export const keywords = () => [
   },
   {
     Word: "ว่ายน้ำ",
-    Count: 22,
-  },
-  {
-    Word: "เล่น",
     Count: 22,
   },
   {
@@ -657,10 +597,6 @@ export const keywords = () => [
   },
   {
     Word: "ศรีนครินทร์",
-    Count: 21,
-  },
-  {
-    Word: "นำมา",
     Count: 21,
   },
   {
@@ -704,10 +640,6 @@ export const keywords = () => [
     Count: 19,
   },
   {
-    Word: "ฝัง",
-    Count: 19,
-  },
-  {
     Word: "กลบ",
     Count: 19,
   },
@@ -729,10 +661,6 @@ export const keywords = () => [
   },
   {
     Word: "สารสนเทศ",
-    Count: 18,
-  },
-  {
-    Word: "ชุมนุมชน",
     Count: 18,
   },
   {
@@ -800,15 +728,7 @@ export const keywords = () => [
     Count: 15,
   },
   {
-    Word: "เกิด",
-    Count: 15,
-  },
-  {
     Word: "บูรณะ",
-    Count: 15,
-  },
-  {
-    Word: "น้อยกว่า",
     Count: 15,
   },
   {
@@ -880,10 +800,6 @@ export const keywords = () => [
     Count: 13,
   },
   {
-    Word: "ยก",
-    Count: 13,
-  },
-  {
     Word: "หอพัก",
     Count: 13,
   },
@@ -892,7 +808,7 @@ export const keywords = () => [
     Count: 13,
   },
   {
-    Word: "กรุงธน",
+    Word: "กรุงธนบุรี",
     Count: 13,
   },
   {
@@ -908,23 +824,7 @@ export const keywords = () => [
     Count: 12,
   },
   {
-    Word: "ดับ",
-    Count: 12,
-  },
-  {
-    Word: "เพลิง",
-    Count: 12,
-  },
-  {
-    Word: "จุด",
-    Count: 12,
-  },
-  {
     Word: "ขนส่งมวลชน",
-    Count: 12,
-  },
-  {
-    Word: "ราง",
     Count: 12,
   },
   {
@@ -940,19 +840,11 @@ export const keywords = () => [
     Count: 12,
   },
   {
-    Word: "ถูกสุขลักษณะ",
-    Count: 12,
-  },
-  {
     Word: "อาชญากรรม",
     Count: 12,
   },
   {
     Word: "คุณภาพชีวิต",
-    Count: 12,
-  },
-  {
-    Word: "สมเด็จพระกนิษฐาธิราชเจ้า กรมสมเด็จพระเทพรัตนราชสุดาฯ สยามบรมราชกุมารี",
     Count: 12,
   },
   {
@@ -969,14 +861,6 @@ export const keywords = () => [
   },
   {
     Word: "เข้าโรง",
-    Count: 11,
-  },
-  {
-    Word: "กรุง",
-    Count: 11,
-  },
-  {
-    Word: "อัน",
     Count: 11,
   },
   {
@@ -1024,14 +908,6 @@ export const keywords = () => [
     Count: 10,
   },
   {
-    Word: "เลียบ",
-    Count: 10,
-  },
-  {
-    Word: "ช่อง",
-    Count: 10,
-  },
-  {
     Word: "วิธี",
     Count: 10,
   },
@@ -1048,10 +924,6 @@ export const keywords = () => [
     Count: 10,
   },
   {
-    Word: "สมเด็จพระเทพรัตนราชสุดาฯ สยามบรมราชกุมารี",
-    Count: 10,
-  },
-  {
     Word: "สนอง",
     Count: 10,
   },
@@ -1061,10 +933,6 @@ export const keywords = () => [
   },
   {
     Word: "การเดินเรือ",
-    Count: 9,
-  },
-  {
-    Word: "ราชฐาน",
     Count: 9,
   },
   {
@@ -1081,14 +949,6 @@ export const keywords = () => [
   },
   {
     Word: "ทางยกระดับ",
-    Count: 9,
-  },
-  {
-    Word: "ลอด",
-    Count: 9,
-  },
-  {
-    Word: "นนทรี",
     Count: 9,
   },
   {
@@ -1128,14 +988,6 @@ export const keywords = () => [
     Count: 8,
   },
   {
-    Word: "เข้าสู่ระบบ",
-    Count: 8,
-  },
-  {
-    Word: "เวียน",
-    Count: 8,
-  },
-  {
     Word: "bus",
     Count: 8,
   },
@@ -1153,10 +1005,6 @@ export const keywords = () => [
   },
   {
     Word: "น้ำท่วม",
-    Count: 8,
-  },
-  {
-    Word: "กำหนดให้",
     Count: 8,
   },
   {
@@ -1248,10 +1096,6 @@ export const keywords = () => [
     Count: 7,
   },
   {
-    Word: "เท",
-    Count: 7,
-  },
-  {
     Word: "ท้าย",
     Count: 7,
   },
@@ -1264,19 +1108,7 @@ export const keywords = () => [
     Count: 7,
   },
   {
-    Word: "มหา",
-    Count: 7,
-  },
-  {
     Word: "กำหนด",
-    Count: 7,
-  },
-  {
-    Word: "ฉีด",
-    Count: 7,
-  },
-  {
-    Word: "สูง",
     Count: 7,
   },
   {
@@ -1364,18 +1196,6 @@ export const keywords = () => [
     Count: 6,
   },
   {
-    Word: "จอก",
-    Count: 6,
-  },
-  {
-    Word: "พระยา",
-    Count: 6,
-  },
-  {
-    Word: "จีน",
-    Count: 6,
-  },
-  {
     Word: "บำรุง",
     Count: 6,
   },
@@ -1384,15 +1204,7 @@ export const keywords = () => [
     Count: 6,
   },
   {
-    Word: "บัว",
-    Count: 6,
-  },
-  {
     Word: "คอขวด",
-    Count: 6,
-  },
-  {
-    Word: "ล้อ",
     Count: 6,
   },
   {
@@ -1452,14 +1264,6 @@ export const keywords = () => [
     Count: 5,
   },
   {
-    Word: "ผดุง",
-    Count: 5,
-  },
-  {
-    Word: "เกษม",
-    Count: 5,
-  },
-  {
     Word: "ฐานข้อมูล",
     Count: 5,
   },
@@ -1476,14 +1280,6 @@ export const keywords = () => [
     Count: 5,
   },
   {
-    Word: "พิพัฒน์",
-    Count: 5,
-  },
-  {
-    Word: "มิตร",
-    Count: 5,
-  },
-  {
     Word: "ทางแยก",
     Count: 5,
   },
@@ -1492,23 +1288,7 @@ export const keywords = () => [
     Count: 5,
   },
   {
-    Word: "แจ้ง",
-    Count: 5,
-  },
-  {
-    Word: "วัฒนะ",
-    Count: 5,
-  },
-  {
-    Word: "ธรรม",
-    Count: 5,
-  },
-  {
     Word: "อโศก",
-    Count: 5,
-  },
-  {
-    Word: "ป้อม",
     Count: 5,
   },
   {
@@ -1552,15 +1332,7 @@ export const keywords = () => [
     Count: 5,
   },
   {
-    Word: "ล่าง",
-    Count: 5,
-  },
-  {
     Word: "สาธิต",
-    Count: 5,
-  },
-  {
-    Word: "เชิง",
     Count: 5,
   },
   {
@@ -1660,10 +1432,6 @@ export const keywords = () => [
     Count: 4,
   },
   {
-    Word: "กา",
-    Count: 4,
-  },
-  {
     Word: "ขออนุญาต",
     Count: 4,
   },
@@ -1696,14 +1464,6 @@ export const keywords = () => [
     Count: 4,
   },
   {
-    Word: "ไมตรี",
-    Count: 4,
-  },
-  {
-    Word: "วัง",
-    Count: 4,
-  },
-  {
     Word: "ถาวร",
     Count: 4,
   },
@@ -1717,38 +1477,6 @@ export const keywords = () => [
   },
   {
     Word: "ออกแบบ",
-    Count: 4,
-  },
-  {
-    Word: "เสีย",
-    Count: 4,
-  },
-  {
-    Word: "วารี",
-    Count: 4,
-  },
-  {
-    Word: "สัมพันธ์",
-    Count: 4,
-  },
-  {
-    Word: "ล้อม",
-    Count: 4,
-  },
-  {
-    Word: "พิมเสน",
-    Count: 4,
-  },
-  {
-    Word: "ฟัก",
-    Count: 4,
-  },
-  {
-    Word: "อุดม",
-    Count: 4,
-  },
-  {
-    Word: "ประเวศ",
     Count: 4,
   },
   {
@@ -1792,43 +1520,11 @@ export const keywords = () => [
     Count: 4,
   },
   {
-    Word: "รัช",
-    Count: 4,
-  },
-  {
-    Word: "วิภา",
-    Count: 4,
-  },
-  {
     Word: "ชายทะเล",
     Count: 4,
   },
   {
-    Word: "โค",
-    Count: 4,
-  },
-  {
-    Word: "สาร",
-    Count: 4,
-  },
-  {
     Word: "สุขุมวิท",
-    Count: 4,
-  },
-  {
-    Word: "สาน",
-    Count: 4,
-  },
-  {
-    Word: "ค่าย",
-    Count: 4,
-  },
-  {
-    Word: "บน",
-    Count: 4,
-  },
-  {
-    Word: "เตย",
     Count: 4,
   },
   {
@@ -1888,10 +1584,6 @@ export const keywords = () => [
     Count: 4,
   },
   {
-    Word: "ย่อย",
-    Count: 4,
-  },
-  {
     Word: "โครงข่าย",
     Count: 4,
   },
@@ -1905,14 +1597,6 @@ export const keywords = () => [
   },
   {
     Word: "ความเร็ว",
-    Count: 4,
-  },
-  {
-    Word: "สรง",
-    Count: 4,
-  },
-  {
-    Word: "ประภา",
     Count: 4,
   },
   {
@@ -2052,30 +1736,6 @@ export const keywords = () => [
     Count: 3,
   },
   {
-    Word: "เจ้าคุณ",
-    Count: 3,
-  },
-  {
-    Word: "ทหาร",
-    Count: 3,
-  },
-  {
-    Word: "ทางขึ้น",
-    Count: 3,
-  },
-  {
-    Word: "คุ้ม",
-    Count: 3,
-  },
-  {
-    Word: "เกล้า",
-    Count: 3,
-  },
-  {
-    Word: "ณ",
-    Count: 3,
-  },
-  {
     Word: "รัชดา",
     Count: 3,
   },
@@ -2084,23 +1744,7 @@ export const keywords = () => [
     Count: 3,
   },
   {
-    Word: "หาญ",
-    Count: 3,
-  },
-  {
-    Word: "จิก",
-    Count: 3,
-  },
-  {
-    Word: "เกาะ",
-    Count: 3,
-  },
-  {
     Word: "พื้นที่รับน้ำ",
-    Count: 3,
-  },
-  {
-    Word: "ลาด",
     Count: 3,
   },
   {
@@ -2113,10 +1757,6 @@ export const keywords = () => [
   },
   {
     Word: "ลานจอดรถ",
-    Count: 3,
-  },
-  {
-    Word: "จร",
     Count: 3,
   },
   {
@@ -2152,31 +1792,11 @@ export const keywords = () => [
     Count: 3,
   },
   {
-    Word: "ภูมิ",
-    Count: 3,
-  },
-  {
-    Word: "โคก",
-    Count: 3,
-  },
-  {
-    Word: "ยาง",
-    Count: 3,
-  },
-  {
     Word: "หมู่",
     Count: 3,
   },
   {
     Word: "ประดิษฐ์",
-    Count: 3,
-  },
-  {
-    Word: "ว",
-    Count: 3,
-  },
-  {
-    Word: "ชิ",
     Count: 3,
   },
   {
@@ -2280,23 +1900,11 @@ export const keywords = () => [
     Count: 3,
   },
   {
-    Word: "นที",
-    Count: 3,
-  },
-  {
     Word: "สมเด็จพระนางเจ้า",
     Count: 3,
   },
   {
     Word: "สิริกิติ์",
-    Count: 3,
-  },
-  {
-    Word: "ฯ",
-    Count: 3,
-  },
-  {
-    Word: "ล่",
     Count: 3,
   },
   {
@@ -2324,10 +1932,6 @@ export const keywords = () => [
     Count: 3,
   },
   {
-    Word: "ลำพู",
-    Count: 3,
-  },
-  {
     Word: "ดำรง",
     Count: 3,
   },
@@ -2336,23 +1940,11 @@ export const keywords = () => [
     Count: 3,
   },
   {
-    Word: "สุเมรุ",
-    Count: 3,
-  },
-  {
     Word: "แผน",
     Count: 3,
   },
   {
-    Word: "กะดี",
-    Count: 3,
-  },
-  {
     Word: "ยืนยัน",
-    Count: 3,
-  },
-  {
-    Word: "ตัว",
     Count: 3,
   },
   {
@@ -2449,10 +2041,6 @@ export const keywords = () => [
   },
   {
     Word: "Green",
-    Count: 2,
-  },
-  {
-    Word: "ติดยา",
     Count: 2,
   },
   {
@@ -2652,10 +2240,6 @@ export const keywords = () => [
     Count: 2,
   },
   {
-    Word: "นม",
-    Count: 2,
-  },
-  {
     Word: "แม่",
     Count: 2,
   },
@@ -2664,31 +2248,7 @@ export const keywords = () => [
     Count: 2,
   },
   {
-    Word: "เวช",
-    Count: 2,
-  },
-  {
-    Word: "การุณย์",
-    Count: 2,
-  },
-  {
-    Word: "รัศมิ์",
-    Count: 2,
-  },
-  {
-    Word: "อรุณ",
-    Count: 2,
-  },
-  {
-    Word: "อมรินทร์",
-    Count: 2,
-  },
-  {
     Word: "ศิริราช",
-    Count: 2,
-  },
-  {
-    Word: "สพน์",
     Count: 2,
   },
   {
@@ -2796,10 +2356,6 @@ export const keywords = () => [
     Count: 2,
   },
   {
-    Word: "นา",
-    Count: 2,
-  },
-  {
     Word: "สามง่าม",
     Count: 2,
   },
@@ -2824,10 +2380,6 @@ export const keywords = () => [
     Count: 2,
   },
   {
-    Word: "สุข",
-    Count: 2,
-  },
-  {
     Word: "สวัสดิ์",
     Count: 2,
   },
@@ -2836,15 +2388,7 @@ export const keywords = () => [
     Count: 2,
   },
   {
-    Word: "โขนง",
-    Count: 2,
-  },
-  {
     Word: "ระฆัง",
-    Count: 2,
-  },
-  {
-    Word: "สน.",
     Count: 2,
   },
   {
@@ -2988,10 +2532,6 @@ export const keywords = () => [
     Count: 2,
   },
   {
-    Word: "ทำความสะอาด",
-    Count: 2,
-  },
-  {
     Word: "จิต",
     Count: 2,
   },
@@ -3056,10 +2596,6 @@ export const keywords = () => [
     Count: 2,
   },
   {
-    Word: "พ่น",
-    Count: 2,
-  },
-  {
     Word: "เครื่องยนต์",
     Count: 2,
   },
@@ -3084,27 +2620,7 @@ export const keywords = () => [
     Count: 2,
   },
   {
-    Word: "โกมล",
-    Count: 2,
-  },
-  {
     Word: "ฝึก",
-    Count: 2,
-  },
-  {
-    Word: "นาค",
-    Count: 2,
-  },
-  {
-    Word: "นิวาส",
-    Count: 2,
-  },
-  {
-    Word: "พัก",
-    Count: 2,
-  },
-  {
-    Word: "รอ",
     Count: 2,
   },
   {
@@ -3324,14 +2840,6 @@ export const keywords = () => [
     Count: 1,
   },
   {
-    Word: "เกือก",
-    Count: 1,
-  },
-  {
-    Word: "ซือกง",
-    Count: 1,
-  },
-  {
     Word: "สัมพันธวงศ์",
     Count: 1,
   },
@@ -3508,10 +3016,6 @@ export const keywords = () => [
     Count: 1,
   },
   {
-    Word: "สี",
-    Count: 1,
-  },
-  {
     Word: "เขียว",
     Count: 1,
   },
@@ -3581,10 +3085,6 @@ export const keywords = () => [
   },
   {
     Word: "Trade",
-    Count: 1,
-  },
-  {
-    Word: "shows",
     Count: 1,
   },
   {
@@ -3700,14 +3200,6 @@ export const keywords = () => [
     Count: 1,
   },
   {
-    Word: "จั่น",
-    Count: 1,
-  },
-  {
-    Word: "บ่อ",
-    Count: 1,
-  },
-  {
     Word: "สถานทูต",
     Count: 1,
   },
@@ -3733,18 +3225,6 @@ export const keywords = () => [
   },
   {
     Word: "ขี้เหล็ก",
-    Count: 1,
-  },
-  {
-    Word: "น้้ำ",
-    Count: 1,
-  },
-  {
-    Word: "บ้ำ",
-    Count: 1,
-  },
-  {
-    Word: "บัด",
     Count: 1,
   },
   {
@@ -3788,19 +3268,7 @@ export const keywords = () => [
     Count: 1,
   },
   {
-    Word: "พร",
-    Count: 1,
-  },
-  {
     Word: "ประชาธิปไตย",
-    Count: 1,
-  },
-  {
-    Word: "มนตรี",
-    Count: 1,
-  },
-  {
-    Word: "ตอนที่",
     Count: 1,
   },
   {
@@ -3813,10 +3281,6 @@ export const keywords = () => [
   },
   {
     Word: "โรงเรียนสตรี",
-    Count: 1,
-  },
-  {
-    Word: "กิตติ",
     Count: 1,
   },
   {
@@ -3840,15 +3304,7 @@ export const keywords = () => [
     Count: 1,
   },
   {
-    Word: "รมย์",
-    Count: 1,
-  },
-  {
     Word: "ตะวันตก",
-    Count: 1,
-  },
-  {
-    Word: "นิมมานรดี",
     Count: 1,
   },
   {
@@ -3988,10 +3444,6 @@ export const keywords = () => [
     Count: 1,
   },
   {
-    Word: "พึงประสงค์",
-    Count: 1,
-  },
-  {
     Word: "การสัมมนา",
     Count: 1,
   },
@@ -4009,14 +3461,6 @@ export const keywords = () => [
   },
   {
     Word: "IQ",
-    Count: 1,
-  },
-  {
-    Word: "ทางกาย",
-    Count: 1,
-  },
-  {
-    Word: "พร้าว",
     Count: 1,
   },
   {
