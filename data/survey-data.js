@@ -3,7 +3,12 @@ export const surveyData = () => [
     no: 1,
     Problem_full_name: "ปรับปรุงระบบจัดการขยะ",
     Problem: "ขยะ",
-    Sub_problem: [],
+    Sub_problem: [
+      {
+        name: "ขยะ",
+        strategy: "การพัฒนาสิ่งแวดล้อมยั่งยืน",
+      },
+    ],
   },
   {
     no: 2,
