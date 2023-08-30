@@ -18,10 +18,7 @@
           class="bg-black flex text-white w-fit wv-b6 px-[10px] py-[6px] rounded-[5px] cursor-pointer"
           @click="handleModal"
         >
-        <img
-                src="~/assets/icons/seemore.svg"
-                class=" mr-2"
-              />
+          <img src="~/assets/icons/seemore.svg" class="mr-2" />
           ดูรายการใช้งบ
         </div>
       </ModalDetails>
@@ -309,7 +306,7 @@ export default {
           ).length,
         };
       } else {
-        this.updateSelectYearStrategy({ label: "2561-2566", value: "" });
+        this.updateSelectYearStrategy({ label: "2561-2567", value: "" });
         this.filterYears = this.isModalDetails;
       }
     },

@@ -244,7 +244,7 @@ export default Vue.extend({
           names: [
             "<a href='https://www.linkedin.com/mwlite/in/pimpatipan-angkharuengrattana-560898209' target='_blank'>พิมพ์ปฏิภาณ อังคเรืองรัตนา<a/>,&nbsp;",
             "<a href='https://github.com/palminister' target='_blank'>ธนภัทร จำนงรัตน์ </a>,&nbsp;",
-            "ณัฐกิตติ์ แซ่ตัน",
+            "ณัฐกิตติ์ แซ่ตัน,&nbsp",
             "<a href='https://github.com/napatswift' target='_blank'>ณภัทร ดลภาวิจิต</a>,&nbsp;",
             "<a href='https://github.com/mixth' target='_blank'>ณรัฐ สุชาติสุนทร</a>,&nbsp;",
             "<a href='https://github.com/MEEP00H' target='_blank'>โสภณ จำปาซ่อนกลิ่น</a>",

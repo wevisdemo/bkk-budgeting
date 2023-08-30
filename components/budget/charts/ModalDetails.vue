@@ -143,15 +143,16 @@ export default {
       filterYears: [],
       defaultByFilter: [],
       isProject: false,
-      selectFilter: "2561-2566",
+      selectFilter: "2561-2567",
       yearList: [
-        { label: "2561-2566", value: "" },
+        { label: "2561-2567", value: "" },
         { label: "2561", value: 61 },
         { label: "2562", value: 62 },
         { label: "2563", value: 63 },
         { label: "2564", value: 64 },
         { label: "2565", value: 65 },
         { label: "2566", value: 66 },
+        { label: "2567", value: 67 },
       ],
     };
   },
@@ -213,11 +214,11 @@ export default {
         });
       } else {
         if (this.page === "organize")
-          this.updateSelectYearOrganize({ label: "2561-2566", value: "" });
+          this.updateSelectYearOrganize({ label: "2561-2567", value: "" });
         if (this.page === "strategy")
-          this.updateSelectYearStrategy({ label: "2561-2566", value: "" });
+          this.updateSelectYearStrategy({ label: "2561-2567", value: "" });
         if (this.page === "keyword")
-          this.updateSelectKeywordStrategy({ label: "2561-2566", value: "" });
+          this.updateSelectKeywordStrategy({ label: "2561-2567", value: "" });
         this.filterYears = this.isModalDetails;
       }
     },

@@ -3,7 +3,7 @@
     id="byYears"
     class="mt-7 md:w-[80%] mx-auto lg:w-full flex lg:space-x-[35px] min-h-screen flex-col lg:flex-row justify-center relative"
   >
-    <div class="fixed w-full bottom-0 ">
+    <div class="fixed w-full bottom-0">
       <div
         id="scrollTopTop"
         @click="scrollToTop"
@@ -39,7 +39,9 @@
     </div>
     <div class="lg:max-w-[685px] mt-3 flex-1 flex flex-col justify-between">
       <div class="flex items-center">
-        <p class="wv-h8 font-bold mr-2 wv-kondolar" id="topic-pointer">หน่วยงานที่ได้รับงบในปี</p>
+        <p class="wv-h8 font-bold mr-2 wv-kondolar" id="topic-pointer">
+          หน่วยงานที่ได้รับงบในปี
+        </p>
         <el-select
           v-model="selectFilterYear"
           placeholder="Select"
@@ -163,15 +165,16 @@ export default {
       ],
       selectedFilter: "งบมากไปน้อย",
       isFilterModal: false,
-      selectFilterYear: "2561-2566",
+      selectFilterYear: "2561-2567",
       yearList: [
-        { label: "2561-2566", value: "" },
+        { label: "2561-2567", value: "" },
         { label: "2561", value: 61 },
         { label: "2562", value: 62 },
         { label: "2563", value: 63 },
         { label: "2564", value: 64 },
         { label: "2565", value: 65 },
         { label: "2566", value: 66 },
+        { label: "2567", value: 67 },
       ],
     };
   },
@@ -250,7 +253,7 @@ export default {
             .length,
         };
       } else {
-        this.updateSelectYearOrganize({ label: "2561-2566", value: "" });
+        this.updateSelectYearOrganize({ label: "2561-2567", value: "" });
         this.filterYears = this.isModalDetails;
       }
       this.fetchByOrganizeYear(year);

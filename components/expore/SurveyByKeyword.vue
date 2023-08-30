@@ -427,7 +427,7 @@ export default {
       const groupOrganize = Object.keys(_.groupBy(response.items, "nameOrganization"));
       this.filterOrganize = [`${groupOrganize.length} หน่วยงาน`, ...groupOrganize];
       this.selectFilter = this.filterOrganize[0];
-      this.updateSelectKeywordStrategy({ label: "2561-2566", value: "" });
+      this.updateSelectKeywordStrategy({ label: "2561-2567", value: "" });
       this.updateIsModalDetails(response);
       this.updateSubTitleModal(
         `ที่มีคำว่า “${this.selectedKey.Word}” ในชื่อ ซึ่งของบโดย “${this.filterOrganize.length} หน่วยงาน”`,

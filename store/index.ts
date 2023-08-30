@@ -36,9 +36,9 @@ export const state = (): State => ({
     project_type: "",
     project_id: "",
   },
-  selectYearOrganize: { label: "2561-2566", value: "" },
-  selectYearStrategy: { label: "2561-2566", value: "" },
-  selectKeywordStrategy: { label: "2561-2566", value: "" },
+  selectYearOrganize: { label: "2561-2567", value: "" },
+  selectYearStrategy: { label: "2561-2567", value: "" },
+  selectKeywordStrategy: { label: "2561-2567", value: "" },
   selectedSurvey: [],
 });
 
