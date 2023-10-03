@@ -37,8 +37,9 @@
                   )
                 }}
               </div>
-              <div class=" absolute bottom-[-30px] left-[50%] wv-b5 translate-x-[-50%]">
-                ’{{ item.year }}</div>
+              <div class="absolute bottom-[-30px] left-[50%] wv-b5 translate-x-[-50%]">
+                ’{{ item.year }}
+              </div>
             </div>
             <div class="flex flex-col-reverse w-full h-full relative justify-items-end">
               <div
@@ -113,6 +114,7 @@ export default Vue.extend({
         { year: 64, amount: 75500000000 },
         { year: 65, amount: 78979446500 },
         { year: 66, amount: 79000000000 },
+        { year: 67, amount: 89780661000 },
       ],
     };
   },
