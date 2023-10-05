@@ -73,7 +73,7 @@ export default {
     },
     chooseTopic(topicValue) {
       this.topic = topicValue;
-      this.$router.push({ path: "explore", query: { select: topicValue } });
+      this.$router.push({ query: { select: topicValue } });
     },
   },
 };
