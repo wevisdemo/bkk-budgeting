@@ -204,10 +204,14 @@
                 ></div>
                 <!--  number -->
                 <div
-                  class="z-[20] wv-b7 font-bold"
+                  class="z-[20] wv-b7 font-bold relative"
                   v-if="isMillion && selectFilter === filterOrganize[0]"
                 >
-                  {{ convertMillion(item.amount) }}
+                  <div
+                    class="absolute left-[50%] translate-x-[-50%] translate-y-[-100%]"
+                  >
+                    {{ convertMillion(item.amount) }}
+                  </div>
                 </div>
                 <div
                   class="z-[20] wv-b7 font-bold"
