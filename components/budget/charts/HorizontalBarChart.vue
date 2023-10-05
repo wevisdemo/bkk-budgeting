@@ -144,7 +144,9 @@
           v-if="!chartSelected && isMillion"
           class="relative wv-b7 font-bold text-center"
         >
-          {{ convertMillion(d.amount) }}
+          <div class="absolute translate-y-[-100%]">
+            {{ convertMillion(d.amount) }}
+          </div>
         </div>
       </div>
     </div>

@@ -35,10 +35,10 @@
 
 <script lang="ts">
 import { PropType, defineComponent } from "vue";
-import { planData } from "~/data/plan-data";
-import type { Plan } from "~/data/plan-data";
 import { navData } from "../expore/navData";
 import { colorFilter } from "./utils";
+import { planData } from "~/data/plan-data";
+import type { Plan } from "~/data/plan-data";
 
 type VariantTypes = "yearly-budget" | "budget-usage";
 
