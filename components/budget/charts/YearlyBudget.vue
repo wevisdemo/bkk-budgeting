@@ -34,6 +34,7 @@
                 {{
                   convertMillion(
                     totalBudget.filter(i => i.year === item.year)[0].amount,
+                    false,
                   )
                 }}
               </div>
@@ -70,13 +71,15 @@
                   height: `${calHeight(item.amount)}%`,
                 }"
               ></div>
-              <div class="wv-b7 md:wv-b5 font-bold mx-auto">
-                {{ convertMillion(item.amount) }}
+              <div class="wv-b7 md:wv-b5 font-bold mx-auto relative">
+                <div class="absolute translate-y-[-100%] left-[50%] translate-x-[-50%]">
+                  {{ convertMillion(item.amount, false) }}
+                </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="lg:hidden block mt-5">
+        <div class="lg:hidden block mt-16">
           <StrategyLegend variant="yearly-budget" />
         </div>
         <div class="w-full flex flex-col justify-between gap-4 mt-12">
@@ -97,9 +100,9 @@
 
 <script>
 import Vue from "vue";
+import { convertMillion, strategyList, colorFilter } from "../utils";
 import VizChart from "~/components/budget/charts/VizChartContainer.vue";
 import StrategyLegend from "~/components/budget/StrategyLegend.vue";
-import { convertMillion, strategyList, colorFilter } from "../utils";
 
 export default Vue.extend({
   name: "YearlyBudget",

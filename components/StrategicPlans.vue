@@ -96,7 +96,7 @@
                 :class="`bg-wv-${pointerHover?.strategy_en}`"
               >
                 <span
-                  class="absolute top-[50%] left-[50%] translate-x-[-51%] h-[15px] translate-y-[-50%]"
+                  class="absolute top-[50%] left-[50%] translate-x-[-51%] translate-y-[-50%]"
                   >{{ strategyIndex + 1 }}</span
                 >
               </div>
@@ -154,7 +154,7 @@
               :class="`bg-wv-${pointerHover?.strategy_en}`"
             >
               <p
-                class="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[55%]"
+                class="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]"
               >
                 {{ strategyIndex + 1 }}
               </p>
@@ -210,11 +210,7 @@ export default Vue.extend({
       pointerHover: {},
     };
   },
-  methods: {
-    selectHandle(index) {
-      this.selected = index;
-    },
-  },
+
   computed: {
     plans() {
       return planData;
@@ -225,12 +221,10 @@ export default Vue.extend({
       });
     },
     currentHoveredImage() {
+      // eslint-disable-next-line vue/no-side-effects-in-computed-properties
       this.selected = "";
       return this.$store.state.currentImage;
     },
-  },
-  mounted() {
-    this.pointerHover = this.plans.find(p => p.topic_img === this.selectedStrategy);
   },
   watch: {
     currentHoveredImage(newCount) {
@@ -240,6 +234,14 @@ export default Vue.extend({
     },
     selectedStrategy(newCount) {
       this.pointerHover = this.plans.find(p => p.topic_img === newCount);
+    },
+  },
+  mounted() {
+    this.pointerHover = this.plans.find(p => p.topic_img === this.selectedStrategy);
+  },
+  methods: {
+    selectHandle(index) {
+      this.selected = index;
     },
   },
 });

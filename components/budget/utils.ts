@@ -41,13 +41,14 @@ export const handleRemoveSelected = (selector: string, className: string) => {
     );
 };
 
-export const convertMillion = (num: number) => {
+export const convertMillion = (num: number, isDecimal = true) => {
   const numFormat = num / 1000000;
-  return numFormat.toLocaleString("en-US", {
-        maximumFractionDigits: 2,
-        minimumFractionDigits: 2,
-      })||''
-    
+  return (
+    numFormat.toLocaleString("en-US", {
+      maximumFractionDigits: isDecimal ? 2 : 0,
+      minimumFractionDigits: isDecimal ? 2 : 0,
+    }) || ""
+  );
 };
 
 export const strategyList = () => [
