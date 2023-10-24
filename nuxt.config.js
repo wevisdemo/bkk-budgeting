@@ -1,7 +1,7 @@
 import { createMetadata } from "./utils/metadata";
 import { generateOgImageRoutes } from "./utils/ogimages";
 
-const BASE_PATH = "/bkk-budgeting";
+const BASE_PATH = "/";
 const { title, meta } = createMetadata();
 
 const config = {
@@ -66,6 +66,7 @@ const config = {
   },
 
   modules: [
+    "vue-plausible",
     "@nuxtjs/tailwindcss",
     "@nuxtjs/axios",
     "@nuxtjs/pwa",
@@ -89,12 +90,17 @@ const config = {
     ],
   ],
 
+  plausible: {
+    domain: "bangkokbudgeting.wevis.info",
+    apiHost: "https://analytics.punchup.world",
+  },
+
   extends: ["@nuxtjs/eslint-config-typescript"],
 
   publicRuntimeConfig: {
     path: {
       base: BASE_PATH,
-      images: `${BASE_PATH}/images`,
+      images: `/images`,
     },
     nocoToken: process.env.NOCO_TOKEN,
   },

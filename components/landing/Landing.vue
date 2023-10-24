@@ -11,13 +11,20 @@
           <div>Budgeting</div>
         </h1>
         <div class="wv-b3 wv-bold hidden sm:block">
-          <p>เปิดเผยอย่างโปร่งใส</p>
-          <p>เพื่อใครๆก็มีส่วนร่วมกับงบฯ กรุงเทพได้</p>
+          <p>เปิดเผยอย่างโปร่งใส เพื่อใครๆ</p>
+          <p>ก็มีส่วนร่วมกับงบกรุงเทพฯได้</p>
         </div>
         <div class="wv-b4 wv-bold block sm:hidden">
-          <p>เปิดเผยอย่างโปร่งใส</p>
-          <p>เพื่อใครๆก็มีส่วนร่วมกับงบฯ กรุงเทพได้</p>
+          <p>เปิดเผยอย่างโปร่งใสเพื่อใครๆ</p>
+          <p>ก็มีส่วนร่วมกับงบกรุงเทพฯได้</p>
         </div>
+        <div class="flex items-center">
+          <p class="wv-b7">ร่วมพัฒนาโดย</p>
+          <div class="w-[50px] ml-2">
+            <img :src="require(`~/assets/images/partners/hand.png`)" alt="hand" />
+          </div>
+        </div>
+
         <div class="block sm:hidden w-full">
           <Lottie :options="defaultOptions" />
         </div>
