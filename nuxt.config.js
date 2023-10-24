@@ -1,7 +1,7 @@
 import { createMetadata } from "./utils/metadata";
 import { generateOgImageRoutes } from "./utils/ogimages";
 
-const BASE_PATH = "/";
+const BASE_PATH = "/bkk-budgeting";
 const { title, meta } = createMetadata();
 
 const config = {
