@@ -7,11 +7,11 @@
       <StrategicPlans />
       <DevelopmentTimeline />
       <BudgetPlans />
-      <AllocationQuestion />
+      <!-- <AllocationQuestion />
       <ProjectDevelopment />
       <IdeaVote />
       <ProjectShare />
-      <ParticipatoryBudgeting />
+      <ParticipatoryBudgeting /> -->
     </div>
   </div>
 </template>

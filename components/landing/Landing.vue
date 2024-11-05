@@ -18,7 +18,7 @@
           <p>เปิดเผยอย่างโปร่งใสเพื่อใครๆ</p>
           <p>ก็มีส่วนร่วมกับงบกรุงเทพฯได้</p>
         </div>
-        <div class="flex items-center">
+        <div class="flex items-center justify-center md:justify-start">
           <p class="wv-b7">ร่วมพัฒนาโดย</p>
           <div class="w-[50px] ml-2">
             <img :src="require(`~/assets/images/partners/hand.png`)" alt="hand" />
@@ -90,10 +90,6 @@ export default Vue.extend({
         {
           title: "ใช้ทำอะไรไปแล้ว",
           anchorLink: "#budgetplans",
-        },
-        {
-          title: "อยากให้งบทำเรื่องอะไร",
-          anchorLink: "#projectsDevelopment",
         },
       ],
       budgetExplore: [

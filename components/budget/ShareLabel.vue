@@ -48,7 +48,7 @@ export default {
       icon_fb: require("~/assets/logo/facebook.svg"),
       icon_line: require("~/assets/logo/line.svg"),
       icon_twitter: require("~/assets/logo/twitter.svg"),
-      shareUrl: `https://wevisdemo.github.io/bkk-budgeting/images/og_default.jpg`,
+      shareUrl: `https://wevisdemo.github.io/bkk-budgeting`,
       GOOGLE_SHEETS_CSV:
         "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ85mQgwOqSIwu-QOdD4nPgC9K8_UgXFgOW1p45p5HIedDihVCNTDIOAU2O-ibjyKMGNpj3jI_E65g1/pub?gid=1938129512&single=true&output=csv",
     };

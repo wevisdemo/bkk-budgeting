@@ -32,24 +32,6 @@ const config = {
     "@nuxtjs/svg",
     "@nuxtjs/style-resources",
     "@nuxtjs/moment",
-    [
-      "@nuxtjs/firebase",
-      {
-        config: {
-          apiKey: "AIzaSyCwIBLPmMURCSdqe_rQqC4gFrUtteLwbfI",
-          authDomain: "participatory-budgeting-a5f34.firebaseapp.com",
-          databaseURL:
-            "https://participatory-budgeting-a5f34-default-rtdb.asia-southeast1.firebasedatabase.app",
-          projectId: "participatory-budgeting-a5f34",
-          storageBucket: "participatory-budgeting-a5f34.appspot.com",
-          messagingSenderId: "412280397430",
-          appId: "1:412280397430:web:d2fd56e866108d5c3c0957",
-        },
-        services: {
-          database: true,
-        },
-      },
-    ],
   ],
 
   moment: {
@@ -66,7 +48,6 @@ const config = {
   },
 
   modules: [
-    "vue-plausible",
     "@nuxtjs/tailwindcss",
     "@nuxtjs/axios",
     "@nuxtjs/pwa",
@@ -89,12 +70,6 @@ const config = {
       },
     ],
   ],
-
-  plausible: {
-    domain: "bangkokbudgeting.wevis.info",
-    apiHost: "https://analytics.punchup.world",
-  },
-
   extends: ["@nuxtjs/eslint-config-typescript"],
 
   publicRuntimeConfig: {
