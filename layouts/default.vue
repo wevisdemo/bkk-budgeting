@@ -18,7 +18,7 @@
     >
       <div class="flex text-center">
         <svg
-          class="mr-2 md:-mt-2"
+          class="mr-2"
           width="20"
           height="20"
           viewBox="0 0 23 20"
